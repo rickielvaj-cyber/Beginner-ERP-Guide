@@ -195,6 +195,14 @@ img { max-width: 100%; height: auto; border-radius: var(--radius-sm); }
   html[data-sidebar="collapsed"] .sidebar-collapse-btn .icon-flip {
     transform: scaleX(-1);
   }
+  /* With the sidebar gone, center the reading column instead of letting it
+     sit flush against the left edge — otherwise text looks lopsided on
+     wide screens. A touch wider than the normal max-width too, since
+     there's extra room to use. */
+  html[data-sidebar="collapsed"] .main {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
 }
 
 .topbar {
