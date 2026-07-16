@@ -379,7 +379,7 @@ img { max-width: 100%; height: auto; border-radius: var(--radius-sm); }
   margin-top: auto;
   padding: 14px 12px 4px;
   font-size: 11px;
-  color: #6f88ab;
+  color: #a97e83;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -437,7 +437,7 @@ img { max-width: 100%; height: auto; border-radius: var(--radius-sm); }
   font-weight: 700;
   letter-spacing: .08em;
   text-transform: uppercase;
-  color: #cfe6fb;
+  color: #fce3e7;
   margin-bottom: 10px;
 }
 .hero h1 {
@@ -448,7 +448,7 @@ img { max-width: 100%; height: auto; border-radius: var(--radius-sm); }
 .hero p {
   margin: 0;
   max-width: 60ch;
-  color: #e4f0fb;
+  color: #fbeaec;
   font-size: 15px;
 }
 .hero-actions {
