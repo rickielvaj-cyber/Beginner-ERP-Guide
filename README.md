@@ -41,9 +41,17 @@ python3 -m http.server 8000
 
 Lalu buka `http://localhost:8000`.
 
-## Palet warna
+## Palet warna & tema
 
-Warna didefinisikan sebagai CSS custom properties di bagian atas `assets/css/style.css`
-(`:root { --color-primary: ...; }`), terinspirasi identitas korporat biru Yonyou/YonSuite.
-Gampang disesuaikan kalau mau dicocokkan persis dengan brand asli — cukup ganti nilai hex
-di situ.
+Pengunjung bisa pilih tema sendiri lewat tombol **Tema** di topbar: warna (Merah/Yonyou
+atau Biru) x mode (Terang/Gelap/Ikuti Sistem) — 4 kombinasi total, tersimpan di
+localStorage browser masing-masing. Semua warna didefinisikan sebagai CSS custom
+properties di `assets/css/style.css` (4 blok `:root[data-palette=...][data-theme=...]`),
+gampang disesuaikan atau ditambah palet baru di situ.
+
+## Kalau situs kelihatan belum ke-update setelah push
+
+Browser kadang nge-cache `app.js`/`style.css` versi lama walau `index.html` sudah baru.
+Kalau ganti isi `assets/js/app.js` atau `assets/css/style.css` dan situsnya kelihatan
+belum berubah setelah push + hard refresh, naikkan angka `?v=` di tag `<link>`/`<script>`
+pada `index.html` (misal `?v=3` → `?v=4`) — itu maksa browser ambil file yang baru.
