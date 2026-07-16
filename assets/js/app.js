@@ -32,12 +32,18 @@
   }
 
   function slugify(text) {
-    return String(text)
+    const slug = String(text)
       .toLowerCase()
       .trim()
-      .replace(/[^a-z0-9à-ɏ\s-]/g, "")
       .replace(/\s+/g, "-")
-      .replace(/-+/g, "-");
+      // Keep any Unicode letter/number (this includes Chinese/Japanese/Korean
+      // text, common throughout these notes) instead of only a-z0-9 — the
+      // old ASCII-only version stripped non-Latin headings down to almost
+      // nothing, so unrelated headings collapsed onto the same anchor id.
+      .replace(/[^\p{L}\p{N}-]/gu, "")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "");
+    return slug || "section";
   }
 
   function escapeHtml(s) {
@@ -161,8 +167,16 @@
   // ---------------------------------------------------------------------
   function buildRenderer(basePath) {
     const renderer = new marked.Renderer();
+    const usedIds = new Map(); // per-render dedup, in case two headings slugify the same
     renderer.heading = (text, level, raw) => {
-      const id = slugify(raw);
+      let id = slugify(raw);
+      if (usedIds.has(id)) {
+        const n = usedIds.get(id) + 1;
+        usedIds.set(id, n);
+        id = `${id}-${n}`;
+      } else {
+        usedIds.set(id, 1);
+      }
       return `<h${level} id="${id}">${text}</h${level}>\n`;
     };
     renderer.image = (href, title, text) => {
