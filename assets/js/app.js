@@ -47,6 +47,107 @@
   }
 
   // ---------------------------------------------------------------------
+  // Theme picker (palette: red/blue x mode: light/dark/system)
+  // ---------------------------------------------------------------------
+  const THEME_KEY = "ys-theme-pref";
+  const PALETTES = [
+    { id: "red", label: "Merah (Yonyou)", dot: "dot-red" },
+    { id: "blue", label: "Biru", dot: "dot-blue" },
+  ];
+  const MODES = [
+    { id: "light", label: "Terang" },
+    { id: "dark", label: "Gelap" },
+    { id: "system", label: "Sistem" },
+  ];
+
+  function loadThemePref() {
+    try {
+      const raw = localStorage.getItem(THEME_KEY);
+      if (raw) return JSON.parse(raw);
+    } catch (e) { /* ignore */ }
+    return { palette: "red", mode: "system" };
+  }
+
+  function saveThemePref(pref) {
+    try { localStorage.setItem(THEME_KEY, JSON.stringify(pref)); } catch (e) { /* ignore */ }
+  }
+
+  function resolveMode(mode) {
+    if (mode === "system") {
+      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    return mode;
+  }
+
+  let themePref = loadThemePref();
+
+  function applyTheme() {
+    document.documentElement.setAttribute("data-palette", themePref.palette);
+    document.documentElement.setAttribute("data-theme", resolveMode(themePref.mode));
+  }
+
+  function renderThemePanel() {
+    const $panel = document.getElementById("themePanel");
+    if (!$panel) return;
+    $panel.innerHTML = `
+      <div class="theme-panel-section">
+        <p class="theme-panel-label">Warna</p>
+        <div class="theme-swatch-row">
+          ${PALETTES.map((p) => `
+            <div class="theme-swatch ${themePref.palette === p.id ? "active" : ""}" data-palette-choice="${p.id}">
+              <span class="theme-swatch-dot ${p.dot}"></span>${escapeHtml(p.label)}
+            </div>
+          `).join("")}
+        </div>
+      </div>
+      <div class="theme-panel-section">
+        <p class="theme-panel-label">Mode</p>
+        <div class="theme-mode-row">
+          ${MODES.map((m) => `
+            <div class="theme-mode-btn ${themePref.mode === m.id ? "active" : ""}" data-mode-choice="${m.id}">${escapeHtml(m.label)}</div>
+          `).join("")}
+        </div>
+      </div>
+    `;
+    $panel.querySelectorAll("[data-palette-choice]").forEach((el) => {
+      el.addEventListener("click", () => {
+        themePref.palette = el.dataset.paletteChoice;
+        saveThemePref(themePref);
+        applyTheme();
+        renderThemePanel();
+      });
+    });
+    $panel.querySelectorAll("[data-mode-choice]").forEach((el) => {
+      el.addEventListener("click", () => {
+        themePref.mode = el.dataset.modeChoice;
+        saveThemePref(themePref);
+        applyTheme();
+        renderThemePanel();
+      });
+    });
+  }
+
+  function closeThemePanel() {
+    const $panel = document.getElementById("themePanel");
+    if ($panel) $panel.classList.remove("open");
+  }
+
+  function initThemePicker() {
+    applyTheme();
+    renderThemePanel();
+    document.getElementById("themeToggle").addEventListener("click", (e) => {
+      e.stopPropagation();
+      document.getElementById("themePanel").classList.toggle("open");
+    });
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest(".theme-picker")) closeThemePanel();
+    });
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+      if (themePref.mode === "system") applyTheme();
+    });
+  }
+
+  // ---------------------------------------------------------------------
   // State
   // ---------------------------------------------------------------------
   let manifest = null;
@@ -610,6 +711,8 @@
   // Boot
   // ---------------------------------------------------------------------
   async function boot() {
+    initThemePicker();
+
     const res = await fetch(`${CONTENT_DIR}/manifest.json`, { cache: "no-store" });
     manifest = await res.json();
     manifest.modules.forEach((m) => moduleBySlug.set(m.slug, m));
@@ -631,6 +734,7 @@
       if (e.key === "Escape") {
         closeSearch();
         closeSidebar();
+        closeThemePanel();
         document.getElementById("searchInput").blur();
       }
     });
