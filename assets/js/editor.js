@@ -13,6 +13,10 @@ window.YSEditor = (function () {
 
   const TOKEN_KEY = "ys-gh-token";
   const PW_HASH_KEY = "ys-editor-pw-hash";
+  // SHA-256 of the fixed PIN that gates the Editor Settings modal (token &
+  // password management) — one extra layer before that screen is reachable
+  // at all, on top of the password gate on the per-page Edit button.
+  const SETTINGS_PIN_HASH = "5e42eea3f485ab878ab85215030f3caa487ae986e75cfa6e508e982196da9aa9";
   const REPO_OWNER = "rickielvaj-cyber";
   const REPO_NAME = "Beginner-ERP-Guide";
   const BRANCH = "claude/yonsuite-erp-learning-site-9k37bq";
@@ -168,7 +172,7 @@ window.YSEditor = (function () {
     `;
     overlay.classList.add("open");
     document.getElementById("ysNotSetupClose").addEventListener("click", closeOverlay);
-    document.getElementById("ysNotSetupOpen").addEventListener("click", () => renderSettingsModal());
+    document.getElementById("ysNotSetupOpen").addEventListener("click", () => openSettingsGated());
   }
 
   function renderPasswordModal(slug) {
@@ -202,9 +206,50 @@ window.YSEditor = (function () {
   }
 
   // -----------------------------------------------------------------------
+  // PIN gate — one extra layer in front of Editor Settings (token/password
+  // management). Fixed PIN, checked against a hardcoded hash, not per-device.
+  // -----------------------------------------------------------------------
+  function openSettingsGated() {
+    renderPinModal();
+  }
+
+  function renderPinModal() {
+    const overlay = ensureOverlay();
+    overlay.innerHTML = `
+      <div class="ys-editor-modal ys-editor-modal-sm">
+        <h3>Masukkan PIN</h3>
+        <p class="ys-editor-hint">PIN diperlukan buat buka Pengaturan Editor.</p>
+        <input type="password" id="ysPinInput" class="ys-editor-input ys-editor-input-pin" placeholder="PIN" inputmode="numeric" autocomplete="off" maxlength="12">
+        <p class="ys-editor-error" id="ysPinErr"></p>
+        <div class="ys-editor-actions">
+          <button class="ys-btn ghost" id="ysPinCancel">Batal</button>
+          <button class="ys-btn primary" id="ysPinSubmit">Lanjut</button>
+        </div>
+      </div>
+    `;
+    overlay.classList.add("open");
+    const $pin = document.getElementById("ysPinInput");
+    $pin.focus();
+    const submit = async () => {
+      const hash = await sha256Hex($pin.value || "");
+      if (hash !== SETTINGS_PIN_HASH) {
+        document.getElementById("ysPinErr").textContent = "PIN salah.";
+        $pin.value = "";
+        $pin.focus();
+        return;
+      }
+      renderSettingsModal();
+    };
+    document.getElementById("ysPinSubmit").addEventListener("click", submit);
+    $pin.addEventListener("keydown", (e) => { if (e.key === "Enter") submit(); });
+    document.getElementById("ysPinCancel").addEventListener("click", closeOverlay);
+  }
+
+  // -----------------------------------------------------------------------
   // editor settings (standalone entry — the "Editor" key-icon button in the
   // topbar, always reachable regardless of which page you're on). Also
   // reachable from the "belum di-setup" prompt on the per-page Edit button.
+  // Gated behind the PIN above (openSettingsGated), not opened directly.
   // -----------------------------------------------------------------------
   function renderSettingsModal() {
     const overlay = ensureOverlay();
@@ -295,7 +340,7 @@ window.YSEditor = (function () {
     `;
     document.getElementById("ysEditorCloseErr").addEventListener("click", closeOverlay);
     const $settings = document.getElementById("ysEditorOpenSettingsFromErr");
-    if ($settings) $settings.addEventListener("click", () => renderSettingsModal());
+    if ($settings) $settings.addEventListener("click", () => openSettingsGated());
   }
 
   function renderEditorUI(text) {
@@ -440,7 +485,7 @@ window.YSEditor = (function () {
   }
 
   const $settingsBtn = document.getElementById("editorSettingsToggle");
-  if ($settingsBtn) $settingsBtn.addEventListener("click", () => renderSettingsModal());
+  if ($settingsBtn) $settingsBtn.addEventListener("click", () => openSettingsGated());
 
   return { mount };
 })();
