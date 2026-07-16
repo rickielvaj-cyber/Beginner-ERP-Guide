@@ -345,8 +345,13 @@
       $app.innerHTML = `
         <div class="view">
           <div class="doc-header">
-            <div class="doc-eyebrow">Modul ${idx >= 0 ? idx + 1 : ""} · Catatan Belajar</div>
-            <h1>${escapeHtml(m.title)}</h1>
+            <div class="doc-header-row">
+              <div>
+                <div class="doc-eyebrow">Modul ${idx >= 0 ? idx + 1 : ""} · Catatan Belajar</div>
+                <h1>${escapeHtml(m.title)}</h1>
+              </div>
+              <div class="doc-edit-slot" data-slug="${slug}"></div>
+            </div>
           </div>
           <div class="markdown-body">${html}</div>
           <div class="doc-nav">
@@ -356,6 +361,7 @@
         </div>
       `;
       wireNavClicks();
+      if (window.YSEditor) window.YSEditor.mount();
       if (anchor) {
         requestAnimationFrame(() => {
           const el = document.getElementById(anchor);
@@ -380,8 +386,13 @@
       $app.innerHTML = `
         <div class="view">
           <div class="doc-header">
-            <div class="doc-eyebrow" style="color:${cats.sequencing.color}">${icon("alert", 14)} Referensi Troubleshooting</div>
-            <h1>${escapeHtml(manifest.issueLog.title)}</h1>
+            <div class="doc-header-row">
+              <div>
+                <div class="doc-eyebrow" style="color:${cats.sequencing.color}">${icon("alert", 14)} Referensi Troubleshooting</div>
+                <h1>${escapeHtml(manifest.issueLog.title)}</h1>
+              </div>
+              <div class="doc-edit-slot" data-slug="${manifest.issueLog.slug}"></div>
+            </div>
           </div>
           <div class="issue-filter-bar">
             <div class="issue-chip ${!activeCat ? "active" : ""}" data-cat="" style="${!activeCat ? "background:#1f2937;border-color:#1f2937" : ""}">Semua</div>
@@ -395,6 +406,7 @@
       wireNavClicks();
       decorateIssueCards();
       applyIssueFilter(activeCat);
+      if (window.YSEditor) window.YSEditor.mount();
 
       $app.querySelectorAll(".issue-chip").forEach((chip) => {
         chip.addEventListener("click", () => {
@@ -759,4 +771,17 @@
     console.error(err);
     $app.innerHTML = `<div class="view"><h1>Gagal memuat situs</h1><p>${escapeHtml(err.message || String(err))}</p></div>`;
   });
+
+  // Exposed so editor.js can reuse the exact same markdown rendering (live preview)
+  // and reload a module's content right after a save, without a full page reload.
+  window.YSApp = {
+    renderMarkdown,
+    CONTENT_DIR,
+    escapeHtml,
+    get manifest() { return manifest; },
+    invalidateCache(slug) { mdCache.delete(slug); },
+    setCachedContent(slug, text) { mdCache.set(slug, text); },
+    resetSearchIndex() { searchIndex = null; searchIndexPromise = null; },
+    reroute() { route(); },
+  };
 })();
