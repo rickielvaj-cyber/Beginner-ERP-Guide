@@ -8,7 +8,7 @@ After approve sales quotation, kita harus lanjut validate, validate, after valid
 
 Note: Jika GL tidak terposting itu bisa saja bermasalah di bagian Cost Area, karna dari warehouse kita belum dimapping ke Cost Area, jadinya system bingung apa yang mau di posting
 
-1. Sales Order
+2. Sales Order
 
 ![sales screenshot 2](images/sales/sales-002.png)
 
@@ -16,13 +16,13 @@ Note: Jika GL tidak terposting itu bisa saja bermasalah di bagian Cost Area, kar
 
 Core dari semuanya, dari sini kita bisa lihat sales order kita sudah ditahap mana. Kalau ada problem dll, bisa cek mulai dari sales order dan track Document Flow-nya.
 
-1. Sales Return
+3. Sales Return
 
 ![sales screenshot 4](images/sales/sales-004.png)
 
 Sales Return bisa mulai di-Generate dari Sales Order, pengisian harus minus, flow approval sama seperti Sales Order normal yang sampai ke tahapa Sales Invoice.
 
-1. Sales Service
+4. Sales Service
 
 ![sales screenshot 5](images/sales/sales-005.png)
 
@@ -36,7 +36,7 @@ Sama seperti Sales Order biasanya, Cuma yang ini tidak perlu issue dan receipt, 
 
 Ini laporan yang nge-track eksekusi Sales Order per baris produk — bandingin Order Quantity/Amount vs Shipment Quantity/Amount vs Invoiced Quantity, jadi kita bisa lihat progress satu SO dari order → kirim → invoice. Fungsinya: buat monitoring gap antara apa yang di-order, apa yang sudah dikirim, dan apa yang sudah di-invoice.
 
-1. **Shipment Statitstics**
+2. **Shipment Statitstics**
 
 ![sales screenshot 7](images/sales/sales-007.png)
 

@@ -9,38 +9,38 @@ Inget dulu bedanya sama Inventory Management: yang di-track di sini bukan QUANTI
 Dipakai buat purchase inbound, self-made inbound, dan inbound lainnya — kalau harga inbound nggak dispesifikasi manual, sistem ambil harga otomatis pakai scheme ini.
 **Catatan penting:** Purchase inbound (PO) sebenernya ambil harga dari **Purchasing Parameters**, BUKAN dari Inventory Parameters ini. Jadi parameter ini cuma berlaku buat inbound non-purchase (self-made/lainnya).
 
-1. **Issue Doc Price Retrieval Scheme**
+2. **Issue Doc Price Retrieval Scheme**
 
 ![inventory-accounting screenshot 2](images/inventory-accounting/inventory-accounting-002.png)
 
 Harus enable "auto pricing" dulu di Inventory Parameters baru fitur ini jalan. Red-letter outbound (return/reversal) dan outbound normal dikelola pakai scheme yang sama.
 Default urutan ambil harga: **Last Outbound Cost → Recent Period Balance → Price List Reference → Last Inbound Cost** — bisa pilih beberapa dan diurutin prioritasnya.
 
-1. Negative Issue Doc Price Scheme
+3. Negative Issue Doc Price Scheme
 
 *Catatan: bukan parameter terpisah — digabung/dikelola bareng Issue Doc Price Retrieval Scheme (item #2 di atas). Red-letter (return/reversal) outbound pakai scheme yang sama dengan outbound normal, nggak ada config sendiri.*
 
-1. **Processing of Abnormal Bal (the Qty is positive and the Amt is 0)**
+4. **Processing of Abnormal Bal (the Qty is positive and the Amt is 0)**
 
 ![inventory-accounting screenshot 3](images/inventory-accounting/inventory-accounting-003.png)
 
 Ada stok fisik, tapi nilai buku = 0. Penyebab: biaya masuk (inbound cost) nggak ke-aggregate dengan benar, atau ada anomali di perhitungan cost.
 
-1. **Processing of Abnormal Bal (the Qty is positive and the Amt is negative)**
+5. **Processing of Abnormal Bal (the Qty is positive and the Amt is negative)**
 
 ![inventory-accounting screenshot 4](images/inventory-accounting/inventory-accounting-004.png)
 
 Ada stok fisik, tapi nilai buku minus.
 Bukan soal urutan transaksi kebalik, tapi **biaya outbound (keluar) lebih tinggi dari biaya inbound (masuk)**. Jadi pas barang keluar, sistem ngitung cost yang harus dikurangin dari saldo lebih besar dari apa yang sebenernya ada di saldo — hasilnya saldo jebol ke minus.
 
-1. **Abnormal Bal (Qty is zero and Amt is not zero) Processing**
+6. **Abnormal Bal (Qty is zero and Amt is not zero) Processing**
 
 ![inventory-accounting screenshot 5](images/inventory-accounting/inventory-accounting-005.png)
 
 Fisik udah habis (qty 0), tapi masih ada sisa nilai nyangkut (misal akhir bulan qty 0 tapi amount masih Rp 50).
 bukan cuma soal rounding, tapi lebih umum: **outbound nggak sepenuhnya nge-offset/ngurangin cost dari inbound**. Jadi ada sisa nilai yang "ketinggalan" karena proses pengurangan biaya nggak tuntas pas barang keluar.
 
-1. **Est. Processing Method**
+7. **Est. Processing Method**
 
 ![inventory-accounting screenshot 6](images/inventory-accounting/inventory-accounting-006.png)
 
@@ -55,7 +55,7 @@ Ngatur cara sistem handle **selisih harga** antara barang yang udah masuk gudang
 
 Hasil akhir sama, tapi jejaknya di sistem beda — Adjust lebih ringkas, Reverse & Rebook lebih jelas histori-nya.
 
-1. **Cost Area Creation Type**
+8. **Cost Area Creation Type**
 
 ![inventory-accounting screenshot 7](images/inventory-accounting/inventory-accounting-007.png)
 
@@ -65,8 +65,8 @@ Hasil akhir sama, tapi jejaknya di sistem beda — Adjust lebih ringkas, Reverse
 2. Per inventory organization (misal multi-pabrik)
 3. Per warehouse (misal per lini produk)
 4. Per inventory org + warehouse (paling detail — misal gudang bahan baku & gudang barang jadi beda pabrik)
-1. **Price Scheme of Adj Doc Generated Upon Abnormal Bal**
-2. **Apportion Basis of Abnormal Balance Booked to Gain/Loss**
+9. **Price Scheme of Adj Doc Generated Upon Abnormal Bal**
+10. **Apportion Basis of Abnormal Balance Booked to Gain/Loss**
 
 ![inventory-accounting screenshot 8](images/inventory-accounting/inventory-accounting-008.png)
 
@@ -76,7 +76,7 @@ Pakai aturan bawaan sistem — kemungkinan ini yang narik dari node "Outbound Ad
 Alokasi selisihnya dipecah berdasarkan kombinasi 2 dimensi: jenis transaksi akuntansi + department. Jadi kalau abnormal balance-nya nyangkut beberapa department, sistem bagi proporsional berdasarkan kombinasi itu.
 - **Accounting Transaction Type + Department + Customer**
 Sama kayak di atas, tapi lebih detail — nambah dimensi customer juga. Jadi alokasinya makin granular, bisa ketauan abnormal balance-nya "milik" customer mana.
-1. **Re-calculate Cost at Month-end**
+11. **Re-calculate Cost at Month-end**
 
 ![inventory-accounting screenshot 9](images/inventory-accounting/inventory-accounting-009.png)
 
@@ -84,7 +84,7 @@ Sama kayak di atas, tapi lebih detail — nambah dimensi customer juga. Jadi alo
 
 **No:** cuma hitung cost buat data periode berjalan yang belum dihitung.
 
-1. **Data Processing Method after Closing Account Period**
+12. **Data Processing Method after Closing Account Period**
 
 ![inventory-accounting screenshot 10](images/inventory-accounting/inventory-accounting-010.png)
 

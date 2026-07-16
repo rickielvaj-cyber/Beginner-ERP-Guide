@@ -7,33 +7,33 @@ Auto create/relate the user when a user is enabled (Yes/No)**
 
 Fungsinya untuk setiap kali ada pendaftaran employee/karyawan baru, maka user akan otomatis dibikin.
 
-1. **商家商品是否需平台方审核 (TIDAK ADA)
+2. **商家商品是否需平台方审核 (TIDAK ADA)
 Merchant products require platform approval**
 
 Sistem Izin supplier/seller ke user Tenant untuk upload product ke sistem
 
-1. **浮动换算基准（通常以“数量为准“。）
+3. **浮动换算基准（通常以“数量为准“。）
 Floating Conv. Basis (Usually "quantity based ")**
 
 ![digital-modeling screenshot 2](images/digital-modeling/digital-modeling-002.png)
 
 Menghitung suatu jumlah menggunakan format quantity based (pcs).
 
-1. **换算率精度
+4. **换算率精度
 CR Precision**
 
 ![digital-modeling screenshot 3](images/digital-modeling/digital-modeling-003.png)
 
 Angka Decimal (setelah koma) yang ingin ditampilkan supaya data angka yang diberikan bisa lebih presisi
 
-1. **显示物料图片 （是与否）
+5. **显示物料图片 （是与否）
 Display Matl Picture(Yes/No)**
 
 ![digital-modeling screenshot 4](images/digital-modeling/digital-modeling-004.png)
 
 Mengizinkan meng-upload gambar suatu produk/jasa
 
-1. **仓库组织关系 （不控制，服务单一组织，服务多组织）
+6. **仓库组织关系 （不控制，服务单一组织，服务多组织）
 Warehouse Org Relationship (No control, single service organization, multi-organization service)**
 
 ![digital-modeling screenshot 5](images/digital-modeling/digital-modeling-005.png)
@@ -41,42 +41,42 @@ Warehouse Org Relationship (No control, single service organization, multi-organ
 - **No Control :** Organisasi mana saja bebas akses sistem warehouse (1 untuk semua)
 - **Single service org:** 1 warehouse Cuma bisa diakses 1 entitas
 - **Multi org service :**  1 warehouse bisa multiientitas (lebih dari 1 user atau org yang akses)
-1. **启用允销控制 （启用与停用）
+7. **启用允销控制 （启用与停用）
 Enable Allowed Sales Control**
 
 ![digital-modeling screenshot 6](images/digital-modeling/digital-modeling-006.png)
 
 Izin mengkatifkan barang/jasa boleh dijual atau tidak boleh dijual.
 
-1. **允许对当前用户授权（是与否）
+8. **允许对当前用户授权（是与否）
 Allow to authorize the current user(Yes/No)**
 
 ![digital-modeling screenshot 7](images/digital-modeling/digital-modeling-007.png)
 
 - **Yes :** Punya hak untuk membuka atau menambah akses ke user sendiri.
 - **No :** Tidak bisa, hanya admin user yang dipilih saja bisa membuka akses
-1. **允许组织管理员管理企业账号级角色（是与否）
+9. **允许组织管理员管理企业账号级角色（是与否）
 Allow the Org administrator to manage enterprise account-level roles(Yes/No)**
 
 ![digital-modeling screenshot 8](images/digital-modeling/digital-modeling-008.png)
 
 - **Yes :** Organisasi terkait hanya boleh me-manage struktur dibawah mereka (tidak ke Organisasi lain)
 - **No :** Tidak ada batasan untuk bisa manage hingga ke organisasi lain
-1. **部门维护受组织权限控制（是与否）
+10. **部门维护受组织权限控制（是与否）
 Dept maintenance controlled by Org permission(Yes/No)**
 
 ![digital-modeling screenshot 9](images/digital-modeling/digital-modeling-009.png)
 
 - **Yes :** Department terkait hanya bisa me-manage struktur dibawah mereka (tidak ke Department lain)
 - **No :** Tidak ada batasan untuk bisa me-manage hingga ke Department lain
-1. **允许组织管理员管理企业账号级角色（是与否）
+11. **允许组织管理员管理企业账号级角色（是与否）
 Allow the Org administrator to manage enterprise account-level roles(Yes/No)**
 
 ![digital-modeling screenshot 10](images/digital-modeling/digital-modeling-010.png)
 
 Memberi izin kepada Admin Organisasi yang dipilih untuk me-manage akses system Enterprise Account (High level).
 
-1. **角色管理受用户权限控制（是与否）
+12. **角色管理受用户权限控制（是与否）
 Role management is subject to user permissions(Yes/No)**
 
 ![digital-modeling screenshot 11](images/digital-modeling/digital-modeling-011.png)
@@ -85,7 +85,7 @@ Role management is subject to user permissions(Yes/No)**
 
 **No :** Tidak ada Batasan.
 
-1. **是否启用权限授权管控（不启用/ 启用组织管理员）
+13. **是否启用权限授权管控（不启用/ 启用组织管理员）
 Whether to enable authority authorization control**
 
 ![digital-modeling screenshot 12](images/digital-modeling/digital-modeling-012.png)
@@ -94,21 +94,21 @@ Whether to enable authority authorization control**
 
 **Disable:** Tidak diizinkan sama sekali
 
-1. **使用组织物料的启用/停用状态受管理组织控制**
+14. **使用组织物料的启用/停用状态受管理组织控制**
 - **The enabling status of Org-level Materials is controlled by Management Organization**
 
 ![digital-modeling screenshot 13](images/digital-modeling/digital-modeling-013.png)
 
 **Yes :** Hanya Organisasi Management saja yg bisa mengontrol status Level Material dari suatu organisasi.
 
-1. **是否支持设置组织默认地址**
+15. **是否支持设置组织默认地址**
 - **Supports setting the default Org address**
 
 ![digital-modeling screenshot 14](images/digital-modeling/digital-modeling-014.png)
 
 - **Yes :** Alamat akan terinput secara default ketika ada suatu pengajuan atau workflow (alamat sesuai dengan business unit yang didaftarkan)
 - **No :** Alamat tidak terinput secara default
-1. **导入模板中是否展示多个语种**
+16. **导入模板中是否展示多个语种**
 - **Display multiple languages in import template**
 
 ![digital-modeling screenshot 15](images/digital-modeling/digital-modeling-015.png)
@@ -136,7 +136,7 @@ Menginput, edit, enable/disable, delete region tiap sales untuk  kebutuhan penga
 
 Tau cara setting, tidak tau fungsinya utk client apa (issue)
 
-1. **Country/Region**
+2. **Country/Region**
 
 ![digital-modeling screenshot 19](images/digital-modeling/digital-modeling-019.png)
 
@@ -154,14 +154,14 @@ Tau cara setting, tidak tau fungsinya utk client apa (issue)
 
 Menambah jenis fiat dari berbagai mata uang negara.
 
-1. **Exchange Rate Type**
+2. **Exchange Rate Type**
 
 ![digital-modeling screenshot 22](images/digital-modeling/digital-modeling-022.png)
 
 Untuk memasukan **Tipe Rate** mana yang mau menjadi patokan untuk pembayaran.
 Opsi "Benchmark exchange rate" hanya bisa konek ke bank China untuk update rate secara otomatis (hanya tersedia versi China).
 
-1. **Exchange Rate**
+3. **Exchange Rate**
 
 ![digital-modeling screenshot 23](images/digital-modeling/digital-modeling-023.png)
 
@@ -176,7 +176,7 @@ Multi-organization model enabled**
 
 **(HANYA BISA DIAKTIFKAN SEKALI, LANGGANAN BERBEDA)—** untuk perusahaan yang punya cabang/anak Perusahaan. Untuk Perusahaan hanya single entity tidak perlu membuka fitur ini.
 
-1. **新增业务单元 （公司，分公司，事业部，办事处，工厂，其它组织）
+2. **新增业务单元 （公司，分公司，事业部，办事处，工厂，其它组织）
 Add new Business Unit (Company,Factory ,Branch ,Office, Business Unit ,Other Org)**
 
 ![digital-modeling screenshot 25](images/digital-modeling/digital-modeling-025.png)
@@ -185,14 +185,14 @@ Add new Business Unit (Company,Factory ,Branch ,Office, Business Unit ,Other Org
 
 Pembuatan Business Unit baru hingga edit, enable/disable dan settings.
 
-1. **Department
+3. **Department
 部门**
 
 ![digital-modeling screenshot 27](images/digital-modeling/digital-modeling-027.png)
 
 Setelah pembuatan **Businesss Unit** bisa dilanjutkan untuk pembuatan **Department** under Business Unit. **New Sibling** untuk bikin Department baru dan **New Child** untuk organisasi/tim dibawah dari Department.
 
-1. **Organization Status (Organization Chart)**
+4. **Organization Status (Organization Chart)**
 
 ![digital-modeling screenshot 28](images/digital-modeling/digital-modeling-028.png)
 
@@ -200,7 +200,7 @@ Melihat struktur oraganisasi yang telah dibuat, jika ingin ditampilkan secara vi
 
 ![digital-modeling screenshot 29](images/digital-modeling/digital-modeling-029.png)
 
-1. **职能共享设置 
+5. **职能共享设置 
 Function Sharing Setting**
 
 ![digital-modeling screenshot 30](images/digital-modeling/digital-modeling-030.png)
@@ -219,7 +219,7 @@ Tapi dari organisasi B **tidak punya akses Finance Cloud**, dari Organisasi A **
 
 Mendelegasikan pekerjaan purchasing dari organisasi ke organisasi lain, namun secara record tetap tercatat menjadi kepemilikian dari **Requesting Organization**.
 
-1. **销售委托关系**
+2. **销售委托关系**
 - **Sales Delegation**
 
 ![digital-modeling screenshot 32](images/digital-modeling/digital-modeling-032.png)
@@ -261,7 +261,7 @@ Note untuk bagian employee: Saat pembuatan Employee pastikan switch “Operator�
 
 Tempat pembuatan Role baru dan menambahkan akses kedalam role tersebut, hingga enable/disable dan delete. Note: biasanya role dipakai untuk membuat suatu akses untuk admin atau user.
 
-1. **角色组**
+2. **角色组**
 - **Role Group**
 
 ![digital-modeling screenshot 37](images/digital-modeling/digital-modeling-037.png)
@@ -279,14 +279,14 @@ Tau fungsi, belum ngerti logic nya (issue)
 
 Hanya yang punya akses akun Enterprise saja yang bisa melakukan edit, karena ini termasuk otoritas paling tinggi bukan di Organization Level.
 
-1. **授权**
+2. **授权**
 - **Authorization**
 
 ![digital-modeling screenshot 39](images/digital-modeling/digital-modeling-039.png)
 
 **Key Point:** Tempat untuk menyambungkan atau mengaitkan suatu role kepada user, supaya user bisa melakukan akses ke cloud atau fitur yang telah di-set di dalam role tersebut.
 
-1. **全员授权**
+3. **全员授权**
 - **Global App Authorization**
 
 ![digital-modeling screenshot 40](images/digital-modeling/digital-modeling-040.png)
@@ -295,7 +295,7 @@ Penggunaan akses Global Application Authorization hanya khusus untuk pengguna Ak
 
 Tau fungsi, belum ngerti cara pakai (issue)
 
-1. **数据权限**
+4. **数据权限**
 - **Data Permission**
 
 ![digital-modeling screenshot 41](images/digital-modeling/digital-modeling-041.png)
@@ -313,7 +313,7 @@ contoh: seorang sales boleh diberi akses melihat data Sales Order. (cmiiw) (issu
 
 Memberi akses pada suatu organisasi untuk melakukan akses input data ke dalam master data (terdapat berbagai jenis modul).
 
-1. **会计期间方案**
+2. **会计期间方案**
 - **Fiscal Period Scheme**
 
 ![digital-modeling screenshot 43](images/digital-modeling/digital-modeling-043.png)
@@ -324,7 +324,7 @@ Template/struktur periode akuntansi. Dibuat sekali di awal setup.
 
 Mendefinisikan: Period Type (Monthly, Weekly, dsb) dan Jumlah Fiscal Periods, Quarters, Half Years per tahun.
 
-1. **会计期间**
+3. **会计期间**
 - **Fiscal Period**
 
 ![digital-modeling screenshot 44](images/digital-modeling/digital-modeling-044.png)
@@ -333,35 +333,35 @@ Realisasi aktual per tahun berdasarkan scheme. Sistem otomatis generate periode-
 
 **Flow :** Fiscal Period Scheme (setup sekali) > Fiscal Period per tahun (dibuat bertahap, minimal tahun berjalan)  > Add new tiap kali pergantian tahun.
 
-1. **银行类别**
+4. **银行类别**
 - **Bank Category**
 
 ![digital-modeling screenshot 45](images/digital-modeling/digital-modeling-045.png)
 
 Penambahan Kategori Jenis Bank ke dalam system. (Enable/Disable, Add, Delete)
 
-1. **银行网点**
+5. **银行网点**
 - **Bank Branch**
 
 ![digital-modeling screenshot 46](images/digital-modeling/digital-modeling-046.png)
 
 Penambahan cabang dari bank, berhubungan setelah penambahan jenis/kategori bank sebelumnya. (Enable/Disable, Add, Delete)
 
-1. **税目税率**
+6. **税目税率**
 - **Tax Item and Tax Rate**
 - **Menu “Withholding Tax Calculation”**
 
 ![digital-modeling screenshot 47](images/digital-modeling/digital-modeling-047.png)
 
 - **(no clue) (issue)**
-1. **结算方式**
+7. **结算方式**
 - **Payment Method**
 
 ![digital-modeling screenshot 48](images/digital-modeling/digital-modeling-048.png)
 
 Menambahkan jenis metode pembayaran, biasanya kebutuhan purchasing atau sales. (Enable/Disable, Add, Delete)
 
-1. **款项类型
+8. **款项类型
 Payment Type**
 
 ![digital-modeling screenshot 49](images/digital-modeling/digital-modeling-049.png)
@@ -370,7 +370,7 @@ Pembuatan tipe/kategori pembelian atau pembayaran, apakah biaya penanganan, pemb
 
 (Enable/Disable, Add, Delete)
 
-1. **收款协议**
+9. **收款协议**
 - **Collection Agreement**
 
 ![digital-modeling screenshot 50](images/digital-modeling/digital-modeling-050.png)
@@ -393,7 +393,7 @@ Settingan kapan sistem mulai **"mengontrol"** atau **membatasi** transaksi kalau
 - **Shipping Document** → diblokir saat mau kirim barang
 - **Issue Document** → diblokir saat dokumen pengeluaran dibuat
 - **Sales Invoice** → diblokir saat mau buat invoice
-1. **收款起算时点
+10. **收款起算时点
 Coll. Start Time**
 
 ![digital-modeling screenshot 53](images/digital-modeling/digital-modeling-053.png)
@@ -414,7 +414,7 @@ Pilihan yang sering dipakai.
 - **Invoice Approval Date** → dihitung dari tanggal invoice di-approve (lebih ketat)
 - **Order Doc Date** → dihitung dari tanggal SO dibuat (jarang, tapi ada)
 - **Shipment Approval Date** → dihitung dari tanggal barang confirmed dikirim
-1. **付款协议
+11. **付款协议
 Payment Agreement**
 
 ![digital-modeling screenshot 54](images/digital-modeling/digital-modeling-054.png)
@@ -423,7 +423,7 @@ Pembuatan template syarat/skema pembayaran yang disepakati dengan customer/suppl
 
 (Enable/Disable, Add, Delete)
 
-1. **付款起算时点
+12. **付款起算时点
 Payment Start Time**
 
 ![digital-modeling screenshot 55](images/digital-modeling/digital-modeling-055.png)
@@ -454,7 +454,7 @@ Pembuatan kategori tipe material untuk kebutuhan purchasing.
 
 (Enable/Disable, Add, Delete)
 
-1. **计量单位**
+2. **计量单位**
 - **UOM**
 
 ![digital-modeling screenshot 57](images/digital-modeling/digital-modeling-057.png)
@@ -467,7 +467,7 @@ PCS    → Basic Unit = Yes  → 1 PCS = 1 PCS      (patokan)
 
 Box10  → Basic Unit = No   → 1 Box10 = 10 PCS   (1 box isi 10 pcs)
 
-1. **物料创建**
+3. **物料创建**
 - **Material Creation**
 
 ![digital-modeling screenshot 58](images/digital-modeling/digital-modeling-058.png)
@@ -478,7 +478,7 @@ Tempat mendaftarkan semua barang, jasa, atau material yang akan dipakai ke dalam
 
 Pada bagian Material creation ada kotak “Self Produced” ini yang berkorelasi dengan Product Receipt (Produk yang kita terima melalui produksi kita sendiri), jika tidak mencentang “Self produced”, maka Ketika menginput material pada menu product receipt, tidak ada akan material yang muncul pada menu.
 
-1. **物料模版**
+4. **物料模版**
 - **Material Template**
 
 ![digital-modeling screenshot 60](images/digital-modeling/digital-modeling-060.png)
@@ -559,7 +559,7 @@ Pembuatan Jenis/Kategori Customer, tujuan untuk pembagian customer.
 
 (Enable/Disable, Add, Delete)
 
-1. **客户级别**
+2. **客户级别**
 - **Customer Grade**
 
 ![digital-modeling screenshot 64](images/digital-modeling/digital-modeling-064.png)
@@ -568,7 +568,7 @@ Pembuatan Grade atau prioritas dari suatu Customer, tujuan untuk pembagian custo
 
 (Enable/Disable, Add, Delete)
 
-1. **客户行业**
+3. **客户行业**
 - **Customer's Industry**
 
 ![digital-modeling screenshot 65](images/digital-modeling/digital-modeling-065.png)
@@ -577,16 +577,16 @@ Pembuatan Jenis/Kategori Industri Customers
 
 (Enable/Disable, Add, Delete)
 
-1. **客户档案**
+4. **客户档案**
 - **Customer File**
 
 ![digital-modeling screenshot 66](images/digital-modeling/digital-modeling-066.png)
 
 **Database resmi semua customer** perusahaan di sistem. Sebelum bisa bikin Sales Order, Invoice, atau transaksi apapun ke customer, customer wajib terdaftar dulu ke customer file system perusahaan, supaya bisa diinput kedalam invoice atau order.
 
-1. **客户属性**
+5. **客户属性**
 - **Customer Property** (Tidak ada di settings) (issue)
-2. **供应商分类**
+6. **供应商分类**
 - **Supplier Category**
 
 ![digital-modeling screenshot 67](images/digital-modeling/digital-modeling-067.png)
@@ -606,7 +606,7 @@ Database atau informasi setiap supplier yang terdaftar di dalam sistem, sama sep
 
 (Enable/Disable, Add, Delete)
 
-1. **供应商属性**
+2. **供应商属性**
 - **Supplier Property** (Tidak ada di settings) (issue)
 
 ## Project
@@ -618,7 +618,7 @@ Database atau informasi setiap supplier yang terdaftar di dalam sistem, sama sep
 
 Pengkategorian project, berguna untuk pembagian, kategori atau level suatu project yang akan dijalankan
 
-1. **项目**
+2. **项目**
 - **Project**
 
 ![digital-modeling screenshot 70](images/digital-modeling/digital-modeling-070.png)
@@ -648,7 +648,7 @@ Pendaftaran nama gudang kepunyaan organisasi ke dalam sistem (Enable/Disable, Ad
 
 **Stock-Level-by-Storage-Bin** → sistem tracking jumlah stok per bin secara individual. Kalau Yes, lo bisa lihat berapa qty barang di tiap bin secara real-time, bukan cuma total gudang.
 
-1. **货位**
+2. **货位**
 - **Storage Bin**
 
 ![digital-modeling screenshot 73](images/digital-modeling/digital-modeling-073.png)
@@ -657,7 +657,7 @@ Pendaftaran nama gudang kepunyaan organisasi ke dalam sistem (Enable/Disable, Ad
 
 Contoh: Gudang A – Rak 001 (baju)
 
-1. **货位物料对照**
+3. **货位物料对照**
 - **Storage Bin Material Cross**
 
 **Mendedikasikan suatu storage bin** tertentu untuk material spesifik tertentu secara **permanen**.
@@ -666,7 +666,7 @@ Contoh: Gudang A – Rak 001 (baju)
 
 Contoh Gudang A -- Rak 1A (Raw Material).
 
-1. **发运方式**
+4. **发运方式**
 - **Shipping Method**
 
 ![digital-modeling screenshot 75](images/digital-modeling/digital-modeling-075.png)
@@ -685,19 +685,19 @@ Penambahan jenis pengiriman ke dalam system.
 
 Kantong dana utama perusahaan. Ini "rekening induk" yang nampung total duit internal yang dimiliki perusahaan. Dari sini lo bisa lihat berapa total dana yang tersedia.
 
-1. **Enterprise Cash Account**
+3. **Enterprise Cash Account**
 
 ![digital-modeling screenshot 77](images/digital-modeling/digital-modeling-077.png)
 
 Rekening kas operasional yang lebih kecil & spesifik. Contoh: petty cash, kas per department. Bisa di-assign ke divisi atau proyek tertentu. Ini "kantong-kantong kecil" yang diambil dari kantong induk.
 
-1. **Account Purpose**
+4. **Account Purpose**
 
 ![digital-modeling screenshot 78](images/digital-modeling/digital-modeling-078.png)
 
 Penanda tujuan tiap akun dipakai buat apa. Fungsinya biar duit ga kepake sembarangan — tiap akun jelas peruntukannya.
 
-1. **企业现金账户**
+5. **企业现金账户**
 - **Cash Account**
 
 ![digital-modeling screenshot 79](images/digital-modeling/digital-modeling-079.png)
@@ -715,7 +715,7 @@ Penambahan jenis atau kategori beban/biaya yang dikeluarkan oleh perusahaan.
 
 (Enable/Disable, Add, Delete)
 
-1. **费用项目**
+2. **费用项目**
 - **Expense Item**
 
 ![digital-modeling screenshot 81](images/digital-modeling/digital-modeling-081.png)
@@ -733,7 +733,7 @@ Contoh: Kategori “Pajak” – PPH 21, PPHb dll
 
 Fixed User Defined Field yang menjadi permanen dan wajib ada contoh pada bagian No, code, nama. (penambahan suatu menu atau list pada User Defined)
 
-1. **自定义项设置**
+2. **自定义项设置**
 - **User-defined File Setting**
 
 ![digital-modeling screenshot 83](images/digital-modeling/digital-modeling-083.png)
@@ -762,7 +762,7 @@ Tampilan arsitektur sistem — user bisa lihat struktur data di balik setiap mod
 
 Tau fungsi, tapi tidak tau logic (issue)
 
-1. **流程调度**
+2. **流程调度**
 - **Workflow Process Scheduling**
 
 ![digital-modeling screenshot 86](images/digital-modeling/digital-modeling-086.png)
@@ -779,7 +779,7 @@ Fungsinya utk monitoring Workflow request yang sudah pernah diajukan.
 
 Aturan yang menentukan bagaimana satu dokumen bisa otomatis menghasilkan dokumen berikutnya dalam alur transaksi. Document Conversion Rules = aturan yang mendefinisikan push down itu. **Arrival > Receipt**
 
-1. **业务流设置**
+2. **业务流设置**
 - **Business Process Design**
 
 ![digital-modeling screenshot 88](images/digital-modeling/digital-modeling-088.png)
@@ -808,7 +808,7 @@ Jika Workflow Design adalah urutan untuk suatu approval, maka Business Process A
 
 Tau fungsi, masih butuh latihan untuk menggunakan ini (issue)
 
-1. **打印模版**
+2. **打印模版**
 - **Print Template**
 
 ![digital-modeling screenshot 91](images/digital-modeling/digital-modeling-091.png)
@@ -861,7 +861,7 @@ Digunakan untuk men-customize menu dan men-enable/disable menu yang ada pada sys
 
 **Tau fungsinya belum ngerti cara pakai (issue)**
 
-1. **移动门户设计**
+2. **移动门户设计**
 - **Mobile Portable Design/ Mobile Portal Design**
 
 ![digital-modeling screenshot 97](images/digital-modeling/digital-modeling-097.png)
@@ -870,7 +870,7 @@ Digunakan untuk Mendesign UI dari aplikasi mobile Yonyou
 
 **Tau fungsinya belum ngerti cara pakai (issue)**
 
-1. **移动应用排序**
+3. **移动应用排序**
 - **Homepage Sorting** (Tidak ada di settings) (issue)
 
 ## Catatan Tambahan Digital Parameter Training Video by Osel
@@ -881,10 +881,10 @@ Digunakan untuk Mendesign UI dari aplikasi mobile Yonyou
 
 Tempat menyimpan informasi client/customer. Logo perusahaan juga bisa diedit di sini.
 
-1. **Alur Setup Dasar (Flow Penting)**
+2. **Alur Setup Dasar (Flow Penting)**
 - Bikin Business Unit → Bikin Department → Bikin User → Bikin Employee
 - → Bikin Role → Hubungkan Role dengan Employee dengan Authorization
-2. **Parameter Setting — Level Pengaturan**
+3. **Parameter Setting — Level Pengaturan**
 
 | Level | Cakupan |
 | --- | --- |
@@ -963,26 +963,26 @@ Tempat menyimpan informasi client/customer. Logo perusahaan juga bisa diedit di 
 
 ![digital-modeling screenshot 114](images/digital-modeling/digital-modeling-114.png)
 
-1. **Uniqueness Rules** — pengecekan data duplikat. Semakin banyak layer kategori, makin detail. Contoh: cek by nama + negara + code = 3 layer. Kalau cuma 1 layer (nama saja), berisiko false-duplicate (nama sama tapi negara/code beda dianggap sama). Paling sering kena: nama customer, supplier, material.
+2. **Uniqueness Rules** — pengecekan data duplikat. Semakin banyak layer kategori, makin detail. Contoh: cek by nama + negara + code = 3 layer. Kalau cuma 1 layer (nama saja), berisiko false-duplicate (nama sama tapi negara/code beda dianggap sama). Paling sering kena: nama customer, supplier, material.
 
 ![digital-modeling screenshot 115](images/digital-modeling/digital-modeling-115.png)
 
 Catatan: Kalau sistem Yonyou ada update, workflow yang sudah dibuat **tidak akan hilang**
 
-1. **Currencies** — bisa atur precision (biasanya 0–2 digit, tergantung nilai mata uang). Catatan: kalau precision sudah dinaikkan, **tidak bisa diturunkan lagi**
+3. **Currencies** — bisa atur precision (biasanya 0–2 digit, tergantung nilai mata uang). Catatan: kalau precision sudah dinaikkan, **tidak bisa diturunkan lagi**
 
 ![digital-modeling screenshot 116](images/digital-modeling/digital-modeling-116.png)
 
-1. **Exchange Rate Type** — untuk memasukan Tipe Rate mana yang mau menjadi patokan.
+4. **Exchange Rate Type** — untuk memasukan Tipe Rate mana yang mau menjadi patokan.
 Opsi "Benchmark exchange rate" bisa konek ke bank China untuk update rate otomatis (hanya tersedia versi China)
 
 ![digital-modeling screenshot 117](images/digital-modeling/digital-modeling-117.png)
 
-1. **Exchange Rate** — input rate fiat ke dalam Exchange Rate Type yang sudah dibuat. Kolom "indirect exchange" diisi rate fiat yang mau ditampilkan. Rate ini berubah-ubah, sebaiknya rutin di-maintain
+5. **Exchange Rate** — input rate fiat ke dalam Exchange Rate Type yang sudah dibuat. Kolom "indirect exchange" diisi rate fiat yang mau ditampilkan. Rate ini berubah-ubah, sebaiknya rutin di-maintain
 
 ![digital-modeling screenshot 118](images/digital-modeling/digital-modeling-118.png)
 
-1. **User Defined File Setting** — maintain custom field, bentuknya seperti kategori/koleksi Contoh: RAM dengan berbagai kapasitas→ bisa add size baru **Flow:**
+6. **User Defined File Setting** — maintain custom field, bentuknya seperti kategori/koleksi Contoh: RAM dengan berbagai kapasitas→ bisa add size baru **Flow:**
   - Add new di **User Defined File Setting**
 
 ![digital-modeling screenshot 119](images/digital-modeling/digital-modeling-119.png)
@@ -1004,11 +1004,11 @@ Opsi "Benchmark exchange rate" bisa konek ke bank China untuk update rate otomat
 
 ![digital-modeling screenshot 123](images/digital-modeling/digital-modeling-123.png)
 
-1. **Transaction Type** — membedakan UI/data antar jenis transaksi. Contoh: saat import, ada beberapa jenis data — UI dan proses import bisa dibedakan (mana yang lokal, mana yang bukan). Bikin tipe transaksi untuk bikin pembeda tiap jenis transaksi. Semuanya ud by default, tpi tergantung case kemungkinan bisa ditambahin atau custom. - (Tau fungsi, belum mengerti logic) (issue)
+7. **Transaction Type** — membedakan UI/data antar jenis transaksi. Contoh: saat import, ada beberapa jenis data — UI dan proses import bisa dibedakan (mana yang lokal, mana yang bukan). Bikin tipe transaksi untuk bikin pembeda tiap jenis transaksi. Semuanya ud by default, tpi tergantung case kemungkinan bisa ditambahin atau custom. - (Tau fungsi, belum mengerti logic) (issue)
 
 ![digital-modeling screenshot 124](images/digital-modeling/digital-modeling-124.png)
 
-2. **Coding Rules** — aturan penomoran otomatis transaksi (PO, Material, dll) Exp: PO-20261106-0001
+8. **Coding Rules** — aturan penomoran otomatis transaksi (PO, Material, dll) Exp: PO-20261106-0001
   - Tambah jenis penomoran baru: pilih field → Edit → Copy → edit hasil copy-nya
 
 ![digital-modeling screenshot 125](images/digital-modeling/digital-modeling-125.png)
@@ -1031,14 +1031,14 @@ Opsi "Benchmark exchange rate" bisa konek ke bank China untuk update rate otomat
 
 ![digital-modeling screenshot 129](images/digital-modeling/digital-modeling-129.png)
 
-1. **UI Template** — menyesuaikan tampilan UI berdasarkan jenis transaksi Contoh: field ukuran baju (dari user defined) bisa dimasukkan ke UI Purchase Order
+9. **UI Template** — menyesuaikan tampilan UI berdasarkan jenis transaksi Contoh: field ukuran baju (dari user defined) bisa dimasukkan ke UI Purchase Order
 - **Catatan**: kalau user sudah pernah modifikasi UI mereka sendiri, update template besar/global dari kita **tidak akan menimpa** punya mereka. Ada opsi **"Clear user level setting"** untuk menyamakan semua —  **belum sepenuhnya paham cara kerja opsi ini.**
 
 ![digital-modeling screenshot 130](images/digital-modeling/digital-modeling-130.png)
 
 ![digital-modeling screenshot 131](images/digital-modeling/digital-modeling-131.png)
 
-1. **Print Template** — setting template untuk print, formatnya drag and drop
+10. **Print Template** — setting template untuk print, formatnya drag and drop
 
 ![digital-modeling screenshot 132](images/digital-modeling/digital-modeling-132.png)
 
@@ -1056,7 +1056,7 @@ Opsi "Benchmark exchange rate" bisa konek ke bank China untuk update rate otomat
 
 designated head of the department; used for approval routing — when a workflow requires department head approval, the system auto-routes to whoever is set as Leader here.
 
-1. **Licensing & Resource Management**
+2. **Licensing & Resource Management**
 
 ![digital-modeling screenshot 135](images/digital-modeling/digital-modeling-135.png)
 
@@ -1076,19 +1076,19 @@ designated head of the department; used for approval routing — when a workflow
 
 Biasanya untuk mendaftarkan suatu Lembaga perpajakan suatu negara, karena kita berada di Indonesia, di system kita daftarkan menggunakan DJP.
 
-1. **Tax Category Archive**
+2. **Tax Category Archive**
 
 ![digital-modeling screenshot 137](images/digital-modeling/digital-modeling-137.png)
 
 Biasanya dipakai untuk mendaftarkan tipe tipe jenis pajak pada suatu negara, jika di Indonesia ada seperti PPH, PPH, PPN, dll.
 
-1. **Tax Rate Archive**
+3. **Tax Rate Archive**
 
 ![digital-modeling screenshot 138](images/digital-modeling/digital-modeling-138.png)
 
 Disini biasanya dipakai untuk memasukan tipe tipe rate dari jenis jenis pajak suatu negara tergantung dengan jenis pembelian atau penjualan.
 
-1. **Witholding Tax Type**
+4. **Witholding Tax Type**
 
 ![digital-modeling screenshot 139](images/digital-modeling/digital-modeling-139.png)
 

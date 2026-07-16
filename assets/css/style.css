@@ -1,26 +1,28 @@
 /* ==========================================================================
    Catatan Belajar ERP YonSuite — stylesheet
-   Palet warna terinspirasi identitas korporat Yonyou (biru korporat + aksen
-   cyan). Semua warna didefinisikan sebagai CSS variable di :root supaya
-   gampang disesuaikan kalau nanti mau dicocokkan persis dengan yonyou.co.id.
+   Palet warna korporat merah-putih (identitas Yonyou/YonSuite). Aksen emas
+   dipakai khusus untuk state interaktif (hover/active/focus) supaya nggak
+   tabrakan secara visual dengan tag kategori merah di halaman Issue Log.
+   Semua warna didefinisikan sebagai CSS variable di :root supaya gampang
+   disesuaikan kalau nanti mau dicocokkan persis dengan yonyou.co.id.
    ========================================================================== */
 
 :root {
   /* -- brand palette -- */
-  --color-primary: #0b4da2;
-  --color-primary-dark: #073766;
-  --color-primary-light: #3e82d6;
-  --color-accent: #00a9e0;
-  --color-accent-soft: #e6f7fd;
+  --color-primary: #c8102e;
+  --color-primary-dark: #7a0c1c;
+  --color-primary-light: #e5455c;
+  --color-accent: #c9971f;
+  --color-accent-soft: #fbf0da;
 
   /* -- neutrals -- */
-  --color-bg: #f4f7fb;
+  --color-bg: #faf7f5;
   --color-surface: #ffffff;
-  --color-surface-alt: #f0f4f9;
-  --color-border: #e2e8f0;
-  --color-text: #16202e;
-  --color-text-secondary: #57677e;
-  --color-text-faint: #8898ab;
+  --color-surface-alt: #f7f0ee;
+  --color-border: #ece1dd;
+  --color-text: #241416;
+  --color-text-secondary: #6b5a5c;
+  --color-text-faint: #998689;
 
   /* -- issue-log reds -- */
   --color-issue-sequencing: #dc2626;
@@ -32,9 +34,9 @@
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 20px;
-  --shadow-sm: 0 1px 2px rgba(16, 35, 64, 0.06), 0 1px 1px rgba(16, 35, 64, 0.04);
-  --shadow-md: 0 8px 24px rgba(16, 35, 64, 0.08);
-  --shadow-lg: 0 16px 40px rgba(16, 35, 64, 0.14);
+  --shadow-sm: 0 1px 2px rgba(60, 16, 20, 0.07), 0 1px 1px rgba(60, 16, 20, 0.05);
+  --shadow-md: 0 8px 24px rgba(60, 16, 20, 0.10);
+  --shadow-lg: 0 16px 40px rgba(60, 16, 20, 0.16);
   --sidebar-w: 280px;
   --header-h: 64px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -42,18 +44,18 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-primary: #4d8fe0;
-    --color-primary-dark: #0b4da2;
-    --color-primary-light: #6fa8ea;
-    --color-accent: #2fc5f0;
-    --color-accent-soft: #0d3a4a;
-    --color-bg: #0f1620;
-    --color-surface: #161f2c;
-    --color-surface-alt: #1c2734;
-    --color-border: #2a374a;
-    --color-text: #e7edf5;
-    --color-text-secondary: #a7b4c6;
-    --color-text-faint: #74839a;
+    --color-primary: #ff5c72;
+    --color-primary-dark: #c8102e;
+    --color-primary-light: #ff8a98;
+    --color-accent: #e0b23e;
+    --color-accent-soft: #3a2c10;
+    --color-bg: #1a1213;
+    --color-surface: #241819;
+    --color-surface-alt: #2b1d1e;
+    --color-border: #3c2b2c;
+    --color-text: #f5e9ea;
+    --color-text-secondary: #c9b4b6;
+    --color-text-faint: #927e80;
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
     --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
     --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
@@ -268,8 +270,8 @@ img { max-width: 100%; height: auto; border-radius: var(--radius-sm); }
   top: 0;
   height: 100vh;
   overflow-y: auto;
-  background: linear-gradient(180deg, var(--color-primary-dark), #06264a 70%);
-  color: #eaf1fb;
+  background: linear-gradient(180deg, var(--color-primary-dark), #2b0509 70%);
+  color: #f5e6e8;
   padding: 22px 16px 24px;
   display: flex;
   flex-direction: column;
@@ -294,9 +296,9 @@ img { max-width: 100%; height: auto; border-radius: var(--radius-sm); }
   justify-content: center;
   font-weight: 800;
   font-size: 15px;
-  color: #06264a;
+  color: #2b0509;
   flex-shrink: 0;
-  box-shadow: 0 4px 14px rgba(0, 169, 224, 0.35);
+  box-shadow: 0 4px 14px rgba(201, 151, 31, 0.35);
 }
 .brand-text .brand-title {
   font-weight: 700;
@@ -305,7 +307,7 @@ img { max-width: 100%; height: auto; border-radius: var(--radius-sm); }
 }
 .brand-text .brand-subtitle {
   font-size: 11.5px;
-  color: #9fb6d6;
+  color: #d9aab0;
 }
 
 .nav-section-title {
@@ -313,7 +315,7 @@ img { max-width: 100%; height: auto; border-radius: var(--radius-sm); }
   font-weight: 700;
   letter-spacing: .08em;
   text-transform: uppercase;
-  color: #7d97bc;
+  color: #b98a8f;
   padding: 16px 12px 6px;
 }
 
@@ -323,7 +325,7 @@ img { max-width: 100%; height: auto; border-radius: var(--radius-sm); }
   gap: 11px;
   padding: 9px 12px;
   border-radius: var(--radius-sm);
-  color: #d3e0f2;
+  color: #f0dde0;
   font-size: 13.6px;
   font-weight: 500;
   cursor: pointer;
@@ -337,7 +339,7 @@ img { max-width: 100%; height: auto; border-radius: var(--radius-sm); }
   transform: translateX(2px);
 }
 .nav-link.active {
-  background: rgba(0, 169, 224, 0.18);
+  background: rgba(201, 151, 31, 0.22);
   color: #ffffff;
   font-weight: 600;
 }
@@ -363,11 +365,11 @@ img { max-width: 100%; height: auto; border-radius: var(--radius-sm); }
   font-weight: 700;
   flex-shrink: 0;
 }
-.nav-link.active .step-num { background: var(--color-accent); color: #06264a; }
+.nav-link.active .step-num { background: var(--color-accent); color: #2b0509; }
 
 .nav-link.issue-link {
   margin-top: 4px;
-  color: #ffd7d7;
+  color: #ffb8bb;
 }
 .nav-link.issue-link:hover { background: rgba(220, 38, 38, 0.16); }
 .nav-link.issue-link.active { background: rgba(220, 38, 38, 0.22); color: #fff; }
@@ -491,6 +493,100 @@ img { max-width: 100%; height: auto; border-radius: var(--radius-sm); }
   color: var(--color-text-secondary);
   font-size: 14px;
   margin: 0 0 22px;
+}
+
+/* ---------- mindmap ---------- */
+
+.mindmap {
+  position: relative;
+  margin: 0 0 44px;
+  padding: 4px 0 0 4px;
+}
+
+.mm-step {
+  position: relative;
+  padding-left: 40px;
+  padding-bottom: 22px;
+}
+.mm-step::before {
+  content: "";
+  position: absolute;
+  left: 13px;
+  top: 26px;
+  bottom: -6px;
+  width: 2px;
+  background: linear-gradient(var(--color-border), var(--color-border));
+}
+.mm-step:last-child::before { display: none; }
+
+.mm-dot {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 4px var(--color-accent-soft);
+  z-index: 1;
+}
+
+.mm-content { padding-top: 2px; }
+
+.mm-branch-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.mm-node {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: 999px;
+  padding: 9px 16px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--color-text);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: transform .18s var(--ease), box-shadow .18s var(--ease), border-color .18s var(--ease), color .18s var(--ease);
+}
+.mm-node-icon { display: inline-flex; color: var(--color-primary); }
+.mm-node:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-accent);
+  color: var(--color-primary-dark);
+  box-shadow: var(--shadow-md);
+}
+
+.mm-step-issue { padding-bottom: 0; }
+.mm-dot-issue {
+  background: var(--color-issue-sequencing);
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.12);
+}
+.mm-node-issue {
+  border-color: var(--color-issue-sequencing);
+  color: var(--color-issue-sequencing);
+  font-weight: 700;
+}
+.mm-node-issue:hover {
+  background: var(--color-issue-sequencing);
+  color: #fff;
+}
+.mm-issue-note {
+  margin: 8px 0 0;
+  font-size: 12.5px;
+  color: var(--color-text-faint);
+  max-width: 46ch;
 }
 
 .path-list {

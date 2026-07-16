@@ -53,7 +53,7 @@ Alurnya dimulai dari bikin scheme, lalu isi data opening, baru terakhir jalanin 
 - Setup sumber data bank statement Perusahaan (bisa setup di **Corporate Fund Account**
 - ), kecocokan antara akun rekonsiliasi dan akun bank, serta kombinasi akun bank buat rekonsiliasi batch.
 - Sistem support 2 tipe sumber data rekonsiliasi: bank journal vs bank statement, dan accounting voucher vs bank statement.
-1. **Opening Outstanding Item**
+2. **Opening Outstanding Item**
 
 ![gl screenshot 6](images/gl/gl-006.png)
 

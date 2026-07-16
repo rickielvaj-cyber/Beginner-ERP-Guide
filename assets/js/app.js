@@ -159,6 +159,10 @@
           </div>
         </section>
 
+        <h2 class="section-title">Peta Alur Belajar</h2>
+        <p class="section-desc">Mindmap urutan &amp; percabangan modul — klik node mana saja untuk langsung buka catatannya.</p>
+        ${renderMindmap()}
+
         <h2 class="section-title">Urutan Belajar yang Disarankan</h2>
         <p class="section-desc">Klik salah satu langkah untuk langsung buka catatannya.</p>
         <div class="path-list">${cards}</div>
@@ -179,6 +183,50 @@
       </div>
     `;
     wireNavClicks();
+  }
+
+  const MINDMAP_GROUPS = [
+    ["digital-modeling"],
+    ["aact-coa"],
+    ["purchasing", "sales"],
+    ["inventory"],
+    ["ap", "ar"],
+    ["fa"],
+    ["inventory-accounting"],
+    ["gl"],
+  ];
+
+  function renderMindmap() {
+    const stepsHtml = MINDMAP_GROUPS.map((slugs, i) => {
+      const nodes = slugs.map((slug) => moduleBySlug.get(slug)).filter(Boolean);
+      const nodesHtml = nodes.map((m) => `
+        <div class="mm-node" data-nav="/module/${m.slug}">
+          <span class="mm-node-icon">${icon(m.icon, 15)}</span>${escapeHtml(m.title)}
+        </div>
+      `).join("");
+      const isBranch = nodes.length > 1;
+      return `
+        <div class="mm-step">
+          <div class="mm-dot">${i + 1}</div>
+          <div class="mm-content">
+            <div class="${isBranch ? "mm-branch-row" : ""}">${nodesHtml}</div>
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    return `
+      <div class="mindmap">
+        ${stepsHtml}
+        <div class="mm-step mm-step-issue">
+          <div class="mm-dot mm-dot-issue">${icon("alert", 13)}</div>
+          <div class="mm-content">
+            <div class="mm-node mm-node-issue" data-nav="/issue-log">Issue Log &amp; Troubleshooting</div>
+            <p class="mm-issue-note">Referensi lintas-modul — dicek kapan pun nemu error di tahap manapun di atas.</p>
+          </div>
+        </div>
+      </div>
+    `;
   }
 
   async function renderModulePage(slug, anchor) {
