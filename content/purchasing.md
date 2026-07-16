@@ -348,7 +348,7 @@ Note: settled = sudah terselesaikan (selesaikan pesanan)
 
 Note Tambahan:
 
-1. PR → PO → Arrive Doc → Purchase Invoice → Purchase Settlement Doc → Manual Settlement / Expense Disc Settlement → Pembayaran final ke supplier ✓
+1. PR → PO → Arrive Doc → Purchase Receipt → Purchase Invoice → Confirmation A/P → Payment
 2. Settled ≠ Paid. Settled = dokumen sudah cocok dan selesai secara administratif di sistem. Paid = Pembayaran aktual (transfer uang) diproses terpisah di Finance/Treasury module.
 
 ## REPORT PALING SERING DIPAKAI
