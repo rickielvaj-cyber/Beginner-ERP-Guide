@@ -5,7 +5,7 @@ Auto create/relate the user when a user is enabled (Yes/No)**
 
 ![digital-modeling screenshot 1](images/digital-modeling/digital-modeling-001.png)
 
-Fungsinya untuk setiap kali ada pendaftaran employee/karyawan baru, maka user akan otomatis dibikin.
+Fungsinya untuk setiap kali ada pendaftaran employee/karyawan baru, maka user akan otomatis dibentuk.
 
 2. **商家商品是否需平台方审核 (TIDAK ADA)
 Merchant products require platform approval**
