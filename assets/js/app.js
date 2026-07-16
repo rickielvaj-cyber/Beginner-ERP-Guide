@@ -565,58 +565,52 @@
   // ---------------------------------------------------------------------
   // Search
   // ---------------------------------------------------------------------
-  function stripMdEmphasis(text) {
-    return text
-      .replace(/\*\*\*(.+?)\*\*\*/g, "$1")
-      .replace(/\*\*(.+?)\*\*/g, "$1")
-      .replace(/\*(.+?)\*/g, "$1")
-      .replace(/`(.+?)`/g, "$1")
-      .trim();
-  }
-
-  function mdToPlainText(md) {
-    return md
-      .replace(/```[\s\S]*?```/g, " ")
-      .replace(/!\[[^\]]*\]\([^)]*\)/g, " ")
-      .replace(/<[^>]+>/g, " ")
-      .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
-      .replace(/[*_`>#|-]/g, " ")
-      .replace(/\s+/g, " ")
-      .trim();
-  }
-
-  function buildSectionsFromMd(md, slug, title, isIssueLog) {
-    const lines = md.split("\n");
+  // Build the search index from the exact same HTML the pages themselves
+  // render (renderMarkdown), then read headings' real `id` attributes back
+  // out of that HTML — instead of recomputing slugs from raw markdown text
+  // with a second, separately-maintained parser. Two independent slug
+  // implementations drifted apart (links/entities/CJK edge cases), which is
+  // what caused search results to jump to the wrong section: this way the
+  // anchor a search result links to is always the id that's actually on
+  // the rendered page, by construction.
+  function extractSectionsFromHtml(html, slug, title, isIssueLog) {
+    const container = document.createElement("div");
+    container.innerHTML = html;
     const sections = [];
-    let current = { heading: title, anchor: "", buf: [] };
-    let currentCategory = null;
+    let current = { heading: title, anchor: "", buf: [], category: null };
 
-    for (const line of lines) {
-      const catMatch = line.match(/data-category="([^"]+)"/);
-      if (catMatch) currentCategory = catMatch[1];
-      const hMatch = line.match(/^(#{2,3})\s+(.*)$/);
-      if (hMatch) {
-        if (current.buf.length) sections.push(finalizeSection(current, slug, title, isIssueLog, currentCategory));
-        const headingText = stripMdEmphasis(hMatch[2].trim());
-        current = { heading: headingText, anchor: slugify(headingText), buf: [] };
-      } else {
-        current.buf.push(line);
+    const finalize = () => {
+      const text = current.buf.join(" ").replace(/\s+/g, " ").trim();
+      if (text.length > 3) {
+        sections.push({
+          slug, title, isIssueLog,
+          heading: current.heading,
+          anchor: current.anchor,
+          text,
+          category: current.category,
+        });
+      }
+    };
+
+    const walker = document.createTreeWalker(container, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT);
+    let node;
+    while ((node = walker.nextNode())) {
+      if (node.nodeType === 1 && (node.tagName === "H2" || node.tagName === "H3")) {
+        finalize();
+        const card = node.closest(".issue-card");
+        current = {
+          heading: node.textContent.trim(),
+          anchor: node.id || "",
+          buf: [],
+          category: card ? card.dataset.category : null,
+        };
+      } else if (node.nodeType === 3) {
+        if (node.parentElement && node.parentElement.closest("h2, h3")) continue; // already captured as `heading`
+        current.buf.push(node.textContent);
       }
     }
-    if (current.buf.length) sections.push(finalizeSection(current, slug, title, isIssueLog, currentCategory));
-    return sections.filter((s) => s.text.length > 3);
-  }
-
-  function finalizeSection(current, slug, title, isIssueLog, category) {
-    return {
-      slug,
-      title,
-      isIssueLog,
-      heading: current.heading,
-      anchor: current.anchor,
-      text: mdToPlainText(current.buf.join(" ")),
-      category,
-    };
+    finalize();
+    return sections;
   }
 
   async function buildSearchIndex() {
@@ -629,7 +623,8 @@
       await Promise.all(jobs.map(async (job) => {
         try {
           const md = await fetchMd(job.slug);
-          const sections = buildSectionsFromMd(md, job.slug, job.title, job.isIssueLog);
+          const html = renderMarkdown(md);
+          const sections = extractSectionsFromHtml(html, job.slug, job.title, job.isIssueLog);
           all.push(...sections);
         } catch (e) {
           console.warn("search index: skip", job.slug, e);
