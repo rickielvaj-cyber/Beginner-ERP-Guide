@@ -147,13 +147,30 @@ window.YSEditor = (function () {
   }
 
   function handleEditClick(slug) {
-    if (!hasSetup()) { renderSetupModal(slug, false); return; }
+    if (!hasSetup()) { renderNotSetupModal(); return; }
     renderPasswordModal(slug);
   }
 
   // -----------------------------------------------------------------------
-  // password gate
+  // password gate (per-page "Edit" button — assumes setup already done)
   // -----------------------------------------------------------------------
+  function renderNotSetupModal() {
+    const overlay = ensureOverlay();
+    overlay.innerHTML = `
+      <div class="ys-editor-modal ys-editor-modal-sm">
+        <h3>Editor belum di-setup</h3>
+        <p class="ys-editor-hint">Setup token GitHub &amp; password editor dulu lewat tombol <strong>Editor</strong> (ikon kunci) di pojok kanan atas.</p>
+        <div class="ys-editor-actions">
+          <button class="ys-btn ghost" id="ysNotSetupClose">Tutup</button>
+          <button class="ys-btn primary" id="ysNotSetupOpen">Buka Pengaturan Editor</button>
+        </div>
+      </div>
+    `;
+    overlay.classList.add("open");
+    document.getElementById("ysNotSetupClose").addEventListener("click", closeOverlay);
+    document.getElementById("ysNotSetupOpen").addEventListener("click", () => renderSettingsModal());
+  }
+
   function renderPasswordModal(slug) {
     const overlay = ensureOverlay();
     overlay.innerHTML = `
@@ -166,7 +183,6 @@ window.YSEditor = (function () {
           <button class="ys-btn ghost" id="ysEditorPwCancel">Batal</button>
           <button class="ys-btn primary" id="ysEditorPwSubmit">Masuk</button>
         </div>
-        <button class="ys-editor-reset-link" id="ysEditorResetLink" type="button">Setup ulang token/password</button>
       </div>
     `;
     overlay.classList.add("open");
@@ -183,29 +199,35 @@ window.YSEditor = (function () {
     document.getElementById("ysEditorPwSubmit").addEventListener("click", submit);
     $pw.addEventListener("keydown", (e) => { if (e.key === "Enter") submit(); });
     document.getElementById("ysEditorPwCancel").addEventListener("click", closeOverlay);
-    document.getElementById("ysEditorResetLink").addEventListener("click", () => renderSetupModal(slug, true));
   }
 
-  function renderSetupModal(slug, isReset) {
+  // -----------------------------------------------------------------------
+  // editor settings (standalone entry — the "Editor" key-icon button in the
+  // topbar, always reachable regardless of which page you're on). Also
+  // reachable from the "belum di-setup" prompt on the per-page Edit button.
+  // -----------------------------------------------------------------------
+  function renderSettingsModal() {
     const overlay = ensureOverlay();
+    const already = hasSetup();
     overlay.innerHTML = `
       <div class="ys-editor-modal">
-        <h3>${isReset ? "Setup Ulang Editor" : "Setup Editor (sekali aja per browser/device)"}</h3>
+        <h3>${already ? "Pengaturan Editor" : "Setup Editor (sekali aja per browser/device)"}</h3>
         <p class="ys-editor-hint">
           1. Buat <strong>GitHub fine-grained personal access token</strong> yang di-scope <strong>cuma ke repo
           ${esc(REPO_OWNER)}/${esc(REPO_NAME)}</strong>, izin <strong>Contents: Read and write</strong>.<br>
           2. Tempel token-nya di sini, dan bikin password editor kamu sendiri.<br>
           Keduanya cuma tersimpan di browser ini (localStorage) — nggak pernah ke-commit ke kode atau dikirim ke server manapun selain langsung ke GitHub.
+          ${already ? "<br><br>Sudah ada token &amp; password tersimpan. Kosongin field yang nggak mau diganti." : ""}
         </p>
-        <label class="ys-editor-label">GitHub Token</label>
-        <input type="password" id="ysSetupToken" class="ys-editor-input" placeholder="ghp_... atau github_pat_..." autocomplete="off">
-        <label class="ys-editor-label">Password Editor (bikin sendiri)</label>
-        <input type="password" id="ysSetupPw" class="ys-editor-input" placeholder="Password baru" autocomplete="new-password">
+        <label class="ys-editor-label">GitHub Token${already ? " (kosongin buat biarin yang lama)" : ""}</label>
+        <input type="password" id="ysSetupToken" class="ys-editor-input" placeholder="${already ? "•••••••• (sudah diset)" : "ghp_... atau github_pat_..."}" autocomplete="off">
+        <label class="ys-editor-label">Password Editor${already ? " (kosongin buat biarin yang lama)" : " (bikin sendiri)"}</label>
+        <input type="password" id="ysSetupPw" class="ys-editor-input" placeholder="${already ? "•••••••• (sudah diset)" : "Password baru"}" autocomplete="new-password">
         <input type="password" id="ysSetupPw2" class="ys-editor-input" placeholder="Ulangi password" autocomplete="new-password">
         <p class="ys-editor-error" id="ysSetupErr"></p>
         <div class="ys-editor-actions">
           <button class="ys-btn ghost" id="ysSetupCancel">Batal</button>
-          <button class="ys-btn primary" id="ysSetupSubmit">Simpan &amp; Lanjut</button>
+          <button class="ys-btn primary" id="ysSetupSubmit">Simpan</button>
         </div>
       </div>
     `;
@@ -216,12 +238,18 @@ window.YSEditor = (function () {
       const pw = document.getElementById("ysSetupPw").value;
       const pw2 = document.getElementById("ysSetupPw2").value;
       const $err = document.getElementById("ysSetupErr");
-      if (!token) { $err.textContent = "Token wajib diisi."; return; }
-      if (!pw || pw.length < 4) { $err.textContent = "Password minimal 4 karakter."; return; }
-      if (pw !== pw2) { $err.textContent = "Password gak sama."; return; }
-      localStorage.setItem(TOKEN_KEY, token);
-      localStorage.setItem(PW_HASH_KEY, await sha256Hex(pw));
-      openEditor(slug);
+      if (!token && !already) { $err.textContent = "Token wajib diisi."; return; }
+      if (pw || pw2) {
+        if (pw.length < 4) { $err.textContent = "Password minimal 4 karakter."; return; }
+        if (pw !== pw2) { $err.textContent = "Password gak sama."; return; }
+      } else if (!already) {
+        $err.textContent = "Password wajib diisi.";
+        return;
+      }
+      if (token) localStorage.setItem(TOKEN_KEY, token);
+      if (pw) localStorage.setItem(PW_HASH_KEY, await sha256Hex(pw));
+      closeOverlay();
+      showToast(already ? "Pengaturan editor tersimpan." : "Token & password tersimpan. Klik Edit di modul manapun buat mulai edit.");
     });
   }
 
@@ -254,21 +282,20 @@ window.YSEditor = (function () {
 
   function renderApiError(e) {
     const overlay = ensureOverlay();
-    const authHint = e.status === 401 || e.status === 403
-      ? '<br><br>Kemungkinan token salah/kadaluarsa/nggak punya izin write ke repo ini. Coba <button class="ys-editor-reset-link" id="ysEditorResetFromErr" type="button">setup ulang token</button>.'
-      : "";
+    const isAuthIssue = e.status === 401 || e.status === 403;
     overlay.innerHTML = `
       <div class="ys-editor-modal ys-editor-modal-sm">
         <h3>Gagal</h3>
-        <p class="ys-editor-error">${esc(e.message)}${authHint}</p>
+        <p class="ys-editor-error">${esc(e.message)}${isAuthIssue ? "<br><br>Kemungkinan token salah/kadaluarsa/nggak punya izin write ke repo ini." : ""}</p>
         <div class="ys-editor-actions">
           <button class="ys-btn ghost" id="ysEditorCloseErr">Tutup</button>
+          ${isAuthIssue ? '<button class="ys-btn primary" id="ysEditorOpenSettingsFromErr">Buka Pengaturan Editor</button>' : ""}
         </div>
       </div>
     `;
     document.getElementById("ysEditorCloseErr").addEventListener("click", closeOverlay);
-    const $reset = document.getElementById("ysEditorResetFromErr");
-    if ($reset) $reset.addEventListener("click", () => renderSetupModal(currentSlug, true));
+    const $settings = document.getElementById("ysEditorOpenSettingsFromErr");
+    if ($settings) $settings.addEventListener("click", () => renderSettingsModal());
   }
 
   function renderEditorUI(text) {
@@ -390,7 +417,8 @@ window.YSEditor = (function () {
       closeOverlay();
       showToast("Tersimpan! Situs bakal ke-update dalam 1-2 menit setelah GitHub Pages rebuild.");
     } catch (err) {
-      $err.textContent = "Gagal menyimpan: " + err.message;
+      const isAuthIssue = err.status === 401 || err.status === 403;
+      $err.innerHTML = `Gagal menyimpan: ${esc(err.message)}${isAuthIssue ? " — kemungkinan token belum punya izin write. Draft kamu di textarea aman, buka tombol Editor di topbar (tab/window lain) buat cek/ganti token, lalu coba Simpan lagi di sini." : ""}`;
     } finally {
       $btn.disabled = false;
       $btn.textContent = "Simpan & Publish";
@@ -410,6 +438,9 @@ window.YSEditor = (function () {
     clearTimeout(t._hideTimer);
     t._hideTimer = setTimeout(() => t.classList.remove("open"), 5000);
   }
+
+  const $settingsBtn = document.getElementById("editorSettingsToggle");
+  if ($settingsBtn) $settingsBtn.addEventListener("click", () => renderSettingsModal());
 
   return { mount };
 })();

@@ -1153,18 +1153,6 @@ img { max-width: 100%; height: auto; border-radius: var(--radius-sm); }
 .ys-btn.ghost { background: var(--color-surface-alt); color: var(--color-text-secondary); border-color: var(--color-border); }
 .ys-btn.ghost:hover { border-color: var(--color-accent); color: var(--color-text); }
 
-.ys-editor-reset-link {
-  display: block;
-  margin: 14px auto 0;
-  background: none;
-  border: none;
-  color: var(--color-text-faint);
-  font-size: 12px;
-  text-decoration: underline;
-  cursor: pointer;
-}
-.ys-editor-reset-link:hover { color: var(--color-primary); }
-
 .ys-editor-header {
   display: flex;
   align-items: center;
