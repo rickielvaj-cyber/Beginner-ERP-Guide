@@ -30,13 +30,13 @@ Sama seperti Sales Order biasanya, Cuma yang ini tidak perlu issue dan receipt, 
 
 ## Report
 
-1. **Order Execution Statistics**
+### 1. Order Execution Statistics
 
 ![sales screenshot 6](images/sales/sales-006.png)
 
 Ini laporan yang nge-track eksekusi Sales Order per baris produk — bandingin Order Quantity/Amount vs Shipment Quantity/Amount vs Invoiced Quantity, jadi kita bisa lihat progress satu SO dari order → kirim → invoice. Fungsinya: buat monitoring gap antara apa yang di-order, apa yang sudah dikirim, dan apa yang sudah di-invoice.
 
-2. **Shipment Statitstics**
+### 2. Shipment Statitstics
 
 ![sales screenshot 7](images/sales/sales-007.png)
 

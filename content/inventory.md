@@ -2,7 +2,8 @@
 
 ### Control Rules (Aturan Pengecekan)
 
-1. **Check the warehouse for inbound and outbound based on the warehouse-material relationship.**
+### 1. Check the warehouse for inbound and outbound based on the warehouse-material relationship.
+
 - **仓库物料关系检查规则**
 
 ![inventory screenshot 1](images/inventory/inventory-001.png)
@@ -12,7 +13,9 @@ Cek apakah material tertentu boleh masuk/keluar dari gudang yang berkaitan (berd
 - **Do not check** → ga dicek, bebas
 - **Prompt only** → munculin peringatan, tapi tetap bisa lanjut
 - **Strict control** → diblokir total jika tidak sesuai relationship
-2. **Nearly-Expired Goods Rejection Rules**
+
+### 2. Nearly-Expired Goods Rejection Rules
+
 - **效期临期拒收规则**
 
 ![inventory screenshot 2](images/inventory/inventory-002.png)
@@ -25,7 +28,8 @@ Aturan tolak barang yang mendekati kadaluarsa saat barang masuk.
 
 ### Issue / Outbound Rules (Aturan Pengeluaran)
 
-1. **Auto Clear Product without Stock**
+### 1. Auto Clear Product without Stock
+
 - **自动清除0存量商品**
 
 ![inventory screenshot 3](images/inventory/inventory-003.png)
@@ -33,7 +37,8 @@ Aturan tolak barang yang mendekati kadaluarsa saat barang masuk.
 Otomatis hapus item yang stoknya 0 dari daftar. 
 *(yes = bersihin otomatis biar list rapi || no = tidak otomatis)*
 
-2. **Allow Issue Quantity Exceeding Issue Application Quantity**
+### 2. Allow Issue Quantity Exceeding Issue Application Quantity
+
 - **允许超出库申请出库 (keluar masuk Gudang)**
 
 ![inventory screenshot 4](images/inventory/inventory-004.png)
@@ -51,7 +56,8 @@ Boleh ga keluarin barang lebih banyak dari yang diminta di aplikasi pengeluaran.
 
 *setting ini bisa diubah kapanpun, tapi hanya berlaku buat dokumen* ***setelah*** *perubahan.* ***Dokumen yang udah ada sebelumnya tidak terpengaruh.***
 
-3. **Allow Exceeding Planned Order Quantity**
+### 3. Allow Exceeding Planned Order Quantity
+
 - **计划订单允许超计划下达 (permintaan pengeluaran sesuai rencana)**
 
 ![inventory screenshot 5](images/inventory/inventory-005.png)
@@ -68,7 +74,8 @@ Boleh ga rilis order melebihi jumlah yang direncanakan.
 
 *setting ini bisa diubah kapanpun, tapi hanya berlaku buat dokumen* ***setelah*** *perubahan.* ***Dokumen yang udah ada sebelumnya tidak terpengaruh.***
 
-4. **Allow Issue Quantity Exceeding Transfer Order Quantity**
+### 4. Allow Issue Quantity Exceeding Transfer Order Quantity
+
 - **允许超调拨订单出库 (mutasi/pindah barang antar gudang)**
 
 ![inventory screenshot 6](images/inventory/inventory-006.png)
@@ -83,7 +90,8 @@ Boleh ga keluarin barang lebih dari jumlah di transfer order (mutasi antar gudan
 
 *setting ini bisa diubah kapanpun, tapi hanya berlaku buat dokumen* ***setelah*** *perubahan.* ***Dokumen yang udah ada sebelumnya tidak terpengaruh.***
 
-5. **Auto Picking upon Issue**
+### 5. Auto Picking upon Issue
+
 - **支持自动拣货**
 
 ![inventory screenshot 7](images/inventory/inventory-007.png)
@@ -93,7 +101,8 @@ Sistem otomatis nentuin bin mana yang diambil saat issue.
 
 ### Stocktaking / 盘点 Rules (Aturan Stock Opname)
 
-1. **Count Material with 0 Stock on Book**
+### 1. Count Material with 0 Stock on Book
+
 - **盘零账存物料**
 
 ![inventory screenshot 8](images/inventory/inventory-008.png)
@@ -107,7 +116,8 @@ Ini kontradiktif secara logika.
 
 Auto Clear sudah hapus material yang stoknya 0 dari daftar → pas opname jalan, material itu udah ga ada di list → setting Count Material 0 Stock jadi ga relevan karena ga ada yang perlu dihitung lagi (karna material 0 sudah ga ada di list, dikarenakan settingan Auto Clear)
 
-2. **Count Stock on Book**
+### 2. Count Stock on Book
+
 - **盘点显示账存数量**
 
 ![inventory screenshot 9](images/inventory/inventory-009.png)
@@ -116,7 +126,9 @@ Ngatur apakah angka stok buku **ditampilkan** di form hitung fisik atau tidak.
 
 - Yes → petugas **bisa lihat** angka sistem saat hitung fisik
 - No → blind counting, petugas tidak tau angka sistem
-3. **The physical inventory order defaults to include products from the stocktaking plan.**
+
+### 3. The physical inventory order defaults to include products from the stocktaking plan.
+
 - **实盘单默认带入盘点计划商品**
 
 ![inventory screenshot 10](images/inventory/inventory-010.png)
@@ -135,7 +147,8 @@ Parameter ini **mutually exclusive** dengan **Stocktaking Big Data Model** — d
 
 Logika bisnisnya: kalau perusahaan udah bikin rencana opname (barang apa aja yang mau dihitung, kapan, di gudang mana) ya tinggal otomatis ditarik aja ke form fisiknya — lebih efisien daripada input ulang.
 
-4. **Retrive Book Quantity by Default for Physical Inventory**
+### 4. Retrive Book Quantity by Default for Physical Inventory
+
 - **实盘默认取账存数量**
 
 ![inventory screenshot 11](images/inventory/inventory-011.png)
@@ -144,14 +157,17 @@ Ngatur apakah angka stok buku **otomatis diisi** sebagai nilai awal di kolom has
 
 - Yes → kolom hasil hitung **otomatis terisi** angka dari sistem, petugas tinggal koreksi kalau beda
 - No → kolom kosong, petugas input angka dari nol
-5. **Generate Gain/Loss Document from Counting Review**
+
+### 5. Generate Gain/Loss Document from Counting Review
+
 - **盘点复核生成盈亏单**
 
 ![inventory screenshot 12](images/inventory/inventory-012.png)
 
 Otomatis bikin dokumen selisih (gain/loss) setelah review hasil perhitungan dari Physical Stock Check. *(yes = auto generate)*
 
-6. **Value of Gain/Loss Document Date**
+### 6. Value of Gain/Loss Document Date
+
 - **盈亏单据日期取值**
 
 ![inventory screenshot 13](images/inventory/inventory-013.png)
@@ -160,7 +176,9 @@ Tanggal yang dipakai di dokumen selisih.
 
 - Review date → tanggal saat review
 - Physical Inventory Date → tanggal saat hitung fisik dilakukan
-7. **Backflush in Inventory Gains Exceeds Limit**
+
+### 7. Backflush in Inventory Gains Exceeds Limit
+
 - **盘盈倒冲超量**
 
 ![inventory screenshot 14](images/inventory/inventory-014.png)
@@ -169,7 +187,9 @@ Apa yang terjadi kalau hasil hitung fisik lebih banyak dari yang seharusnya alia
 
 - Counting Review Fails → review gagal, ga bisa lanjut
 - Generate other receipt document → bikin dokumen penerimaan terpisah buat kelebihannya
-8. **Stocktaking Snapshot Generation Sequence**
+
+### 8. Stocktaking Snapshot Generation Sequence
+
 - **盘点快照生成顺序**
 
 ![inventory screenshot 15](images/inventory/inventory-015.png)
@@ -177,7 +197,8 @@ Apa yang terjadi kalau hasil hitung fisik lebih banyak dari yang seharusnya alia
 Urutan sorting saat sistem generate snapshot stok yang akan dipakai untuk melakukan pengecekan stock. 
 Pilihannya: by Product code / Material Category / Product Category / Brand / Storage bin code / Mnemonic code. *(tinggal pilih mau diurutin berdasarkan apa)*
 
-9. **Default Range of Quick Stocktaking**
+### 9. Default Range of Quick Stocktaking
+
 - **快盘默认盘点范围**
 
 ![inventory screenshot 16](images/inventory/inventory-016.png)
@@ -192,7 +213,9 @@ Cakupan default saat quick count.
 
 - **Whole Warehouse** → default hitung semua material di gudang. Cocok kalau mau spot-check seluruh gudang secara cepat.
 - **Specified Goods** → default hanya material yang lo pilih. Cocok kalau mau cek barang tertentu aja — misal barang mahal, barang yang sering selisih, atau barang yang baru masuk.
-10. **Calculate Business Occurred During Stocktaking**
+
+### 10. Calculate Business Occurred During Stocktaking
+
 - **计算盘点期间业务发生数**
 
 ![inventory screenshot 17](images/inventory/inventory-017.png)
@@ -222,7 +245,8 @@ Artinya: sistem freeze — dianggap antara waktu counting plan dan real time itu
 
 Nyambung juga ke parameter **Stocktaking Snapshot** (no.15)— snapshot itu diambil di awal opname sebagai "foto" kondisi stok, dan setting ini nentuin apakah pergerakan setelah snapshot ikut diperhitungkan atau tidak.
 
-11. **Warehouse Material Relationship**
+### 11. Warehouse Material Relationship
+
 - **仓库物料关系**
 
 ![inventory screenshot 18](images/inventory/inventory-018.png)
@@ -452,7 +476,8 @@ Kenapa SO lolos tapi Issue diblokir? Beda Calculation Rule — SO pakai Order sc
 
 ## Inventory Issue/Receipt
 
-1. **Opening Inventory**
+### 1. Opening Inventory
+
 - **期初库存**
 
 Stok awal saat pertama kali setup sistem. Action: Add new, Approve/Unapprove. Harus add inventory period scheme dlu pada Business Unit
@@ -539,7 +564,7 @@ Konfirmasi masuk di gudang tujuan. **Action: Add new Receipt, Approve/Unapprove.
 
 ## Stocktacking
 
-1. **Closing Stocktaking**
+### 1. Closing Stocktaking
 
 ![inventory screenshot 32](images/inventory/inventory-032.png)
 
@@ -549,7 +574,7 @@ Hitung fisik semua barang → bandingkan dengan sistem → selesaikan selisih.
 
 **Bedanya dari Daily:** Ini **planned** — harus ada Stocktaking Plan dulu sebelum turun ke lapangan.
 
-2. **Daily Stocktaking**
+### 2. Daily Stocktaking
 
 ![inventory screenshot 33](images/inventory/inventory-033.png)
 
@@ -568,7 +593,7 @@ Report dari Selisih antara stok fisik dengan stok pada system, setelah itu klik 
 
 Setelah klik save biasanya jika kita melakukan pengecekan pada alur, akan ada alur “Other goods Issue Document (harus di approve juga supaya tercatat di event), yang menandakan adanya minus. Minus nulisnya Issue, Plus nulisnya Receipt. **Nyambung ke Daily Stocktaking**
 
-3. **Inventory Variance Doc**
+### 3. Inventory Variance Doc
 
 ![inventory screenshot 36](images/inventory/inventory-036.png)
 
@@ -578,7 +603,7 @@ Isinya: Qty fisik vs qty buku, selisihnya berapa, gain atau loss.
 Perlu Approve: Ya — berbeda dari Opening Inventory yang langsung efektif saat Save. Variance Doc harus di-approve dulu sebelum sistem update stok.
 Analoginya: berita acara resmi yang mencatat temuan selisih dan perlu ditandatangani sebelum diproses. **Nyambung ke Daily Stocktaking**
 
-4. **Inventory Gain/Loss Query**
+### 4. Inventory Gain/Loss Query
 
 ![inventory screenshot 37](images/inventory/inventory-037.png)
 
@@ -590,7 +615,7 @@ Tidak ada action: Cuma query, tidak bisa bikin atau approve apapun dari sini. **
 
 ## Inventory Adjustment
 
-1. **Stock Transfer**
+### 1. Stock Transfer
 
 Pindahin barang dari Gudang A ke Gudang B masih dalam organisasi yang sama.
 
@@ -613,7 +638,7 @@ Di dalamnya ada beberapa dokumen:
 
 ![inventory screenshot 39](images/inventory/inventory-039.png)
 
-2. **Storage Bin Adjustment**
+### 2. Storage Bin Adjustment
 
 ![inventory screenshot 40](images/inventory/inventory-040.png)
 
@@ -621,26 +646,26 @@ Perpindahan barang antar Bin bukan antar Gudang, skalanya kecil, Cuma pindah rak
 
 ## Borrowing/Lending
 
-1. **Lending Application**
+### 1. Lending Application
 
 ![inventory screenshot 41](images/inventory/inventory-041.png)
 
 Pengajuan resmi mau minjemin barang. Ada approval dulu sebelum barang boleh keluar.
 Setelah approve → auto generate **Lending Issue**.
 
-2. **Lending Issue**
+### 2. Lending Issue
 
 ![inventory screenshot 42](images/inventory/inventory-042.png)
 
 Eksekusi fisik — barang beneran keluar dari gudang ke peminjam. Ini yang catat stok berkurang. Dibagian ini setelah di approved maka transaksi akan selesai, untuk pengembalian bisa dilanjutkan ke fitur Lend & Return Receipt
 
-3. **Return to Inventory (Lend & Return Receipt)**
+### 3. Return to Inventory (Lend & Return Receipt)
 
 ![inventory screenshot 43](images/inventory/inventory-043.png)
 
 Barang yang dipinjam dikembalikan → masuk ke gudang lagi → stok bertambah otomatis.
 
-4. **Not-returned Doc**
+### 4. Not-returned Doc
 
 ![inventory screenshot 44](images/inventory/inventory-044.png)
 
@@ -650,19 +675,19 @@ Bukan dokumen transaksi — ini **tracking/monitoring**. Bisa lihat: siapa yang 
 
 ### Real time Stock Checking
 
-1. **On-Hand stock Query (现存量查询) (SERING DIPAKAI)**
+### 1. On-Hand stock Query (现存量查询) (SERING DIPAKAI)
 
 ![inventory screenshot 45](images/inventory/inventory-045.png)
 
 Cek stok yang ada sekarang + available qty. Bisa difilter dan digroup **per material, warehouse, batch, dll**. Bisa konversi unit (purchase unit, sales unit, inventory unit).
 
-2. **Product Receipt/Issue Summary (SERING DIPAKAI)**
+### 2. Product Receipt/Issue Summary (SERING DIPAKAI)
 
 ![inventory screenshot 46](images/inventory/inventory-046.png)
 
 Summary Report Receipt/Issue/Inventaris Produk terutama mencatat transaksi masuk dan keluar material atau produk, serta situasi inventaris saat ini selama periode tertentu. Melalui tabel ini, user dapat menanyakan informasi ringkasan material/SKU mengenai saldo awal, penerimaan, pengeluaran, dan saldo akhir dalam jangka waktu tertentu, yang secara jelas menunjukkan status aliran setiap material.
 
-3. **Storage Bin Stock Qty Query (货位存量查询)**
+### 3. Storage Bin Stock Qty Query (货位存量查询)
 
 ![inventory screenshot 47](images/inventory/inventory-047.png)
 
@@ -670,7 +695,7 @@ Sama kayak Stock on Hand, tapi sampai level **bin/lokasi**. Tau persis stok ada 
 
 **Note:** Stock on Hand = level gudang. Storage Bin = level rak/lokasi dalam gudang.
 
-4. **Inventory Ledger (SERING DIPAKAI)**
+### 4. Inventory Ledger (SERING DIPAKAI)
 
 ![inventory screenshot 48](images/inventory/inventory-048.png)
 
@@ -678,7 +703,7 @@ Pencatatan jenis keluar masuk dari suatu material (either dia sales issue, other
 
 ### Analysist & Alert
 
-1. **Stock Alert (库存预警)**
+### 1. Stock Alert (库存预警)
 
 ![inventory screenshot 49](images/inventory/inventory-049.png)
 
@@ -692,7 +717,7 @@ Kalau stok di luar range ini → muncul alert.
 
 Masih bingung set safety stock biar bisa terinpur ke dalam stock alert.
 
-2. **Stock Analysis Details (存量分析明细)**
+### 2. Stock Analysis Details (存量分析明细)
 
 ![inventory screenshot 50](images/inventory/inventory-050.png)
 
@@ -702,19 +727,19 @@ Nyambung dengan Transfer In dan Transfer Out stock.
 
 ### Transactions List/History
 
-1. **Issue/Receipt Query (New) (出入库查询) (SERING DIPAKAI)**
+### 1. Issue/Receipt Query (New) (出入库查询) (SERING DIPAKAI)
 
 ![inventory screenshot 51](images/inventory/inventory-051.png)
 
 Semua riwayat barang masuk dan keluar — diurutkan berdasarkan waktu, bisa filter per organisasi atau warehouse. Diinput ke dalam Opening Inventory juga akan tercatat disini.
 
-2. **Inventory Ledger (库存台账)**
+### 2. Inventory Ledger (库存台账)
 
 ![inventory screenshot 52](images/inventory/inventory-052.png)
 
 Buku besar inventory — detail perubahan qty dan nilai per periode. Isinya: saldo awal, barang masuk keluar, saldo akhir per material.
 
-3. **Goods Receipt/Issue/Inv Summary (收发存汇总)**
+### 3. Goods Receipt/Issue/Inv Summary (收发存汇总)
 
 ![inventory screenshot 53](images/inventory/inventory-053.png)
 
@@ -726,13 +751,13 @@ Note: Ledger vs Summary: Ledger = detail tiap transaksi. Summary = total masuk/k
 
 ### Outlook
 
-1. **Inventory Expectation/Outlook (库存展望)**
+### 1. Inventory Expectation/Outlook (库存展望)
 
 ![inventory screenshot 54](images/inventory/inventory-054.png)
 
 Proyeksi stok atau overview stock yang dimiliki suatu organisasi— berapa available qty, supply, dan demandnya.
 
-2. **Inventory Expectation Detail (库存展望明细)**
+### 2. Inventory Expectation Detail (库存展望明细)
 
 ![inventory screenshot 55](images/inventory/inventory-055.png)
 
