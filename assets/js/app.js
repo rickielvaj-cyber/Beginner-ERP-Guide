@@ -524,6 +524,18 @@
     document.getElementById("sidebarOverlay").classList.remove("open");
   }
 
+  const SIDEBAR_COLLAPSE_KEY = "ys-sidebar-collapsed";
+  function initSidebarCollapse() {
+    const $btn = document.getElementById("sidebarCollapseToggle");
+    if (!$btn) return;
+    $btn.addEventListener("click", () => {
+      const collapsed = document.documentElement.getAttribute("data-sidebar") === "collapsed";
+      const next = collapsed ? "expanded" : "collapsed";
+      document.documentElement.setAttribute("data-sidebar", next);
+      try { localStorage.setItem(SIDEBAR_COLLAPSE_KEY, next === "collapsed" ? "1" : "0"); } catch (e) { /* ignore */ }
+    });
+  }
+
   // ---------------------------------------------------------------------
   // Search
   // ---------------------------------------------------------------------
@@ -712,6 +724,7 @@
   // ---------------------------------------------------------------------
   async function boot() {
     initThemePicker();
+    initSidebarCollapse();
 
     const res = await fetch(`${CONTENT_DIR}/manifest.json`, { cache: "no-store" });
     manifest = await res.json();
