@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catatan Belajar ERP YonSuite</title>
+<meta name="description" content="Catatan belajar pribadi YonSuite ERP — Digital Modeling, AACT/COA, AP, AR, FA, GL, Inventory, Purchasing, Sales, dan Issue Log troubleshooting.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><rect width=%2224%22 height=%2224%22 rx=%225%22 fill=%22%230b4da2%22/><text x=%2212%22 y=%2216.5%22 font-size=%2211%22 font-family=%22Arial%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22>YS</text></svg>">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="Buka menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
+    <span class="brand-mobile">Catatan ERP</span>
+    <div class="search-wrap">
+      <span class="search-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      </span>
+      <input type="text" id="searchInput" class="search-input" placeholder="Cari keyword di semua modul & issue log..." autocomplete="off">
+      <span class="search-shortcut">/</span>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+    <span class="theme-note">Mengikuti tema sistem (light/dark)</span>
+  </header>
+
+  <main class="main" id="app"></main>
+</div>
+
+<script src="assets/js/vendor/marked.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
