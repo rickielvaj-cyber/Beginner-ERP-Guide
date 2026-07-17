@@ -1297,6 +1297,21 @@ img { max-width: 100%; height: auto; border-radius: var(--radius-sm); }
   100% { background: transparent; }
 }
 
+/* Exact-match jump from search results — like browser Ctrl+F */
+.search-jump-hit {
+  background: var(--color-accent);
+  color: #fff;
+  border-radius: 3px;
+  padding: 0 2px;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-accent) 30%, transparent);
+  transition: background 1.1s var(--ease), color 1.1s var(--ease), box-shadow 1.1s var(--ease);
+}
+.search-jump-hit-fade {
+  background: var(--color-accent-soft);
+  color: inherit;
+  box-shadow: none;
+}
+
 /* ==========================================================================
    Responsive
    ========================================================================== */

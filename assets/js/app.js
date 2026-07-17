@@ -235,10 +235,10 @@
     if (path === "/" || path === "") {
       renderHome();
     } else if (path === "/issue-log") {
-      await renderIssueLog(params.get("cat"));
+      await renderIssueLog(params.get("cat"), params.get("h"), params.get("q"));
     } else if (path.startsWith("/module/")) {
       const slug = path.replace("/module/", "");
-      await renderModulePage(slug, params.get("h"));
+      await renderModulePage(slug, params.get("h"), params.get("q"));
     } else {
       renderNotFound();
     }
@@ -344,7 +344,79 @@
     `;
   }
 
-  async function renderModulePage(slug, anchor) {
+  // -----------------------------------------------------------------------
+  // Jump straight to the exact matched text after a search click (like
+  // browser Ctrl+F) instead of just scrolling to the section heading.
+  // Falls back to the heading anchor when the phrase can't be located.
+  // -----------------------------------------------------------------------
+  function findRangeForQuery(root, query) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    let text = "";
+    let node;
+    while ((node = walker.nextNode())) {
+      nodes.push({ node, start: text.length });
+      text += node.textContent;
+    }
+    const idx = text.toLowerCase().indexOf(query.toLowerCase());
+    if (idx === -1) return null;
+    const end = idx + query.length;
+
+    const locate = (offset) => {
+      for (const n of nodes) {
+        const nodeEnd = n.start + n.node.textContent.length;
+        if (offset <= nodeEnd) return { node: n.node, offset: Math.max(0, offset - n.start) };
+      }
+      const last = nodes[nodes.length - 1];
+      return { node: last.node, offset: last.node.textContent.length };
+    };
+
+    const range = document.createRange();
+    const startLoc = locate(idx);
+    const endLoc = locate(end);
+    range.setStart(startLoc.node, startLoc.offset);
+    range.setEnd(endLoc.node, endLoc.offset);
+    return range;
+  }
+
+  function highlightAndScrollToQuery(query) {
+    const root = $app.querySelector(".markdown-body");
+    if (!root || !query) return false;
+    const trimmed = query.trim();
+    const firstWord = trimmed.split(/\s+/)[0];
+    const attempts = firstWord && firstWord !== trimmed ? [trimmed, firstWord] : [trimmed];
+    for (const attempt of attempts) {
+      if (!attempt) continue;
+      const range = findRangeForQuery(root, attempt);
+      if (!range) continue;
+      try {
+        const mark = document.createElement("mark");
+        mark.className = "search-jump-hit";
+        range.surroundContents(mark);
+        mark.scrollIntoView({ behavior: "smooth", block: "center" });
+        setTimeout(() => mark.classList.add("search-jump-hit-fade"), 2200);
+        return true;
+      } catch (e) {
+        console.warn("highlight failed, trying next fallback", e);
+      }
+    }
+    return false;
+  }
+
+  function jumpToResult(anchor, query) {
+    requestAnimationFrame(() => {
+      if (highlightAndScrollToQuery(query)) return;
+      if (anchor) {
+        const el = document.getElementById(anchor);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+          el.classList.add("flash-highlight");
+        }
+      }
+    });
+  }
+
+  async function renderModulePage(slug, anchor, query) {
     const m = moduleBySlug.get(slug);
     if (!m) return renderNotFound();
     showSkeleton();
@@ -376,21 +448,13 @@
       `;
       wireNavClicks();
       if (window.YSEditor) window.YSEditor.mount();
-      if (anchor) {
-        requestAnimationFrame(() => {
-          const el = document.getElementById(anchor);
-          if (el) {
-            el.scrollIntoView({ behavior: "smooth", block: "start" });
-            el.classList.add("flash-highlight");
-          }
-        });
-      }
+      if (anchor || query) jumpToResult(anchor, query);
     } catch (err) {
       renderError(m.title, err);
     }
   }
 
-  async function renderIssueLog(activeCat) {
+  async function renderIssueLog(activeCat, anchor, query) {
     showSkeleton();
     try {
       const md = await fetchMd(manifest.issueLog.slug);
@@ -421,6 +485,7 @@
       decorateIssueCards();
       applyIssueFilter(activeCat);
       if (window.YSEditor) window.YSEditor.mount();
+      if (anchor || query) jumpToResult(anchor, query);
 
       $app.querySelectorAll(".issue-chip").forEach((chip) => {
         chip.addEventListener("click", () => {
@@ -713,8 +778,8 @@
       html += `<div class="search-group"><div class="search-group-title">${escapeHtml(title)}</div>`;
       for (const s of group.items.slice(0, 5)) {
         const snippet = snippetAround(s.text, qWords[0] || "");
-        const target = s.isIssueLog ? { path: "/issue-log", params: {} } : { path: `/module/${s.slug}`, params: s.anchor ? { h: s.anchor } : {} };
-        html += `<div class="search-result-item" data-path="${target.path}" data-h="${target.params.h || ""}">
+        const path = s.isIssueLog ? "/issue-log" : `/module/${s.slug}`;
+        html += `<div class="search-result-item" data-path="${path}" data-h="${s.anchor || ""}">
           <div class="search-result-heading">${highlightText(s.heading, qWords)}</div>
           <div class="search-result-snippet">${highlightText(snippet, qWords)}</div>
         </div>`;
@@ -728,7 +793,10 @@
       el.addEventListener("click", () => {
         const path = el.dataset.path;
         const h = el.dataset.h;
-        navigate(path, h ? { h } : {});
+        const params = {};
+        if (h) params.h = h;
+        if (q) params.q = q;
+        navigate(path, params);
         closeSearch();
         document.getElementById("searchInput").value = "";
       });
