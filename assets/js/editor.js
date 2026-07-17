@@ -346,7 +346,7 @@ window.YSEditor = (function () {
   function renderEditorUI(text) {
     const overlay = ensureOverlay();
     overlay.innerHTML = `
-      <div class="ys-editor-modal ys-editor-modal-lg">
+      <div class="ys-editor-modal ys-editor-modal-lg" id="ysEditorModal" data-view="write">
         <div class="ys-editor-header">
           <h3>Edit: ${esc(titleForSlug(currentSlug))}</h3>
           <button class="ys-editor-close" id="ysEditorClose" aria-label="Tutup">&times;</button>
@@ -356,9 +356,13 @@ window.YSEditor = (function () {
             ${uploadIcon()} Upload gambar / PDF / SVG
             <input type="file" id="ysEditorFile" accept=".png,.svg,.pdf" style="display:none">
           </label>
+          <div class="ys-editor-tabs">
+            <button class="ys-editor-tab active" id="ysTabWrite" data-view="write">Tulis</button>
+            <button class="ys-editor-tab" id="ysTabPreview" data-view="preview">Preview</button>
+          </div>
           <span class="ys-editor-upload-status" id="ysEditorUploadStatus"></span>
         </div>
-        <div class="ys-editor-split">
+        <div class="ys-editor-single">
           <textarea id="ysEditorTextarea" class="ys-editor-textarea" spellcheck="false">${esc(text)}</textarea>
           <div class="ys-editor-preview markdown-body" id="ysEditorPreview"></div>
         </div>
@@ -369,6 +373,7 @@ window.YSEditor = (function () {
         </div>
       </div>
     `;
+    const $modal = document.getElementById("ysEditorModal");
     const $ta = document.getElementById("ysEditorTextarea");
     const $preview = document.getElementById("ysEditorPreview");
     const pendingBlobUrls = {}; // relPath -> local blob URL, for files uploaded this session
@@ -381,12 +386,14 @@ window.YSEditor = (function () {
       });
       $preview.innerHTML = html;
     };
-    updatePreview();
-    let debounce;
-    $ta.addEventListener("input", () => {
-      clearTimeout(debounce);
-      debounce = setTimeout(updatePreview, 250);
-    });
+    const setView = (view) => {
+      $modal.dataset.view = view;
+      document.getElementById("ysTabWrite").classList.toggle("active", view === "write");
+      document.getElementById("ysTabPreview").classList.toggle("active", view === "preview");
+      if (view === "preview") updatePreview();
+    };
+    document.getElementById("ysTabWrite").addEventListener("click", () => setView("write"));
+    document.getElementById("ysTabPreview").addEventListener("click", () => setView("preview"));
 
     document.getElementById("ysEditorClose").addEventListener("click", closeOverlay);
     document.getElementById("ysEditorCancel").addEventListener("click", closeOverlay);
