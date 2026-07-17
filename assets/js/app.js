@@ -24,6 +24,10 @@
     chevronLeft: '<polyline points="15 18 9 12 15 6"></polyline>',
     compass: '<circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>',
     home: '<path d="M3 10.5 12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path>',
+    dashboard: '<rect x="3" y="3" width="7" height="9" rx="1.5"></rect><rect x="14" y="3" width="7" height="5" rx="1.5"></rect><rect x="14" y="12" width="7" height="9" rx="1.5"></rect><rect x="3" y="16" width="7" height="5" rx="1.5"></rect>',
+    trophy: '<path d="M8 21h8"></path><path d="M12 17v4"></path><path d="M7 4h10v6a5 5 0 0 1-10 0V4z"></path><path d="M7 5H4a2 2 0 0 0 0 4h3"></path><path d="M17 5h3a2 2 0 0 1 0 4h-3"></path>',
+    clock: '<circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>',
+    fileText: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="16" y2="17"></line>',
   };
 
   function icon(name, size = 18) {
@@ -234,6 +238,8 @@
 
     if (path === "/" || path === "") {
       renderHome();
+    } else if (path === "/dashboard") {
+      await renderDashboard();
     } else if (path === "/issue-log") {
       await renderIssueLog(params.get("cat"), params.get("h"), params.get("q"));
     } else if (path.startsWith("/module/")) {
@@ -345,6 +351,169 @@
   }
 
   // -----------------------------------------------------------------------
+  // Scroll-reveal: fade/slide elements in as they enter the viewport.
+  // One-shot (unobserves once revealed) so it doesn't replay on scroll-up.
+  // -----------------------------------------------------------------------
+  function initScrollReveal(container) {
+    const els = container.querySelectorAll(".reveal");
+    if (!("IntersectionObserver" in window)) {
+      els.forEach((el) => el.classList.add("reveal-visible"));
+      return;
+    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("reveal-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    els.forEach((el) => observer.observe(el));
+  }
+
+  function timeAgo(iso) {
+    const diffMs = Date.now() - new Date(iso).getTime();
+    const min = Math.floor(diffMs / 60000);
+    if (min < 1) return "Baru saja";
+    if (min < 60) return `${min} menit lalu`;
+    const hr = Math.floor(min / 60);
+    if (hr < 24) return `${hr} jam lalu`;
+    const day = Math.floor(hr / 24);
+    if (day < 7) return `${day} hari lalu`;
+    const week = Math.floor(day / 7);
+    if (week < 5) return `${week} minggu lalu`;
+    const month = Math.floor(day / 30);
+    if (month < 12) return `${month} bulan lalu`;
+    return `${Math.floor(day / 365)} tahun lalu`;
+  }
+
+  async function renderDashboard() {
+    showSkeleton();
+    const visits = loadVisits();
+    const totalModules = manifest.modules.length;
+    const visitedSlugs = Object.keys(visits).filter((slug) => moduleBySlug.has(slug));
+    const visitedCount = visitedSlugs.length;
+    const pct = totalModules ? Math.round((visitedCount / totalModules) * 100) : 0;
+
+    const recentVisits = visitedSlugs
+      .map((slug) => ({ slug, at: visits[slug], m: moduleBySlug.get(slug) }))
+      .sort((a, b) => new Date(b.at) - new Date(a.at));
+    const lastVisit = recentVisits[0] || null;
+
+    const catCounts = {};
+    let totalIssues = 0;
+    try {
+      const md = await fetchMd(manifest.issueLog.slug);
+      const matches = md.match(/data-category="([^"]+)"/g) || [];
+      matches.forEach((raw) => {
+        const key = raw.match(/data-category="([^"]+)"/)[1];
+        catCounts[key] = (catCounts[key] || 0) + 1;
+        totalIssues++;
+      });
+    } catch (e) { /* stats are best-effort, don't block the page on this */ }
+    const maxCatCount = Math.max(1, ...Object.values(catCounts));
+    const topCat = Object.entries(catCounts).sort((a, b) => b[1] - a[1])[0];
+
+    const firstModuleSlug = manifest.learningPath[0];
+    const firstModule = moduleBySlug.get(firstModuleSlug);
+
+    $app.innerHTML = `
+      <div class="view">
+        <section class="hero reveal">
+          <div class="hero-eyebrow">${icon("dashboard", 14)} Dashboard</div>
+          <h1>Progress Belajar Kamu</h1>
+          <p>Ringkasan sejauh mana kamu udah menjelajah catatan YonSuite ERP ini, plus insight dari Issue Log.</p>
+        </section>
+
+        <div class="dash-stats reveal">
+          <div class="dash-stat-card">
+            <div class="dash-stat-icon">${icon("fileText", 20)}</div>
+            <div class="dash-stat-value">${totalModules}</div>
+            <div class="dash-stat-label">Total Modul</div>
+          </div>
+          <div class="dash-stat-card">
+            <div class="dash-stat-icon">${icon("trophy", 20)}</div>
+            <div class="dash-stat-value">${visitedCount}/${totalModules}</div>
+            <div class="dash-stat-label">Modul Dibuka</div>
+          </div>
+          <div class="dash-stat-card">
+            <div class="dash-stat-icon">${icon("alert", 20)}</div>
+            <div class="dash-stat-value">${totalIssues}</div>
+            <div class="dash-stat-label">Entri Issue Log</div>
+          </div>
+          <div class="dash-stat-card">
+            <div class="dash-stat-icon">${icon("clock", 20)}</div>
+            <div class="dash-stat-value dash-stat-value-sm">${lastVisit ? timeAgo(lastVisit.at) : "—"}</div>
+            <div class="dash-stat-label">Terakhir Belajar</div>
+          </div>
+        </div>
+
+        <div class="dash-progress-section reveal">
+          <div class="dash-progress-head">
+            <h2 class="section-title" style="margin-top:0">Progress Modul</h2>
+            <span class="dash-progress-pct">${pct}%</span>
+          </div>
+          <div class="dash-progress-bar"><div class="dash-progress-fill" data-fill="${pct}"></div></div>
+          <p class="section-desc">${visitedCount} dari ${totalModules} modul udah kamu buka.</p>
+        </div>
+
+        <h2 class="section-title">Sebaran Issue Log per Kategori</h2>
+        <p class="section-desc">${totalIssues} entri total${topCat ? `, paling banyak di "${escapeHtml(manifest.categories[topCat[0]] ? manifest.categories[topCat[0]].label : topCat[0])}"` : ""}.</p>
+        <div class="dash-chart reveal">
+          ${Object.entries(manifest.categories).map(([key, c]) => {
+            const count = catCounts[key] || 0;
+            const width = Math.round((count / maxCatCount) * 100);
+            return `
+              <div class="dash-chart-row">
+                <span class="dash-chart-label">${escapeHtml(c.label)}</span>
+                <div class="dash-chart-track"><div class="dash-chart-fill" data-fill="${width}" style="background:${c.color}"></div></div>
+                <span class="dash-chart-count">${count}</span>
+              </div>
+            `;
+          }).join("")}
+        </div>
+
+        <h2 class="section-title">Modul Terakhir Dibuka</h2>
+        <p class="section-desc">${recentVisits.length ? "Riwayat modul yang udah kamu buka, urut dari yang paling baru." : "Belum ada modul yang dibuka di device ini."}</p>
+        <div class="dash-recent-list">
+          ${recentVisits.slice(0, 6).map((v, i) => `
+            <div class="dash-recent-item reveal" style="transition-delay:${Math.min(i * 60, 300)}ms" data-nav="/module/${v.slug}">
+              <div class="icon-badge">${icon(v.m.icon, 18)}</div>
+              <div class="dash-recent-body">
+                <h3>${escapeHtml(v.m.title)}</h3>
+                <p>${timeAgo(v.at)}</p>
+              </div>
+              ${icon("chevronRight", 18)}
+            </div>
+          `).join("")}
+          ${!recentVisits.length ? `<div class="dash-empty reveal" data-nav="/module/${firstModuleSlug}">${icon("compass", 18)} Yuk mulai dari <strong>&nbsp;${escapeHtml(firstModule.title)}</strong></div>` : ""}
+        </div>
+
+        ${visitedCount > 0 ? `<button class="dash-reset-btn" id="dashResetProgress">Reset progress belajar</button>` : ""}
+
+        <div class="page-footer">Statistik ini cuma tersimpan di browser kamu sendiri (localStorage) — nggak dikirim atau disimpan di server manapun.</div>
+      </div>
+    `;
+    wireNavClicks();
+    initScrollReveal($app);
+    requestAnimationFrame(() => {
+      $app.querySelectorAll("[data-fill]").forEach((el) => {
+        el.style.width = el.dataset.fill + "%";
+      });
+    });
+
+    const $reset = document.getElementById("dashResetProgress");
+    if ($reset) {
+      $reset.addEventListener("click", () => {
+        if (confirm("Reset semua progress modul yang udah dibuka?")) {
+          localStorage.removeItem(VISITS_KEY);
+          renderDashboard();
+        }
+      });
+    }
+  }
+
+  // -----------------------------------------------------------------------
   // Jump straight to the exact matched text after a search click (like
   // browser Ctrl+F) instead of just scrolling to the section heading.
   // Falls back to the heading anchor when the phrase can't be located.
@@ -416,6 +585,21 @@
     });
   }
 
+  // ---------------------------------------------------------------------
+  // Visit tracking (localStorage) — powers the Dashboard's progress stats
+  // ---------------------------------------------------------------------
+  const VISITS_KEY = "ys-module-visits";
+  function loadVisits() {
+    try { return JSON.parse(localStorage.getItem(VISITS_KEY)) || {}; } catch (e) { return {}; }
+  }
+  function trackVisit(slug) {
+    try {
+      const visits = loadVisits();
+      visits[slug] = new Date().toISOString();
+      localStorage.setItem(VISITS_KEY, JSON.stringify(visits));
+    } catch (e) { /* ignore (private browsing etc.) */ }
+  }
+
   async function renderModulePage(slug, anchor, query) {
     const m = moduleBySlug.get(slug);
     if (!m) return renderNotFound();
@@ -449,6 +633,7 @@
       wireNavClicks();
       if (window.YSEditor) window.YSEditor.mount();
       if (anchor || query) jumpToResult(anchor, query);
+      trackVisit(slug);
     } catch (err) {
       renderError(m.title, err);
     }
@@ -580,6 +765,9 @@
 
       <div class="nav-link" data-nav="/" data-route="/">
         ${icon("home")} Panduan Belajar
+      </div>
+      <div class="nav-link" data-nav="/dashboard" data-route="/dashboard">
+        ${icon("dashboard")} Dashboard
       </div>
 
       <div class="nav-section-title">Modul (urutan belajar)</div>
