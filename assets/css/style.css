@@ -167,27 +167,28 @@ img { max-width: 100%; height: auto; border-radius: var(--radius-sm); }
    ========================================================================== */
 
 .app-shell {
-  display: grid;
-  grid-template-columns: var(--sidebar-w) 1fr;
-  grid-template-rows: var(--header-h) 1fr;
-  grid-template-areas:
-    "sidebar header"
-    "sidebar main";
+  display: flex;
+  align-items: stretch;
   min-height: 100vh;
-  transition: grid-template-columns .26s var(--ease);
+}
+
+.content-col {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (min-width: 901px) {
-  html[data-sidebar="collapsed"] .app-shell {
-    grid-template-columns: 0 1fr;
-  }
+  /* Slide the sidebar out with margin-left instead of animating grid
+     track sizes — grid-template-columns transitions force a full layout
+     recompute every frame and end up visibly janky. A single box-model
+     property (plus the content column's max-width below, kept in the same
+     duration/easing so both move as one motion) is far smoother. */
   html[data-sidebar="collapsed"] .sidebar {
-    overflow: hidden;
+    margin-left: calc(-1 * var(--sidebar-w));
     opacity: 0;
     pointer-events: none;
-  }
-  .sidebar {
-    transition: opacity .2s var(--ease);
   }
   .sidebar-collapse-btn .icon-flip {
     transition: transform .22s var(--ease);
@@ -201,12 +202,12 @@ img { max-width: 100%; height: auto; border-radius: var(--radius-sm); }
      there's extra room to use. */
   html[data-sidebar="collapsed"] .main {
     max-width: 1100px;
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
 .topbar {
-  grid-area: header;
   position: sticky;
   top: 0;
   z-index: 20;
@@ -478,7 +479,6 @@ img { max-width: 100%; height: auto; border-radius: var(--radius-sm); }
    ========================================================================== */
 
 .sidebar {
-  grid-area: sidebar;
   position: sticky;
   top: 0;
   height: 100vh;
@@ -490,6 +490,9 @@ img { max-width: 100%; height: auto; border-radius: var(--radius-sm); }
   flex-direction: column;
   gap: 6px;
   z-index: 25;
+  flex-shrink: 0;
+  width: var(--sidebar-w);
+  transition: margin-left .28s var(--ease), opacity .2s var(--ease);
 }
 
 .brand {
@@ -611,9 +614,11 @@ img { max-width: 100%; height: auto; border-radius: var(--radius-sm); }
    ========================================================================== */
 
 .main {
-  grid-area: main;
   padding: 32px clamp(20px, 4vw, 56px) 80px;
   max-width: 980px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: max-width .28s var(--ease), margin-left .28s var(--ease), margin-right .28s var(--ease);
 }
 
 .view {
@@ -1317,12 +1322,6 @@ img { max-width: 100%; height: auto; border-radius: var(--radius-sm); }
    ========================================================================== */
 
 @media (max-width: 900px) {
-  .app-shell {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "header"
-      "main";
-  }
   .hamburger { display: inline-flex; }
   .topbar .brand-mobile { display: block; }
   .sidebar {
