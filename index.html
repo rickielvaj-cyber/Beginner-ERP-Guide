@@ -7,7 +7,7 @@
 <meta name="description" content="Catatan belajar pribadi YonSuite ERP — Digital Modeling, AACT/COA, AP, AR, FA, GL, Inventory, Purchasing, Sales, dan Issue Log troubleshooting.">
 <meta name="color-scheme" content="light dark">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><rect width=%2224%22 height=%2224%22 rx=%225%22 fill=%22%23c8102e%22/><text x=%2212%22 y=%2216.5%22 font-size=%2211%22 font-family=%22Arial%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22>YS</text></svg>">
-<link rel="stylesheet" href="assets/css/style.css?v=14">
+<link rel="stylesheet" href="assets/css/style.css?v=15">
 <script>
 (function () {
   try {
@@ -23,10 +23,28 @@
     var collapsed = localStorage.getItem("ys-sidebar-collapsed") === "1";
     document.documentElement.setAttribute("data-sidebar", collapsed ? "collapsed" : "expanded");
   } catch (e) {}
+  try {
+    if (localStorage.getItem("ys-site-unlocked") === "1") {
+      document.documentElement.setAttribute("data-unlocked", "1");
+    }
+  } catch (e) {}
 })();
 </script>
 </head>
 <body>
+<div class="lock-screen" id="lockScreen">
+  <form class="lock-card" id="lockForm">
+    <div class="lock-logo">YS</div>
+    <h1>Catatan Belajar ERP YonSuite</h1>
+    <p class="lock-hint">Situs ini private. Masukkan ID &amp; password buat masuk.</p>
+    <label class="ys-editor-label">ID</label>
+    <input type="text" id="lockId" class="ys-editor-input" placeholder="ID" autocomplete="username" autocapitalize="off" autocorrect="off" spellcheck="false">
+    <label class="ys-editor-label">Password</label>
+    <input type="password" id="lockPw" class="ys-editor-input" placeholder="Password" autocomplete="current-password">
+    <p class="ys-editor-error" id="lockErr"></p>
+    <button type="submit" class="ys-btn primary lock-submit">Masuk</button>
+  </form>
+</div>
 <div class="app-shell">
   <aside class="sidebar" id="sidebar"></aside>
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
@@ -65,8 +83,9 @@
   </div>
 </div>
 
-<script src="assets/js/vendor/marked.js?v=14"></script>
-<script src="assets/js/editor.js?v=14"></script>
-<script src="assets/js/app.js?v=14"></script>
+<script src="assets/js/lock.js?v=15"></script>
+<script src="assets/js/vendor/marked.js?v=15"></script>
+<script src="assets/js/editor.js?v=15"></script>
+<script src="assets/js/app.js?v=15"></script>
 </body>
 </html>
