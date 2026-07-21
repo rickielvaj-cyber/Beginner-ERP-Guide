@@ -299,6 +299,166 @@ window.YSEditor = (function () {
   }
 
   // -----------------------------------------------------------------------
+  // Preview -> Markdown conversion, so the "Preview" tab can be edited
+  // directly (contenteditable) instead of only the raw "Tulis" textarea.
+  // This only needs to round-trip whatever marked.js's own renderer (see
+  // app.js buildRenderer) can produce, plus whatever plain HTML Chrome's
+  // contenteditable creates while typing — not arbitrary HTML in general.
+  // Unrecognized elements fall back to raw HTML passthrough so nothing
+  // silently gets destroyed.
+  // -----------------------------------------------------------------------
+  function relPathFromImgSrc(src, pendingBlobUrls) {
+    for (const relPath in pendingBlobUrls) {
+      if (pendingBlobUrls[relPath] === src) return relPath;
+    }
+    const prefix = `${window.YSApp.CONTENT_DIR}/`;
+    if (src.startsWith(prefix)) return src.slice(prefix.length);
+    return src;
+  }
+  function mdEscapeCell(s) {
+    return s.replace(/\|/g, "\\|").replace(/\n/g, " ");
+  }
+  function inlineToMd(node, pendingBlobUrls) {
+    let out = "";
+    node.childNodes.forEach((child) => { out += inlineNodeToMd(child, pendingBlobUrls); });
+    return out;
+  }
+  function inlineNodeToMd(node, pendingBlobUrls) {
+    if (node.nodeType === Node.TEXT_NODE) return node.textContent;
+    if (node.nodeType !== Node.ELEMENT_NODE) return "";
+    if (node.classList && node.classList.contains("ys-check-cluster")) return "";
+    const tag = node.tagName.toLowerCase();
+    switch (tag) {
+      case "strong": case "b": {
+        const inner = inlineToMd(node, pendingBlobUrls).trim();
+        return inner ? `**${inner}**` : "";
+      }
+      case "em": case "i": {
+        const inner = inlineToMd(node, pendingBlobUrls).trim();
+        return inner ? `*${inner}*` : "";
+      }
+      case "code": return `\`${node.textContent}\``;
+      case "a": return `[${inlineToMd(node, pendingBlobUrls)}](${node.getAttribute("href") || ""})`;
+      case "img": {
+        const src = relPathFromImgSrc(node.getAttribute("src") || "", pendingBlobUrls);
+        return `![${node.getAttribute("alt") || ""}](${src})`;
+      }
+      case "br": return "\n";
+      default:
+        return inlineToMd(node, pendingBlobUrls);
+    }
+  }
+  function listToMd(list, pendingBlobUrls, depth) {
+    depth = depth || 0;
+    const indent = "  ".repeat(depth);
+    const ordered = list.tagName.toLowerCase() === "ol";
+    let i = 0;
+    const lines = [];
+    Array.from(list.children).forEach((li) => {
+      if (li.tagName !== "LI") return;
+      i++;
+      const marker = ordered ? `${i}.` : "-";
+      const nestedLists = Array.from(li.children).filter((c) => c.tagName === "UL" || c.tagName === "OL");
+      const clone = li.cloneNode(true);
+      Array.from(clone.children).forEach((c) => {
+        if (c.tagName === "UL" || c.tagName === "OL") clone.removeChild(c);
+      });
+      const text = inlineToMd(clone, pendingBlobUrls).trim().replace(/\n+/g, " ");
+      lines.push(`${indent}${marker} ${text}`);
+      nestedLists.forEach((nl) => lines.push(listToMd(nl, pendingBlobUrls, depth + 1)));
+    });
+    return lines.join("\n");
+  }
+  function tableToMd(table, pendingBlobUrls) {
+    const rows = Array.from(table.querySelectorAll("tr"));
+    if (!rows.length) return "";
+    return rows.map((tr, i) => {
+      const cells = Array.from(tr.children).map((cell) => mdEscapeCell(inlineToMd(cell, pendingBlobUrls).trim()));
+      const line = `| ${cells.join(" | ")} |`;
+      if (i === 0) return `${line}\n| ${cells.map(() => "---").join(" | ")} |`;
+      return line;
+    }).join("\n");
+  }
+  function blockNodeToMd(node, pendingBlobUrls) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      const t = node.textContent.trim();
+      return t || "";
+    }
+    if (node.nodeType !== Node.ELEMENT_NODE) return "";
+    const tag = node.tagName.toLowerCase();
+    switch (tag) {
+      case "h1": case "h2": case "h4": case "h5": case "h6":
+        return `${"#".repeat(Number(tag[1]))} ${inlineToMd(node, pendingBlobUrls).trim()}`;
+      case "h3": {
+        const textEl = node.querySelector(".checkable-heading-text");
+        const text = textEl ? inlineToMd(textEl, pendingBlobUrls).trim() : inlineToMd(node, pendingBlobUrls).trim();
+        return `### ${text}`;
+      }
+      case "p":
+        return inlineToMd(node, pendingBlobUrls).trim();
+      case "ul": case "ol":
+        return listToMd(node, pendingBlobUrls);
+      case "blockquote": {
+        const inner = htmlToMarkdown(node, pendingBlobUrls);
+        return inner.split("\n").map((l) => (l ? `> ${l}` : ">")).join("\n");
+      }
+      case "pre": {
+        const codeEl = node.querySelector("code");
+        const langMatch = codeEl && codeEl.className.match(/language-(\S+)/);
+        const lang = langMatch ? langMatch[1] : "";
+        const code = (codeEl || node).textContent.replace(/\n$/, "");
+        return "```" + lang + "\n" + code + "\n```";
+      }
+      case "hr":
+        return "---";
+      case "table":
+        return tableToMd(node, pendingBlobUrls);
+      case "img": {
+        const src = relPathFromImgSrc(node.getAttribute("src") || "", pendingBlobUrls);
+        return `![${node.getAttribute("alt") || ""}](${src})`;
+      }
+      case "div":
+        if (node.classList.contains("issue-card")) {
+          const cat = node.getAttribute("data-category") || "";
+          const inner = htmlToMarkdown(node, pendingBlobUrls);
+          return `<div class="issue-card" data-category="${cat}">\n\n${inner}\n\n</div>`;
+        }
+        // Plain wrapper div — Chrome's contenteditable sometimes creates
+        // these instead of <p> for new paragraphs. Treat like a paragraph.
+        return inlineToMd(node, pendingBlobUrls).trim();
+      default:
+        // Unknown block element (rare) — keep it as raw HTML rather than
+        // guessing wrong and losing content.
+        return node.outerHTML;
+    }
+  }
+  function htmlToMarkdown(root, pendingBlobUrls) {
+    const blocks = [];
+    root.childNodes.forEach((node) => {
+      const md = blockNodeToMd(node, pendingBlobUrls || {});
+      if (md && md.trim()) blocks.push(md.trim());
+    });
+    return blocks.join("\n\n") + "\n";
+  }
+  function insertNodeAtCursorInPreview($preview, node) {
+    const sel = window.getSelection();
+    let range;
+    if (sel && sel.rangeCount && $preview.contains(sel.anchorNode)) {
+      range = sel.getRangeAt(0);
+    } else {
+      range = document.createRange();
+      range.selectNodeContents($preview);
+      range.collapse(false);
+    }
+    range.deleteContents();
+    range.insertNode(node);
+    range.setStartAfter(node);
+    range.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+
+  // -----------------------------------------------------------------------
   // main editor
   // -----------------------------------------------------------------------
   async function openEditor(slug) {
@@ -361,6 +521,7 @@ window.YSEditor = (function () {
             <button class="ys-editor-tab" id="ysTabPreview" data-view="preview">Preview</button>
           </div>
           <span class="ys-editor-upload-status" id="ysEditorUploadStatus"></span>
+          <span class="ys-editor-preview-hint">✏️ Preview bisa diedit langsung</span>
         </div>
         <div class="ys-editor-single">
           <textarea id="ysEditorTextarea" class="ys-editor-textarea" spellcheck="false">${esc(text)}</textarea>
@@ -376,6 +537,8 @@ window.YSEditor = (function () {
     const $modal = document.getElementById("ysEditorModal");
     const $ta = document.getElementById("ysEditorTextarea");
     const $preview = document.getElementById("ysEditorPreview");
+    $preview.contentEditable = "true";
+    try { document.execCommand("defaultParagraphSeparator", false, "p"); } catch (e) { /* older browsers */ }
     const pendingBlobUrls = {}; // relPath -> local blob URL, for files uploaded this session
     const updatePreview = () => {
       let html = window.YSApp.renderMarkdown($ta.value);
@@ -386,7 +549,16 @@ window.YSEditor = (function () {
       });
       $preview.innerHTML = html;
     };
+    // Preview is directly editable (contenteditable). It stays a secondary
+    // view on top of the textarea's markdown — edits made there only get
+    // converted back into the textarea when leaving the tab or saving, not
+    // on every keystroke, so a stray contenteditable quirk can't corrupt
+    // the draft while typing.
+    const syncPreviewToTextarea = () => {
+      $ta.value = htmlToMarkdown($preview, pendingBlobUrls);
+    };
     const setView = (view) => {
+      if ($modal.dataset.view === "preview" && view !== "preview") syncPreviewToTextarea();
       $modal.dataset.view = view;
       document.getElementById("ysTabWrite").classList.toggle("active", view === "write");
       document.getElementById("ysTabPreview").classList.toggle("active", view === "preview");
@@ -397,15 +569,18 @@ window.YSEditor = (function () {
 
     document.getElementById("ysEditorClose").addEventListener("click", closeOverlay);
     document.getElementById("ysEditorCancel").addEventListener("click", closeOverlay);
-    document.getElementById("ysEditorFile").addEventListener("change", (e) => handleFileUpload(e, $ta, updatePreview, pendingBlobUrls));
-    document.getElementById("ysEditorSave").addEventListener("click", () => handleSave($ta.value));
+    document.getElementById("ysEditorFile").addEventListener("change", (e) => handleFileUpload(e, $ta, $preview, $modal, updatePreview, pendingBlobUrls));
+    document.getElementById("ysEditorSave").addEventListener("click", () => {
+      if ($modal.dataset.view === "preview") syncPreviewToTextarea();
+      handleSave($ta.value);
+    });
   }
 
   function uploadIcon() {
     return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>';
   }
 
-  async function handleFileUpload(e, $ta, updatePreview, pendingBlobUrls) {
+  async function handleFileUpload(e, $ta, $preview, $modal, updatePreview, pendingBlobUrls) {
     const file = e.target.files[0];
     e.target.value = "";
     if (!file) return;
@@ -423,8 +598,20 @@ window.YSEditor = (function () {
       const isPdf = file.type === "application/pdf" || /\.pdf$/i.test(file.name);
       const insertion = isPdf ? `[📄 ${file.name}](${relPath})` : `![${file.name}](${relPath})`;
       if (!isPdf) pendingBlobUrls[relPath] = URL.createObjectURL(file);
-      insertAtCursor($ta, insertion);
-      updatePreview();
+
+      if ($modal.dataset.view === "preview") {
+        // Insert straight into the live preview DOM instead of re-rendering
+        // from the textarea — that would discard whatever's been edited in
+        // the preview so far since it was last synced.
+        const node = isPdf
+          ? Object.assign(document.createElement("a"), { href: relPath, textContent: `📄 ${file.name}` })
+          : Object.assign(document.createElement("img"), { src: pendingBlobUrls[relPath], alt: file.name, loading: "lazy" });
+        insertNodeAtCursorInPreview($preview, node);
+        $preview.focus();
+      } else {
+        insertAtCursor($ta, insertion);
+        updatePreview();
+      }
       $status.textContent = "✓ " + file.name + " ke-upload & disisipkan.";
       setTimeout(() => { $status.textContent = ""; }, 4000);
     } catch (err) {

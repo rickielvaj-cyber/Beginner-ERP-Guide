@@ -1461,9 +1461,17 @@ html[data-unlocked="1"] .lock-screen { display: none; }
   border: 1.5px solid var(--color-border);
   background: var(--color-bg);
   box-sizing: border-box;
+  cursor: text;
 }
+.ys-editor-preview:focus { outline: none; border-color: var(--color-accent); }
 .ys-editor-modal[data-view="write"] .ys-editor-textarea { display: block; }
 .ys-editor-modal[data-view="preview"] .ys-editor-preview { display: block; }
+.ys-editor-preview-hint {
+  font-size: 11px;
+  color: var(--color-text-faint);
+  margin-left: auto;
+}
+@media (max-width: 800px) { .ys-editor-preview-hint { display: none; } }
 
 .ys-toast {
   position: fixed;
