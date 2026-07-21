@@ -1054,30 +1054,30 @@ Tempat menyimpan informasi client/customer. Logo perusahaan juga bisa diedit di 
 ![digital-modeling screenshot 113](images/digital-modeling/digital-modeling-113.png)
 
 - **5. Master Data**
-1. **Management Grade** — assign company tertentu agar bisa input data ke master data
+99. **Management Grade** — assign company tertentu agar bisa input data ke master data
 
 ![digital-modeling screenshot 114](images/digital-modeling/digital-modeling-114.png)
 
-2. **Uniqueness Rules** — pengecekan data duplikat. Semakin banyak layer kategori, makin detail. Contoh: cek by nama + negara + code = 3 layer. Kalau cuma 1 layer (nama saja), berisiko false-duplicate (nama sama tapi negara/code beda dianggap sama). Paling sering kena: nama customer, supplier, material.
+100. **Uniqueness Rules** — pengecekan data duplikat. Semakin banyak layer kategori, makin detail. Contoh: cek by nama + negara + code = 3 layer. Kalau cuma 1 layer (nama saja), berisiko false-duplicate (nama sama tapi negara/code beda dianggap sama). Paling sering kena: nama customer, supplier, material.
 
 ![digital-modeling screenshot 115](images/digital-modeling/digital-modeling-115.png)
 
 Catatan: Kalau sistem Yonyou ada update, workflow yang sudah dibuat **tidak akan hilang**
 
-3. **Currencies** — bisa atur precision (biasanya 0–2 digit, tergantung nilai mata uang). Catatan: kalau precision sudah dinaikkan, **tidak bisa diturunkan lagi**
+101. **Currencies** — bisa atur precision (biasanya 0–2 digit, tergantung nilai mata uang). Catatan: kalau precision sudah dinaikkan, **tidak bisa diturunkan lagi**
 
 ![digital-modeling screenshot 116](images/digital-modeling/digital-modeling-116.png)
 
-4. **Exchange Rate Type** — untuk memasukan Tipe Rate mana yang mau menjadi patokan.
+102. **Exchange Rate Type** — untuk memasukan Tipe Rate mana yang mau menjadi patokan.
 Opsi "Benchmark exchange rate" bisa konek ke bank China untuk update rate otomatis (hanya tersedia versi China)
 
 ![digital-modeling screenshot 117](images/digital-modeling/digital-modeling-117.png)
 
-5. **Exchange Rate** — input rate fiat ke dalam Exchange Rate Type yang sudah dibuat. Kolom "indirect exchange" diisi rate fiat yang mau ditampilkan. Rate ini berubah-ubah, sebaiknya rutin di-maintain
+103. **Exchange Rate** — input rate fiat ke dalam Exchange Rate Type yang sudah dibuat. Kolom "indirect exchange" diisi rate fiat yang mau ditampilkan. Rate ini berubah-ubah, sebaiknya rutin di-maintain
 
 ![digital-modeling screenshot 118](images/digital-modeling/digital-modeling-118.png)
 
-6. **User Defined File Setting** — maintain custom field, bentuknya seperti kategori/koleksi Contoh: RAM dengan berbagai kapasitas→ bisa add size baru **Flow:**
+104. **User Defined File Setting** — maintain custom field, bentuknya seperti kategori/koleksi Contoh: RAM dengan berbagai kapasitas→ bisa add size baru **Flow:**
   - Add new di **User Defined File Setting**
 
 ![digital-modeling screenshot 119](images/digital-modeling/digital-modeling-119.png)
@@ -1099,11 +1099,11 @@ Opsi "Benchmark exchange rate" bisa konek ke bank China untuk update rate otomat
 
 ![digital-modeling screenshot 123](images/digital-modeling/digital-modeling-123.png)
 
-7. **Transaction Type** — membedakan UI/data antar jenis transaksi. Contoh: saat import, ada beberapa jenis data — UI dan proses import bisa dibedakan (mana yang lokal, mana yang bukan). Bikin tipe transaksi untuk bikin pembeda tiap jenis transaksi. Semuanya ud by default, tpi tergantung case kemungkinan bisa ditambahin atau custom. - (Tau fungsi, belum mengerti logic) (issue)
+106. **Transaction Type** — membedakan UI/data antar jenis transaksi. Contoh: saat import, ada beberapa jenis data — UI dan proses import bisa dibedakan (mana yang lokal, mana yang bukan). Bikin tipe transaksi untuk bikin pembeda tiap jenis transaksi. Semuanya ud by default, tpi tergantung case kemungkinan bisa ditambahin atau custom. - (Tau fungsi, belum mengerti logic) (issue)
 
 ![digital-modeling screenshot 124](images/digital-modeling/digital-modeling-124.png)
 
-8. **Coding Rules** — aturan penomoran otomatis transaksi (PO, Material, dll) Exp: PO-20261106-0001
+107. **Coding Rules** — aturan penomoran otomatis transaksi (PO, Material, dll) Exp: PO-20261106-0001
   - Tambah jenis penomoran baru: pilih field → Edit → Copy → edit hasil copy-nya
 
 ![digital-modeling screenshot 125](images/digital-modeling/digital-modeling-125.png)
@@ -1126,14 +1126,14 @@ Opsi "Benchmark exchange rate" bisa konek ke bank China untuk update rate otomat
 
 ![digital-modeling screenshot 129](images/digital-modeling/digital-modeling-129.png)
 
-9. **UI Template** — menyesuaikan tampilan UI berdasarkan jenis transaksi Contoh: field ukuran baju (dari user defined) bisa dimasukkan ke UI Purchase Order
+108. **UI Template** — menyesuaikan tampilan UI berdasarkan jenis transaksi Contoh: field ukuran baju (dari user defined) bisa dimasukkan ke UI Purchase Order
 - **Catatan**: kalau user sudah pernah modifikasi UI mereka sendiri, update template besar/global dari kita **tidak akan menimpa** punya mereka. Ada opsi **"Clear user level setting"** untuk menyamakan semua —  **belum sepenuhnya paham cara kerja opsi ini.**
 
 ![digital-modeling screenshot 130](images/digital-modeling/digital-modeling-130.png)
 
 ![digital-modeling screenshot 131](images/digital-modeling/digital-modeling-131.png)
 
-10. **Print Template** — setting template untuk print, formatnya drag and drop
+109. **Print Template** — setting template untuk print, formatnya drag and drop
 
 ![digital-modeling screenshot 132](images/digital-modeling/digital-modeling-132.png)
 
@@ -1147,11 +1147,11 @@ Opsi "Benchmark exchange rate" bisa konek ke bank China untuk update rate otomat
 
 **Catatan Tambahan:**
 
-### 99. Leader in Charge dan Manager (cmiiw)
+### 110. Leader in Charge dan Manager (cmiiw)
 
 designated head of the department; used for approval routing — when a workflow requires department head approval, the system auto-routes to whoever is set as Leader here.
 
-### 100. Licensing & Resource Management
+### 111. Licensing & Resource Management
 
 ![digital-modeling screenshot 135](images/digital-modeling/digital-modeling-135.png)
 
@@ -1165,25 +1165,25 @@ designated head of the department; used for approval routing — when a workflow
 
 ## Tax Collection
 
-### 101. Tax System File (register
+### 112. Tax System File (register
 
 ![digital-modeling screenshot 136](images/digital-modeling/digital-modeling-136.png)
 
 Biasanya untuk mendaftarkan suatu Lembaga perpajakan suatu negara, karena kita berada di Indonesia, di system kita daftarkan menggunakan DJP.
 
-### 102. Tax Category Archive
+### 113. Tax Category Archive
 
 ![digital-modeling screenshot 137](images/digital-modeling/digital-modeling-137.png)
 
 Biasanya dipakai untuk mendaftarkan tipe tipe jenis pajak pada suatu negara, jika di Indonesia ada seperti PPH, PPH, PPN, dll.
 
-### 103. Tax Rate Archive
+### 114. Tax Rate Archive
 
 ![digital-modeling screenshot 138](images/digital-modeling/digital-modeling-138.png)
 
 Disini biasanya dipakai untuk memasukan tipe tipe rate dari jenis jenis pajak suatu negara tergantung dengan jenis pembelian atau penjualan.
 
-### 104. Witholding Tax Type
+### 115. Witholding Tax Type
 
 ![digital-modeling screenshot 139](images/digital-modeling/digital-modeling-139.png)
 
