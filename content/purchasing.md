@@ -1,6 +1,6 @@
-### 1. Price Center
+### Price Center
 
-### 2. Price Adjusting Doc
+### 1. Price Adjusting Doc
 
 ![purchasing screenshot 1](images/purchasing/purchasing-001.png)
 
@@ -8,7 +8,7 @@ Kebutuhan Supplier untuk memberikan adjusting harga produk ke dalam sistem.
 
 Approved = dari pihak client atau pembeli dapat approved/devote approve harga yang diberikan oleh supplier.
 
-### 3. Price Catalog
+### 2. Price Catalog
 
 ![purchasing screenshot 2](images/purchasing/purchasing-002.png)
 
@@ -18,12 +18,12 @@ Flow : Price Adj Doc > Price Catalog
 
 ## Purchase Parameter
 
-### 4. 价格表价格来源
+### 3. 价格表价格来源
 
 - **Price list Price source**
 - **Tidak ada di settings (unavailable)**
 
-### 5. 取价方式
+### 4. 取价方式
 
 - **Price Getting Method**
 
@@ -36,7 +36,7 @@ Menentukan bagaimana harga suatu barang akan diambil untuk kebutuhan purchasing,
 - Lastest Purchase Price = Mengikuti harga pembelian terakhir
 - Price Retrieval Starategi = Mengikuti strategi system pengecekan dan pencocokan secara bertahap
 
-### 6. 定价可改
+### 5.定价可改
 
 - **Pricing modifiable**
 
@@ -46,7 +46,7 @@ Menentukan bagaimana harga suatu barang akan diambil untuk kebutuhan purchasing,
 
 Menentukan **apakah user boleh mengubah harga yang sudah otomatis diambil dari Price Catalog** saat transaksi berlangsung.
 
-### 7. 实时取价
+### 6. 实时取价
 
 - **Real-time Price Retrieval**
 
@@ -56,21 +56,21 @@ Menentukan **apakah user boleh mengubah harga yang sudah otomatis diambil dari P
 
 **No** : **Harga diambil sekali saja saat dokumen pertama kali dibuat**, tidak diupdate otomatis meski harga di katalog sudah berubah.
 
-### 8. 最新采购价来源
+### 7. 最新采购价来源
 
 - **Source of Latest Purchase Price**
 - **(unavailable)**
 
 Mengambil sumber harga barang berdasarkan transaksi terakhir
 
-### 9. 最新采购价按供应商取价
+### 8. 最新采购价按供应商取价
 
 - **Retrieve Latest Purchase Price by Supplier**
 - **(unavailable)**
 
 Mengambil suatu harga barang berdasarkan transaksi supplier terakhir.
 
-### 10. 最高限价控制
+### 9. 最高限价控制
 
 - **Ceiling Price Ctrl**
 
@@ -82,7 +82,7 @@ Batas harga maksimum yang boleh diinput untuk suatu material. Biasanya pada fitu
 - **Check Prompt :** Kalau harga melebihi ceiling, sistem kasih warning/peringatan — tapi user masih bisa lanjut dan save.
 - **Strict Control :** Kalau harga melebihi ceiling, sistem blokir — user tidak bisa lanjut sampai harga diperbaiki.
 
-### 11. 发票本币修改是否折算到原币
+### 10. 发票本币修改是否折算到原币
 
 - **Convert to OC (Original Currency) after modifying FC of invoice**
 
@@ -93,7 +93,7 @@ Settingan yang fungsinya supaya data currency selalu terupdate dengan benar.
 - **Yes :** Kalau Functional Currency diubah → sistem otomatis hitung ulang nilai OC kita (mengikuti kurs) nilai plus = **Nilai currency lebih update**
 - **No :** Kalau Functional Currency diubah → nilai OC tetap seperti semula atau tidak ikut berubah.
 
-### 12. 生单汇率取值
+### 11. 生单汇率取值
 
 - **Value of Ex. Rate in Doc Generation List**
 
@@ -112,7 +112,7 @@ setting ini menentukan kurs kapan yang dipakai di dokumen baru itu.
 
 PO sudah diapprove → user klik "**Push**" → sistem otomatis generate **Arrive Doc** dari data PO itu. Jadi user tidak perlu input ulang data supplier, material, quantity, dll — semua otomatis terisi dari PO.
 
-### 13. 允许超请购订货
+### 12. 允许超请购订货
 
 - **Allow order Qty exceeding PR Qty**
 
@@ -129,7 +129,7 @@ Kalau perusahaan mau **strict cost control** — setiap pembelian harus persis s
 
 Purchase Order vs Purchase Request (kedua ini wajib sama)
 
-### 14. 允许超订单到货及入库
+### 13. 允许超订单到货及入库
 
 - **Allow arrival and receipt Qty exceeding order Qty**
 
@@ -148,7 +148,7 @@ Arrival = barang fisik datang dari supplier, dicatat di sistem (Arrival Document
 
 Receipt = barang resmi diterima dan masuk inventory (Receipt Document)
 
-### 15. 允许超到货实收
+### 14. 允许超到货实收
 
 - **Allowed over-arrival and paid-in**
 
@@ -162,7 +162,7 @@ Arrival VS Receipt
 
 **No** → Receipt **tidak boleh melebihi Arrival**. Harus sesuai atau kurang dari yang datang.
 
-### 16. 供应商供货控制
+### 15. 供应商供货控制
 
 - **Supplier Supply Control**
 
@@ -174,7 +174,7 @@ Kontrol seberapa ketat sistem mengatur apakah supplier boleh men-supply material
 - **Check Prompt (fleksibel)** → Kalau supplier tidak terdaftar sebagai supplier resmi untuk material tertentu, sistem akan kasih warning/notifikasi, tapi transaksi tetap bisa dilanjutkan.
 - **Strict Control** → Kalau supplier tidak terdaftar sebagai supplier resmi untuk material tertentu, sistem langsung blok. Transaksi tidak bisa dilanjutkan.
 
-### 17. 采购发票审核时自动结算
+### 16. 采购发票审核时自动结算
 
 - **Auto Settle upon Purchase Invoice Approval**
 
@@ -185,7 +185,7 @@ Apakah sistem otomatis melakukan settlement begitu Purchase Invoice diapprove.
 - **Yes** → Begitu Purchase Invoice di-approve, **sistem otomatis langsung settle atau generate dokumen untuk Purchase settlement** (merekonsiliasi dokumen secara administratif — bukan berarti uang langsung keluar) tanpa perlu langkah manual lagi.
 - **No** → Setelah Invoice di-approve, **settle-nya masih harus dilakukan manual** secara terpisah.
 
-### 18. 是否自动业务关闭
+### 17. 是否自动业务关闭
 
 - **Auto Close Doc**
 
@@ -198,7 +198,7 @@ Sistem otomatis menutup/close suatu order/business ketika transaksinya sudah sel
 
 Note: ada 4 Jenis close : Arrival Closing, Receipt Closing, Invoicing Closing, Payment Closing
 
-### 19. 订单控制物料最小起订量
+### 18. 订单控制物料最小起订量
 
 - **Control Min Order Qty of Matl**
 
@@ -209,7 +209,7 @@ Apakah sistem **mengontrol minimum quantity order** sesuai yang diset di materia
 - **Yes** → Kalau material punya minimum order qty (misalnya minimal beli 50 unit), sistem akan enforce aturan itu. **Tidak bisa order di bawah minimum.**
 - **No** → Minimum order qty di material file diabaikan, **bisa order berapapun.**
 
-### 20. 订单控制物料采购倍量
+### 19. 订单控制物料采购倍量
 
 - **Control Matl Purchase Multiple of Order**
 
@@ -223,7 +223,7 @@ Mengontrol **apakah quantity order harus kelipatan tertentu** sesuai yang diset 
 
 ## Opening
 
-### 21. 期初采购入库单
+### 20. 期初采购入库单
 
 - **Opening Purchased Goods Receipt Doc**
 
@@ -235,7 +235,7 @@ Situasi penggunaan — hanya saat go-live implementasi ERP, khususnya ketika cli
 
 Stock yang ud masuk, tapi belum jadi AP
 
-### 22. 期初采购发票
+### 21. 期初采购发票
 
 - **Opening Purchased Invoice**
 
@@ -249,7 +249,7 @@ Stock yang ud masuk, udah jadi AP
 
 ## Purchasing
 
-### 23. 请购单
+### 22. 请购单
 
 - **Purchase Requisition**
 
@@ -259,7 +259,7 @@ Dokumen internal, dari departemen lain request ke department purchasing.
 
 Belum ada transaksi ke supplier sama sekali.
 
-### 24. 采购订单
+### 23. 采购订单
 
 - **Purchase Order**
 
@@ -269,7 +269,7 @@ Dokumen resmi pemesanan barang ke supplier. **Titik awal** transaksi purchasing.
 
 Pada saat bikin bikin New atau Push dari Purchase Request, untuk Transaction Type bisa pilih “Purchase Weighing – order arrival”
 
-### 25. 到货单
+### 24. 到货单
 
 - **Arrive Doc**
 
@@ -277,11 +277,11 @@ Pada saat bikin bikin New atau Push dari Purchase Request, untuk Transaction Typ
 
 Dokumen **pencatatan barang datang.** \*Belum masuk inventory (Receipt).
 
-### 26. Pricing Settlement
+### 25. Pricing Settlement
 
 Proses pencocokan antara harga tercatat di PO dengan invoice supplier
 
-### 27. 采购发票
+### 26. 采购发票
 
 - **Purchase Invoice**
 
@@ -289,7 +289,7 @@ Proses pencocokan antara harga tercatat di PO dengan invoice supplier
 
 Dokumen **tagihan resmi dari supplier yang harus dibayar**.
 
-### 28. 手工费用
+### 27. 手工费用
 
 - **Manual Settlement**
 
@@ -297,7 +297,7 @@ Dokumen **tagihan resmi dari supplier yang harus dibayar**.
 
 Proses **settle biaya tambahan** yang diinput manual.
 
-### 29. 费用折扣结算
+### 28. 费用折扣结算
 
 - **Expense Disc Settlement**
 
@@ -305,7 +305,7 @@ Proses **settle biaya tambahan** yang diinput manual.
 
 Proses **settle diskon** atau **biaya khusus** yang sudah disepakati dengan supplier.
 
-### 30. 采购结算单
+### 29. 采购结算单
 
 - **Puchase Settlement Doc**
 
@@ -317,7 +317,7 @@ Dokumen **rekonsiliasi/pencocokan** dokumen antara PO, Arrive Doc, dan Invoice s
 
 ## Report
 
-### 31. 请购执行进度表
+### 30. 请购执行进度表
 
 - **PR Execution Progress**
 
@@ -327,7 +327,7 @@ Laporan **progress tracking** dari **setiap Purchase Requisition**.
 
 Monitoring proses Purchase Requisition
 
-### 32. 请购统计
+### 31. 请购统计
 
 - **PR Statistics**
 
@@ -337,7 +337,7 @@ Monitoring proses Purchase Requisition
 
 Pengecekan PR pada bulan/periode tertentu itu ada berapa banyak.
 
-### 33. 采购订单预警和报警
+### 32. 采购订单预警和报警
 
 - **PO Alert & Alarm**
 
@@ -345,7 +345,7 @@ Pengecekan PR pada bulan/periode tertentu itu ada berapa banyak.
 
 **Laporan peringatan untuk PO yang bermasalah** — misalnya PO yang hampir jatuh tempo tapi barang belum datang, atau PO yang melebihi budget.
 
-### 34. 到货统计
+### 33. 到货统计
 
 - **Arrival Statistics**
 
@@ -353,7 +353,7 @@ Pengecekan PR pada bulan/periode tertentu itu ada berapa banyak.
 
 Laporan rekap barang yang sudah datang dalam periode tertentu. Dari supplier mana, material apa, biaya berapa.
 
-### 35. 入库统计
+### 34. 入库统计
 
 - **Receipt Statistics**
 
@@ -361,7 +361,7 @@ Laporan rekap barang yang sudah datang dalam periode tertentu. Dari supplier man
 
 **Laporan rekap barang yang sudah masuk ke inventory.** Mirip Arrival Statistics tapi fokusnya ke barang yang sudah resmi masuk gudang.
 
-### 36. 发票统计
+### 35. 发票统计
 
 - **Invoice Statistics**
 
@@ -369,7 +369,7 @@ Laporan rekap barang yang sudah datang dalam periode tertentu. Dari supplier man
 
 **Laporan rekap semua invoice dari supplier.** Berapa total tagihan, sudah dibayar berapa, masih outstanding berapa.
 
-### 37. 采购结算余额表
+### 36. 采购结算余额表
 
 - **Purchase Settlement Balance (PALING SERING DIPAKAI)**
 
@@ -379,7 +379,7 @@ Laporan rekap barang yang sudah datang dalam periode tertentu. Dari supplier man
 
 Note: settled = sudah terselesaikan (selesaikan pesanan)
 
-### 38. 未完业务明细表
+### 37. 未完业务明细表
 
 - **Outsourcing Settlement Balance Report**
 
@@ -394,7 +394,7 @@ Note Tambahan:
 
 ## REPORT PALING SERING DIPAKAI
 
-### 39. 采购订单执行统计表 (PALING SERING DIPAKAI)
+### 38. 采购订单执行统计表 (PALING SERING DIPAKAI)
 
 - **Purchase Order Execution Statistics**
 
@@ -402,13 +402,13 @@ Note Tambahan:
 
 Laporan statistik eksekusi PO — Mengecek qty dan nominal yg pernah kita order dari berbagai supplier
 
-### 40. Uncomplete Business Details (PALING SERING DIPAKAI)
+### 39. Uncomplete Business Details (PALING SERING DIPAKAI)
 
 ![purchasing screenshot 35](images/purchasing/purchasing-035.png)
 
 Track purchase yang belum settle, maka disini dibutuhkan untuk di-push ke purchase settlement
 
-### 41. 采购执行进度表
+### 40. 采购执行进度表
 
 - **Purchase Execution Progress Schedule**
 
