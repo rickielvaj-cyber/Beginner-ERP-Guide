@@ -1002,73 +1002,76 @@ html[data-unlocked="1"] .lock-screen { display: none; }
 .doc-nav a.next { text-align: right; margin-left: auto; }
 .doc-nav .nav-label { display: block; font-size: 11px; color: var(--color-text-faint); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 3px; }
 
-/* ---------- sticky checklist rail ---------- */
+/* ---------- "ditandai" (marked items) dropdown ---------- */
 
-.doc-body-layout {
-  display: flex;
-  align-items: flex-start;
-  gap: 22px;
-}
-.doc-body-layout .markdown-body { flex: 1; min-width: 0; }
-.doc-checklist-rail {
-  display: none;
-  flex-shrink: 0;
-  width: 232px;
-  position: sticky;
-  top: 84px;
-  max-height: calc(100vh - 104px);
-  overflow-y: auto;
-  padding: 16px;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  box-shadow: var(--shadow-sm);
-}
-@media (min-width: 1280px) {
-  .doc-checklist-rail:has(.ys-grid-sq) { display: block; }
-}
-.rail-title {
-  font-size: 11.5px;
-  font-weight: 700;
-  color: var(--color-text-faint);
-  text-transform: uppercase;
-  letter-spacing: .05em;
-  margin-bottom: 10px;
-}
-.rail-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(38px, 1fr));
-  gap: 7px;
-}
-.ys-grid-sq {
-  width: 100%;
-  aspect-ratio: 1;
-  min-height: 36px;
-  border-radius: 7px;
+.doc-marked-picker { position: relative; }
+.doc-marked-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 13px;
+  border-radius: 999px;
   border: 1.5px solid var(--color-border);
-  background: var(--color-surface-alt);
-  color: var(--color-text-secondary);
+  background: var(--color-surface);
+  color: var(--color-status-marked);
+  font-size: 12.5px;
+  font-weight: 600;
   cursor: pointer;
-  padding: 0;
-  display: flex;
+  transition: border-color .18s var(--ease), transform .18s var(--ease);
+}
+.doc-marked-btn:hover { border-color: var(--color-status-marked); transform: translateY(-1px); }
+.doc-marked-count {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: background .15s var(--ease), border-color .15s var(--ease), color .15s var(--ease), transform .1s var(--ease);
-}
-.ys-grid-sq-num {
-  font-size: 11.5px;
-  font-weight: 700;
-  line-height: 1;
-  pointer-events: none;
-}
-.ys-grid-sq:hover { border-color: var(--color-accent); transform: scale(1.08); }
-.ys-grid-sq.state-done { background: var(--color-status-done); border-color: var(--color-status-done); color: #fff; }
-.ys-grid-sq.state-marked { background: var(--color-status-marked); border-color: var(--color-status-marked); color: #fff; }
-.rail-hint {
-  margin: 12px 0 0;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--color-status-marked);
+  color: #fff;
   font-size: 10.5px;
-  line-height: 1.5;
+  font-weight: 700;
+}
+.doc-marked-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 300px;
+  max-height: 360px;
+  overflow-y: auto;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: 8px;
+  z-index: 30;
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity .18s var(--ease), transform .18s var(--ease);
+}
+.doc-marked-panel.open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.doc-marked-item {
+  padding: 9px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--color-text);
+  cursor: pointer;
+  border-left: 3px solid var(--color-status-marked);
+  margin-bottom: 3px;
+  transition: background .15s var(--ease);
+}
+.doc-marked-item:hover { background: var(--color-status-marked-soft); }
+.doc-marked-empty {
+  padding: 14px 10px;
+  font-size: 12.5px;
   color: var(--color-text-faint);
+  text-align: center;
 }
 
 .markdown-body h2 {

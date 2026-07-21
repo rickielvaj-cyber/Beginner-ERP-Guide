@@ -622,10 +622,6 @@
       localStorage.setItem(CHECKLIST_KEY, JSON.stringify(all));
     } catch (e) { /* ignore (private browsing etc.) */ }
   }
-  function extractItemNumber(label) {
-    const m = label.match(/^(\d+(?:\.\d+)?)\.?\s/);
-    return m ? m[1] : "";
-  }
   function renderProgressBadge(counts) {
     if (!counts.total) return "";
     return `
@@ -636,14 +632,23 @@
       </div>
     `;
   }
-  // Sticky checklist rail: a compact grid of one small square per checkable
-  // heading, pinned to the right of the content column as you scroll, so
-  // ticking off items you already read doesn't require scrolling back up to
-  // find their inline buttons. Stays in sync with the inline mark/check
-  // buttons on each heading — both drive the same status through setStatus().
+  function closeMarkedPanel() {
+    const $panel = document.getElementById("docMarkedPanel");
+    if ($panel) $panel.classList.remove("open");
+  }
+  function jumpToHeading(heading) {
+    heading.scrollIntoView({ behavior: "smooth", block: "start" });
+    heading.classList.remove("flash-highlight");
+    void heading.offsetWidth; // restart the animation if it was just played
+    heading.classList.add("flash-highlight");
+  }
+  // "Ditandai" button: a dropdown listing every heading currently marked
+  // (kuning) on this page, so it's easy to jump back to something flagged
+  // for review without having to scroll around looking for it.
   function applyChecklist(pageKey) {
-    const $rail = document.getElementById("docChecklistRail");
     const $badge = document.getElementById("docProgressBadge");
+    const $markedBtn = document.getElementById("docMarkedBtn");
+    const $markedPanel = document.getElementById("docMarkedPanel");
     const headings = Array.from($app.querySelectorAll(".checkable-heading"));
     const items = headings.map((h) => {
       const cluster = h.querySelector(".ys-check-cluster");
@@ -653,25 +658,11 @@
     }).filter(Boolean);
 
     if ($badge) $badge.innerHTML = "";
-    if ($rail) $rail.innerHTML = "";
+    if ($markedBtn) $markedBtn.parentElement.style.display = "none";
     if (!items.length) return;
 
     const savedState = loadChecklist()[pageKey] || {};
     items.forEach((it) => { it.status = normalizeStatus(savedState[it.id]); });
-
-    if ($rail) {
-      $rail.innerHTML = `
-        <div class="rail-title">Checklist</div>
-        <div class="rail-grid">${items.map((it) => `<button type="button" class="ys-grid-sq"><span class="ys-grid-sq-num">${escapeHtml(extractItemNumber(it.label))}</span></button>`).join("")}</div>
-        <p class="rail-hint">Klik nomor buat loncat ke soalnya. Centang/tandai lewat tombol di judul.</p>
-      `;
-      const boxes = $rail.querySelectorAll(".ys-grid-sq");
-      items.forEach((it, i) => {
-        it.box = boxes[i];
-        it.box.title = it.label;
-        it.box.setAttribute("aria-label", it.label);
-      });
-    }
 
     function paint(it) {
       it.heading.classList.toggle("checklist-done", it.status === "done");
@@ -679,10 +670,6 @@
       it.cluster.querySelectorAll("button").forEach((btn) => {
         btn.classList.toggle("active", btn.dataset.action === it.status);
       });
-      if (it.box) {
-        it.box.classList.toggle("state-done", it.status === "done");
-        it.box.classList.toggle("state-marked", it.status === "marked");
-      }
     }
     function paintBadge() {
       if (!$badge) return;
@@ -693,11 +680,28 @@
       });
       $badge.innerHTML = renderProgressBadge(counts);
     }
+    function paintMarkedButton() {
+      if (!$markedBtn || !$markedPanel) return;
+      const marked = items.filter((it) => it.status === "marked");
+      $markedBtn.parentElement.style.display = "";
+      $markedBtn.innerHTML = `${markIconSvg()} Ditandai <span class="doc-marked-count">${marked.length}</span>`;
+      $markedPanel.innerHTML = marked.length
+        ? marked.map((it) => `<div class="doc-marked-item" data-check-id="${it.id}">${escapeHtml(it.label)}</div>`).join("")
+        : `<div class="doc-marked-empty">Belum ada yang ditandai kuning.</div>`;
+      $markedPanel.querySelectorAll(".doc-marked-item").forEach((el) => {
+        el.addEventListener("click", () => {
+          const it = marked.find((m) => m.id === el.dataset.checkId);
+          closeMarkedPanel();
+          if (it) jumpToHeading(it.heading);
+        });
+      });
+    }
     function setStatus(it, status) {
       it.status = status;
       setChecklistItem(pageKey, it.id, status);
       paint(it);
       paintBadge();
+      paintMarkedButton();
     }
 
     items.forEach((it) => {
@@ -708,17 +712,17 @@
           setStatus(it, isActive ? null : btn.dataset.action);
         });
       });
-      if (it.box) {
-        it.box.addEventListener("click", () => {
-          it.heading.scrollIntoView({ behavior: "smooth", block: "start" });
-          it.heading.classList.remove("flash-highlight");
-          void it.heading.offsetWidth; // restart the animation if it was just played
-          it.heading.classList.add("flash-highlight");
-        });
-      }
     });
 
+    if ($markedBtn) {
+      $markedBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        $markedPanel.classList.toggle("open");
+      });
+    }
+
     paintBadge();
+    paintMarkedButton();
   }
 
   // ---------------------------------------------------------------------
@@ -758,14 +762,15 @@
               </div>
               <div class="doc-header-actions">
                 <div id="docProgressBadge"></div>
+                <div class="doc-marked-picker">
+                  <button type="button" class="doc-marked-btn" id="docMarkedBtn"></button>
+                  <div class="doc-marked-panel" id="docMarkedPanel"></div>
+                </div>
                 <div class="doc-edit-slot" data-slug="${slug}"></div>
               </div>
             </div>
           </div>
-          <div class="doc-body-layout">
-            <div class="markdown-body">${html}</div>
-            <aside class="doc-checklist-rail" id="docChecklistRail"></aside>
-          </div>
+          <div class="markdown-body">${html}</div>
           <div class="doc-nav">
             ${prev ? `<a class="prev" data-nav="/module/${prev.slug}"><span class="nav-label">${icon("chevronLeft", 12)} Sebelumnya</span>${escapeHtml(prev.title)}</a>` : "<span></span>"}
             ${next ? `<a class="next" data-nav="/module/${next.slug}"><span class="nav-label">Selanjutnya ${icon("chevronRight", 12)}</span>${escapeHtml(next.title)}</a>` : "<span></span>"}
@@ -799,6 +804,10 @@
               </div>
               <div class="doc-header-actions">
                 <div id="docProgressBadge"></div>
+                <div class="doc-marked-picker">
+                  <button type="button" class="doc-marked-btn" id="docMarkedBtn"></button>
+                  <div class="doc-marked-panel" id="docMarkedPanel"></div>
+                </div>
                 <div class="doc-edit-slot" data-slug="${manifest.issueLog.slug}"></div>
               </div>
             </div>
@@ -809,10 +818,7 @@
               <div class="issue-chip ${activeCat === key ? "active" : ""}" data-cat="${key}" style="${activeCat === key ? `background:${c.color};border-color:${c.color}` : ""}">${escapeHtml(c.label)}</div>
             `).join("")}
           </div>
-          <div class="doc-body-layout">
-            <div class="markdown-body">${html}</div>
-            <aside class="doc-checklist-rail" id="docChecklistRail"></aside>
-          </div>
+          <div class="markdown-body">${html}</div>
         </div>
       `;
       wireNavClicks();
@@ -1165,6 +1171,7 @@
     document.getElementById("searchInput").addEventListener("input", onSearchInput);
     document.addEventListener("click", (e) => {
       if (!e.target.closest(".search-wrap")) closeSearch();
+      if (!e.target.closest(".doc-marked-picker")) closeMarkedPanel();
     });
     document.addEventListener("keydown", (e) => {
       if (e.key === "/" && document.activeElement.tagName !== "INPUT") {
@@ -1175,6 +1182,7 @@
         closeSearch();
         closeSidebar();
         closeThemePanel();
+        closeMarkedPanel();
         document.getElementById("searchInput").blur();
       }
     });
