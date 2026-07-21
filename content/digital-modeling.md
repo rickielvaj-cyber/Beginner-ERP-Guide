@@ -132,7 +132,7 @@ Memberi izin kepada Admin Organisasi yang dipilih untuk me-manage akses system E
 
 ## Multilingual
 
-### 1. 查询需要修改的字段，并进行语言修改 （2-3条）
+### 17. 查询需要修改的字段，并进行语言修改 （2-3条）
 
 - **Query the fields that need to be modified, and modify the language (items 2-3)**
 
