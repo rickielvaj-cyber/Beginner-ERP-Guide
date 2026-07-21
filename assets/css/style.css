@@ -1486,6 +1486,34 @@ html[data-unlocked="1"] .lock-screen { display: none; }
 }
 .ys-toast.open { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+.scroll-top-btn {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-primary);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 150;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity .2s var(--ease), transform .2s var(--ease), border-color .18s var(--ease), background .18s var(--ease);
+}
+.scroll-top-btn.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.scroll-top-btn:hover { border-color: var(--color-accent); background: var(--color-accent-soft); }
+.scroll-top-btn:active { transform: scale(.92); }
+@media (max-width: 900px) {
+  .scroll-top-btn { right: 16px; bottom: 16px; width: 40px; height: 40px; }
+}
+
 @media (max-width: 800px) {
   .ys-editor-single { height: 50vh; }
   .ys-editor-modal-lg { max-width: 100%; }

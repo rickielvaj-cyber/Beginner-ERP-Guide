@@ -1152,12 +1152,32 @@
     $results.classList.remove("open");
   }
 
+  function initScrollTopButton() {
+    const $btn = document.getElementById("scrollTopBtn");
+    if (!$btn) return;
+    let ticking = false;
+    const update = () => {
+      $btn.classList.toggle("visible", window.scrollY > 400);
+      ticking = false;
+    };
+    window.addEventListener("scroll", () => {
+      if (!ticking) {
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    });
+    $btn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+
   // ---------------------------------------------------------------------
   // Boot
   // ---------------------------------------------------------------------
   async function boot() {
     initThemePicker();
     initSidebarCollapse();
+    initScrollTopButton();
 
     const res = await fetch(`${CONTENT_DIR}/manifest.json`, { cache: "no-store" });
     manifest = await res.json();
