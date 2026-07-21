@@ -35,6 +35,13 @@
     return `<svg class="icon" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
   }
 
+  function checkIconSvg() {
+    return '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+  }
+  function markIconSvg() {
+    return '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>';
+  }
+
   function slugify(text) {
     const slug = String(text)
       .toLowerCase()
@@ -182,7 +189,10 @@
         usedIds.set(id, 1);
       }
       if (level === 3) {
-        return `<h3 id="${id}" class="checkable-heading"><span class="checkable-heading-text">${text}</span><label class="ys-check" data-check-id="${id}" title="Tandai udah dipelajari"><input type="checkbox" class="ys-check-input"><span class="ys-check-box"></span></label></h3>\n`;
+        return `<h3 id="${id}" class="checkable-heading"><span class="checkable-heading-text">${text}</span><span class="ys-check-cluster" data-check-id="${id}">` +
+          `<button type="button" class="ys-mark-btn" data-action="marked" aria-label="Tandai buat direview lagi" title="Tandai (kuning)">${markIconSvg()}</button>` +
+          `<button type="button" class="ys-check-btn" data-action="done" aria-label="Tandai udah selesai dipelajari" title="Selesai (hijau)">${checkIconSvg()}</button>` +
+          `</span></h3>\n`;
       }
       return `<h${level} id="${id}">${text}</h${level}>\n`;
     };
@@ -312,8 +322,8 @@
   const MINDMAP_GROUPS = [
     ["digital-modeling"],
     ["aact-coa"],
-    ["purchasing", "sales"],
     ["inventory"],
+    ["purchasing", "sales"],
     ["ap", "ar"],
     ["fa"],
     ["inventory-accounting"],
@@ -589,37 +599,81 @@
   }
 
   // ---------------------------------------------------------------------
-  // "Udah dipelajari" checklist (localStorage) — one checkbox per H3
-  // setting/heading, scoped per page (module slug or the issue log).
+  // "Udah dipelajari" checklist (localStorage) — each H3 setting/heading
+  // gets a status: "done" (hijau) or "marked" (kuning, buat direview lagi),
+  // scoped per page (module slug or the issue log). A small progress badge
+  // in the page header shows total/done/marked counts.
   // ---------------------------------------------------------------------
   const CHECKLIST_KEY = "ys-checklist";
   function loadChecklist() {
     try { return JSON.parse(localStorage.getItem(CHECKLIST_KEY)) || {}; } catch (e) { return {}; }
   }
-  function setChecklistItem(pageKey, checkId, checked) {
+  function normalizeStatus(raw) {
+    if (raw === true) return "done"; // legacy boolean format
+    if (raw === "done" || raw === "marked") return raw;
+    return null;
+  }
+  function setChecklistItem(pageKey, checkId, status) {
     try {
       const all = loadChecklist();
       if (!all[pageKey]) all[pageKey] = {};
-      if (checked) all[pageKey][checkId] = true;
+      if (status) all[pageKey][checkId] = status;
       else delete all[pageKey][checkId];
       localStorage.setItem(CHECKLIST_KEY, JSON.stringify(all));
     } catch (e) { /* ignore (private browsing etc.) */ }
   }
+  function renderProgressBadge(counts) {
+    if (!counts.total) return "";
+    return `
+      <div class="doc-progress-badge" title="${counts.done} selesai, ${counts.marked} ditandai, dari ${counts.total} soal">
+        <span class="dpb-item dpb-done"><span class="dpb-dot"></span>${counts.done}</span>
+        <span class="dpb-item dpb-marked"><span class="dpb-dot"></span>${counts.marked}</span>
+        <span class="dpb-total">/ ${counts.total} soal</span>
+      </div>
+    `;
+  }
+  function computeChecklistCounts(pageKey) {
+    const state = loadChecklist()[pageKey] || {};
+    const counts = { total: 0, done: 0, marked: 0 };
+    $app.querySelectorAll(".ys-check-cluster[data-check-id]").forEach((cluster) => {
+      counts.total++;
+      const status = normalizeStatus(state[cluster.dataset.checkId]);
+      if (status === "done") counts.done++;
+      else if (status === "marked") counts.marked++;
+    });
+    return counts;
+  }
+  function updateProgressBadge(pageKey) {
+    const $badge = document.getElementById("docProgressBadge");
+    if (!$badge) return;
+    $badge.innerHTML = renderProgressBadge(computeChecklistCounts(pageKey));
+  }
   function applyChecklist(pageKey) {
     const state = loadChecklist()[pageKey] || {};
     $app.querySelectorAll(".checkable-heading").forEach((h) => {
-      const input = h.querySelector(".ys-check-input");
-      const label = h.querySelector(".ys-check");
-      if (!input || !label) return;
-      const id = label.dataset.checkId;
-      const checked = !!state[id];
-      input.checked = checked;
-      h.classList.toggle("checklist-done", checked);
-      input.addEventListener("change", () => {
-        setChecklistItem(pageKey, id, input.checked);
-        h.classList.toggle("checklist-done", input.checked);
+      const cluster = h.querySelector(".ys-check-cluster");
+      if (!cluster) return;
+      const id = cluster.dataset.checkId;
+      const applyStatus = (status) => {
+        h.classList.toggle("checklist-done", status === "done");
+        h.classList.toggle("checklist-marked", status === "marked");
+        cluster.querySelectorAll("button").forEach((btn) => {
+          btn.classList.toggle("active", btn.dataset.action === status);
+        });
+      };
+      applyStatus(normalizeStatus(state[id]));
+      cluster.querySelectorAll("button").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const isActive = btn.classList.contains("active");
+          const newStatus = isActive ? null : btn.dataset.action;
+          setChecklistItem(pageKey, id, newStatus);
+          applyStatus(newStatus);
+          updateProgressBadge(pageKey);
+        });
       });
     });
+    const $badge = document.getElementById("docProgressBadge");
+    if ($badge) $badge.innerHTML = renderProgressBadge(computeChecklistCounts(pageKey));
   }
 
   // ---------------------------------------------------------------------
@@ -657,7 +711,10 @@
                 <div class="doc-eyebrow">Modul ${idx >= 0 ? idx + 1 : ""} · Catatan Belajar</div>
                 <h1>${escapeHtml(m.title)}</h1>
               </div>
-              <div class="doc-edit-slot" data-slug="${slug}"></div>
+              <div class="doc-header-actions">
+                <div id="docProgressBadge"></div>
+                <div class="doc-edit-slot" data-slug="${slug}"></div>
+              </div>
             </div>
           </div>
           <div class="markdown-body">${html}</div>
@@ -692,7 +749,10 @@
                 <div class="doc-eyebrow" style="color:${cats.sequencing.color}">${icon("alert", 14)} Referensi Troubleshooting</div>
                 <h1>${escapeHtml(manifest.issueLog.title)}</h1>
               </div>
-              <div class="doc-edit-slot" data-slug="${manifest.issueLog.slug}"></div>
+              <div class="doc-header-actions">
+                <div id="docProgressBadge"></div>
+                <div class="doc-edit-slot" data-slug="${manifest.issueLog.slug}"></div>
+              </div>
             </div>
           </div>
           <div class="issue-filter-bar">
