@@ -632,48 +632,87 @@
       </div>
     `;
   }
-  function computeChecklistCounts(pageKey) {
-    const state = loadChecklist()[pageKey] || {};
-    const counts = { total: 0, done: 0, marked: 0 };
-    $app.querySelectorAll(".ys-check-cluster[data-check-id]").forEach((cluster) => {
-      counts.total++;
-      const status = normalizeStatus(state[cluster.dataset.checkId]);
-      if (status === "done") counts.done++;
-      else if (status === "marked") counts.marked++;
-    });
-    return counts;
-  }
-  function updateProgressBadge(pageKey) {
-    const $badge = document.getElementById("docProgressBadge");
-    if (!$badge) return;
-    $badge.innerHTML = renderProgressBadge(computeChecklistCounts(pageKey));
-  }
+  // Sticky checklist rail: a compact grid of one small square per checkable
+  // heading, pinned to the right of the content column as you scroll, so
+  // ticking off items you already read doesn't require scrolling back up to
+  // find their inline buttons. Stays in sync with the inline mark/check
+  // buttons on each heading — both drive the same status through setStatus().
   function applyChecklist(pageKey) {
-    const state = loadChecklist()[pageKey] || {};
-    $app.querySelectorAll(".checkable-heading").forEach((h) => {
+    const $rail = document.getElementById("docChecklistRail");
+    const $badge = document.getElementById("docProgressBadge");
+    const headings = Array.from($app.querySelectorAll(".checkable-heading"));
+    const items = headings.map((h) => {
       const cluster = h.querySelector(".ys-check-cluster");
-      if (!cluster) return;
-      const id = cluster.dataset.checkId;
-      const applyStatus = (status) => {
-        h.classList.toggle("checklist-done", status === "done");
-        h.classList.toggle("checklist-marked", status === "marked");
-        cluster.querySelectorAll("button").forEach((btn) => {
-          btn.classList.toggle("active", btn.dataset.action === status);
-        });
-      };
-      applyStatus(normalizeStatus(state[id]));
-      cluster.querySelectorAll("button").forEach((btn) => {
+      if (!cluster) return null;
+      const labelEl = h.querySelector(".checkable-heading-text");
+      return { id: cluster.dataset.checkId, heading: h, cluster, label: labelEl ? labelEl.textContent.trim() : "" };
+    }).filter(Boolean);
+
+    if ($badge) $badge.innerHTML = "";
+    if ($rail) $rail.innerHTML = "";
+    if (!items.length) return;
+
+    const savedState = loadChecklist()[pageKey] || {};
+    items.forEach((it) => { it.status = normalizeStatus(savedState[it.id]); });
+
+    if ($rail) {
+      $rail.innerHTML = `
+        <div class="rail-title">Checklist</div>
+        <div class="rail-grid">${items.map(() => `<button type="button" class="ys-grid-sq"></button>`).join("")}</div>
+        <p class="rail-hint">Klik kotak buat tandai: hijau = selesai, kuning = ditandai.</p>
+      `;
+      const boxes = $rail.querySelectorAll(".ys-grid-sq");
+      items.forEach((it, i) => {
+        it.box = boxes[i];
+        it.box.title = it.label;
+        it.box.setAttribute("aria-label", it.label);
+      });
+    }
+
+    function paint(it) {
+      it.heading.classList.toggle("checklist-done", it.status === "done");
+      it.heading.classList.toggle("checklist-marked", it.status === "marked");
+      it.cluster.querySelectorAll("button").forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.action === it.status);
+      });
+      if (it.box) {
+        it.box.classList.toggle("state-done", it.status === "done");
+        it.box.classList.toggle("state-marked", it.status === "marked");
+      }
+    }
+    function paintBadge() {
+      if (!$badge) return;
+      const counts = { total: items.length, done: 0, marked: 0 };
+      items.forEach((it) => {
+        if (it.status === "done") counts.done++;
+        else if (it.status === "marked") counts.marked++;
+      });
+      $badge.innerHTML = renderProgressBadge(counts);
+    }
+    function setStatus(it, status) {
+      it.status = status;
+      setChecklistItem(pageKey, it.id, status);
+      paint(it);
+      paintBadge();
+    }
+
+    items.forEach((it) => {
+      paint(it);
+      it.cluster.querySelectorAll("button").forEach((btn) => {
         btn.addEventListener("click", () => {
           const isActive = btn.classList.contains("active");
-          const newStatus = isActive ? null : btn.dataset.action;
-          setChecklistItem(pageKey, id, newStatus);
-          applyStatus(newStatus);
-          updateProgressBadge(pageKey);
+          setStatus(it, isActive ? null : btn.dataset.action);
         });
       });
+      if (it.box) {
+        it.box.addEventListener("click", () => {
+          const next = it.status === null ? "done" : it.status === "done" ? "marked" : null;
+          setStatus(it, next);
+        });
+      }
     });
-    const $badge = document.getElementById("docProgressBadge");
-    if ($badge) $badge.innerHTML = renderProgressBadge(computeChecklistCounts(pageKey));
+
+    paintBadge();
   }
 
   // ---------------------------------------------------------------------
@@ -717,7 +756,10 @@
               </div>
             </div>
           </div>
-          <div class="markdown-body">${html}</div>
+          <div class="doc-body-layout">
+            <div class="markdown-body">${html}</div>
+            <aside class="doc-checklist-rail" id="docChecklistRail"></aside>
+          </div>
           <div class="doc-nav">
             ${prev ? `<a class="prev" data-nav="/module/${prev.slug}"><span class="nav-label">${icon("chevronLeft", 12)} Sebelumnya</span>${escapeHtml(prev.title)}</a>` : "<span></span>"}
             ${next ? `<a class="next" data-nav="/module/${next.slug}"><span class="nav-label">Selanjutnya ${icon("chevronRight", 12)}</span>${escapeHtml(next.title)}</a>` : "<span></span>"}
@@ -761,7 +803,10 @@
               <div class="issue-chip ${activeCat === key ? "active" : ""}" data-cat="${key}" style="${activeCat === key ? `background:${c.color};border-color:${c.color}` : ""}">${escapeHtml(c.label)}</div>
             `).join("")}
           </div>
-          <div class="markdown-body">${html}</div>
+          <div class="doc-body-layout">
+            <div class="markdown-body">${html}</div>
+            <aside class="doc-checklist-rail" id="docChecklistRail"></aside>
+          </div>
         </div>
       `;
       wireNavClicks();
