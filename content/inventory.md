@@ -1,8 +1,8 @@
 ## Inventory Business Parameter
 
-### 1. Control Rules (Aturan Pengecekan)
+### Control Rules (Aturan Pengecekan)
 
-### 2. Check the warehouse for inbound and outbound based on the warehouse-material relationship.
+### 1. Check the warehouse for inbound and outbound based on the warehouse-material relationship.
 
 - **仓库物料关系检查规则**
 
@@ -14,7 +14,7 @@ Cek apakah material tertentu boleh masuk/keluar dari gudang yang berkaitan (berd
 - **Prompt only** → munculin peringatan, tapi tetap bisa lanjut
 - **Strict control** → diblokir total jika tidak sesuai relationship
 
-### 3. Nearly-Expired Goods Rejection Rules
+### 2. Nearly-Expired Goods Rejection Rules
 
 - **效期临期拒收规则**
 
@@ -26,9 +26,9 @@ Aturan tolak barang yang mendekati kadaluarsa saat barang masuk.
 - Prompt only → kasih warning, masih bisa terima
 - Strict control → tolak otomatis barang yang udah mepet expired
 
-### 4. Issue / Outbound Rules (Aturan Pengeluaran)
+### 3. Issue / Outbound Rules (Aturan Pengeluaran)
 
-### 5. Auto Clear Product without Stock
+### 4. Auto Clear Product without Stock
 
 - **自动清除0存量商品**
 
@@ -37,7 +37,7 @@ Aturan tolak barang yang mendekati kadaluarsa saat barang masuk.
 Otomatis hapus item yang stoknya 0 dari daftar. 
 *(yes = bersihin otomatis biar list rapi || no = tidak otomatis)*
 
-### 6. Allow Issue Quantity Exceeding Issue Application Quantity
+### 5. Allow Issue Quantity Exceeding Issue Application Quantity
 
 - **允许超出库申请出库 (keluar masuk Gudang)**
 
@@ -56,7 +56,7 @@ Boleh ga keluarin barang lebih banyak dari yang diminta di aplikasi pengeluaran.
 
 *setting ini bisa diubah kapanpun, tapi hanya berlaku buat dokumen* ***setelah*** *perubahan.* ***Dokumen yang udah ada sebelumnya tidak terpengaruh.***
 
-### 7. Allow Exceeding Planned Order Quantity
+### 6. Allow Exceeding Planned Order Quantity
 
 - **计划订单允许超计划下达 (permintaan pengeluaran sesuai rencana)**
 
@@ -74,7 +74,7 @@ Boleh ga rilis order melebihi jumlah yang direncanakan.
 
 *setting ini bisa diubah kapanpun, tapi hanya berlaku buat dokumen* ***setelah*** *perubahan.* ***Dokumen yang udah ada sebelumnya tidak terpengaruh.***
 
-### 8. Allow Issue Quantity Exceeding Transfer Order Quantity
+### 7. Allow Issue Quantity Exceeding Transfer Order Quantity
 
 - **允许超调拨订单出库 (mutasi/pindah barang antar gudang)**
 
@@ -90,7 +90,7 @@ Boleh ga keluarin barang lebih dari jumlah di transfer order (mutasi antar gudan
 
 *setting ini bisa diubah kapanpun, tapi hanya berlaku buat dokumen* ***setelah*** *perubahan.* ***Dokumen yang udah ada sebelumnya tidak terpengaruh.***
 
-### 9. Auto Picking upon Issue
+### 8. Auto Picking upon Issue
 
 - **支持自动拣货**
 
@@ -99,9 +99,9 @@ Boleh ga keluarin barang lebih dari jumlah di transfer order (mutasi antar gudan
 Sistem otomatis nentuin bin mana yang diambil saat issue. 
 *(yes = auto picking)*
 
-### 10. Stocktaking / 盘点 Rules (Aturan Stock Opname)
+### 9. Stocktaking / 盘点 Rules (Aturan Stock Opname)
 
-### 11. Count Material with 0 Stock on Book
+### 10. Count Material with 0 Stock on Book
 
 - **盘零账存物料**
 
@@ -116,7 +116,7 @@ Ini kontradiktif secara logika.
 
 Auto Clear sudah hapus material yang stoknya 0 dari daftar → pas opname jalan, material itu udah ga ada di list → setting Count Material 0 Stock jadi ga relevan karena ga ada yang perlu dihitung lagi (karna material 0 sudah ga ada di list, dikarenakan settingan Auto Clear)
 
-### 12. Count Stock on Book
+### 11. Count Stock on Book
 
 - **盘点显示账存数量**
 
@@ -127,7 +127,7 @@ Ngatur apakah angka stok buku **ditampilkan** di form hitung fisik atau tidak.
 - Yes → petugas **bisa lihat** angka sistem saat hitung fisik
 - No → blind counting, petugas tidak tau angka sistem
 
-### 13. The physical inventory order defaults to include products from the stocktaking plan.
+### 12. The physical inventory order defaults to include products from the stocktaking plan.
 
 - **实盘单默认带入盘点计划商品**
 
@@ -147,7 +147,7 @@ Parameter ini **mutually exclusive** dengan **Stocktaking Big Data Model** — d
 
 Logika bisnisnya: kalau perusahaan udah bikin rencana opname (barang apa aja yang mau dihitung, kapan, di gudang mana) ya tinggal otomatis ditarik aja ke form fisiknya — lebih efisien daripada input ulang.
 
-### 14. Retrive Book Quantity by Default for Physical Inventory
+### 13. Retrive Book Quantity by Default for Physical Inventory
 
 - **实盘默认取账存数量**
 
@@ -158,7 +158,7 @@ Ngatur apakah angka stok buku **otomatis diisi** sebagai nilai awal di kolom has
 - Yes → kolom hasil hitung **otomatis terisi** angka dari sistem, petugas tinggal koreksi kalau beda
 - No → kolom kosong, petugas input angka dari nol
 
-### 15. Generate Gain/Loss Document from Counting Review
+### 14. Generate Gain/Loss Document from Counting Review
 
 - **盘点复核生成盈亏单**
 
@@ -166,7 +166,7 @@ Ngatur apakah angka stok buku **otomatis diisi** sebagai nilai awal di kolom has
 
 Otomatis bikin dokumen selisih (gain/loss) setelah review hasil perhitungan dari Physical Stock Check. *(yes = auto generate)*
 
-### 16. Value of Gain/Loss Document Date
+### 15. Value of Gain/Loss Document Date
 
 - **盈亏单据日期取值**
 
@@ -177,7 +177,7 @@ Tanggal yang dipakai di dokumen selisih.
 - Review date → tanggal saat review
 - Physical Inventory Date → tanggal saat hitung fisik dilakukan
 
-### 17. Backflush in Inventory Gains Exceeds Limit
+### 16. Backflush in Inventory Gains Exceeds Limit
 
 - **盘盈倒冲超量**
 
@@ -188,7 +188,7 @@ Apa yang terjadi kalau hasil hitung fisik lebih banyak dari yang seharusnya alia
 - Counting Review Fails → review gagal, ga bisa lanjut
 - Generate other receipt document → bikin dokumen penerimaan terpisah buat kelebihannya
 
-### 18. Stocktaking Snapshot Generation Sequence
+### 17. Stocktaking Snapshot Generation Sequence
 
 - **盘点快照生成顺序**
 
@@ -197,7 +197,7 @@ Apa yang terjadi kalau hasil hitung fisik lebih banyak dari yang seharusnya alia
 Urutan sorting saat sistem generate snapshot stok yang akan dipakai untuk melakukan pengecekan stock. 
 Pilihannya: by Product code / Material Category / Product Category / Brand / Storage bin code / Mnemonic code. *(tinggal pilih mau diurutin berdasarkan apa)*
 
-### 19. Default Range of Quick Stocktaking
+### 18. Default Range of Quick Stocktaking
 
 - **快盘默认盘点范围**
 
@@ -214,7 +214,7 @@ Cakupan default saat quick count.
 - **Whole Warehouse** → default hitung semua material di gudang. Cocok kalau mau spot-check seluruh gudang secara cepat.
 - **Specified Goods** → default hanya material yang lo pilih. Cocok kalau mau cek barang tertentu aja — misal barang mahal, barang yang sering selisih, atau barang yang baru masuk.
 
-### 20. Calculate Business Occurred During Stocktaking
+### 19. Calculate Business Occurred During Stocktaking
 
 - **计算盘点期间业务发生数**
 
@@ -245,7 +245,7 @@ Artinya: sistem freeze — dianggap antara waktu counting plan dan real time itu
 
 Nyambung juga ke parameter **Stocktaking Snapshot** (no.15)— snapshot itu diambil di awal opname sebagai "foto" kondisi stok, dan setting ini nentuin apakah pergerakan setelah snapshot ikut diperhitungkan atau tidak.
 
-### 21. Warehouse Material Relationship
+### 20. Warehouse Material Relationship
 
 - **仓库物料关系**
 
@@ -261,7 +261,7 @@ Allocation Method: "Material - Single Choice" yang muncul di semua baris — dug
 
 Tapi ini perlu dikonfirmasi ke Willy karena gua belum yakin ada pilihan lain selain Single Choice.
 
-### 22. Alur Stock Opname
+### 21. Alur Stock Opname
 
 Stocktaking Plan (rencanain: gudang, material, tanggal) → Snapshot (sistem bekukan angka 账存 sebagai patokan) → Physical Inventory 实盘 (hitung fisik di gudang) → Compare: Fisik vs 账存 sistem→ Ada selisih → Variance Doc → Adjustment + Jurnal → Tidak ada selisih → Selesai
 
@@ -273,7 +273,7 @@ Stocktaking Plan (rencanain: gudang, material, tanggal) → Snapshot (sistem bek
 
 ## Calculation Rules, Check Rules of Available Qty and Available Rules Allocation
 
-**1. Konsep Dasar**
+**22. Konsep Dasar**
 
 **Available Qty ≠ Stok Fisik**
 
@@ -783,7 +783,7 @@ Versi detail dari Inventory Outlook— breakdown supply dan demand yang membentu
 
 Pada bagian Material creation ada kotak “Self Produced” ini yang berkorelasi dengan Product Receipt (Produk yang kita terima melalui produksi kita sendiri), jika tidak mencentang “Self produced”, maka Ketika menginput material pada menu product receipt, tidak ada akan material yang muncul pada menu.
 
-2. Outbound (Sales Issue, Other Good Issue, Material Issue)
+1. Outbound (Sales Issue, Other Good Issue, Material Issue)
 
 Sales Issue = Purchased Issue, pengiriman dari sales order
 
