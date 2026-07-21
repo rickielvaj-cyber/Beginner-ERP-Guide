@@ -144,7 +144,7 @@ Tau fungsi, tidak tau cara menggunakannya. (issue)
 
 ## Locale
 
-### 1. Sales Region
+### 18. Sales Region
 
 ![digital-modeling screenshot 17](images/digital-modeling/digital-modeling-017.png)
 
@@ -154,7 +154,7 @@ Menginput, edit, enable/disable, delete region tiap sales untuk  kebutuhan penga
 
 Tau cara setting, tidak tau fungsinya utk client apa (issue)
 
-### 2. Country/Region
+### 19. Country/Region
 
 ![digital-modeling screenshot 19](images/digital-modeling/digital-modeling-019.png)
 
@@ -166,20 +166,20 @@ Tau cara setting, tidak tau fungsinya utk client apa (issue)
 
 ## Multi-Currencies
 
-### 1. Currencies
+### 20. Currencies
 
 ![digital-modeling screenshot 21](images/digital-modeling/digital-modeling-021.png)
 
 Menambah jenis fiat dari berbagai mata uang negara.
 
-### 2. Exchange Rate Type
+### 21. Exchange Rate Type
 
 ![digital-modeling screenshot 22](images/digital-modeling/digital-modeling-022.png)
 
 Untuk memasukan **Tipe Rate** mana yang mau menjadi patokan untuk pembayaran.
 Opsi "Benchmark exchange rate" hanya bisa konek ke bank China untuk update rate secara otomatis (hanya tersedia versi China).
 
-### 3. Exchange Rate
+### 22. Exchange Rate
 
 ![digital-modeling screenshot 23](images/digital-modeling/digital-modeling-023.png)
 
@@ -187,7 +187,7 @@ Input rate fiat ke dalam Exchange Rate Type yang sudah dibuat. Kolom "indirect e
 
 ## Organization
 
-### 1. 多组织模型启用
+### 23. 多组织模型启用
 
 - **Multi-organization model enabled**
 
@@ -195,7 +195,7 @@ Input rate fiat ke dalam Exchange Rate Type yang sudah dibuat. Kolom "indirect e
 
 **(HANYA BISA DIAKTIFKAN SEKALI, LANGGANAN BERBEDA)—** untuk perusahaan yang punya cabang/anak Perusahaan. Untuk Perusahaan hanya single entity tidak perlu membuka fitur ini.
 
-### 2. 新增业务单元 （公司，分公司，事业部，办事处，工厂，其它组织）
+### 24. 新增业务单元 （公司，分公司，事业部，办事处，工厂，其它组织）
 
 - **Add new Business Unit (Company,Factory ,Branch ,Office, Business Unit ,Other Org)**
 
@@ -205,7 +205,7 @@ Input rate fiat ke dalam Exchange Rate Type yang sudah dibuat. Kolom "indirect e
 
 Pembuatan Business Unit baru hingga edit, enable/disable dan settings.
 
-### 3. Department
+### 25. Department
 
 - **部门**
 
@@ -213,7 +213,7 @@ Pembuatan Business Unit baru hingga edit, enable/disable dan settings.
 
 Setelah pembuatan **Businesss Unit** bisa dilanjutkan untuk pembuatan **Department** under Business Unit. **New Sibling** untuk bikin Department baru dan **New Child** untuk organisasi/tim dibawah dari Department.
 
-### 4. Organization Status (Organization Chart)
+### 26. Organization Status (Organization Chart)
 
 ![digital-modeling screenshot 28](images/digital-modeling/digital-modeling-028.png)
 
@@ -221,7 +221,7 @@ Melihat struktur oraganisasi yang telah dibuat, jika ingin ditampilkan secara vi
 
 ![digital-modeling screenshot 29](images/digital-modeling/digital-modeling-029.png)
 
-### 5. 职能共享设置 
+### 27. 职能共享设置 
 
 - **Function Sharing Setting**
 
@@ -234,7 +234,7 @@ Tapi dari organisasi B **tidak punya akses Finance Cloud**, dari Organisasi A **
 
 ## Delegation
 
-### 1. 采购委托关系
+### 28. 采购委托关系
 
 - **Purchase Delegation**
 
@@ -242,7 +242,7 @@ Tapi dari organisasi B **tidak punya akses Finance Cloud**, dari Organisasi A **
 
 Mendelegasikan pekerjaan purchasing dari organisasi ke organisasi lain, namun secara record tetap tercatat menjadi kepemilikian dari **Requesting Organization**.
 
-### 2. 销售委托关系
+### 29. 销售委托关系
 
 - **Sales Delegation**
 
@@ -254,7 +254,7 @@ Contoh: Ada penjualan dari Organisasi A tapi untuk stocknya di ambil dari organi
 
 ## Employee
 
-### 1. 员工类型
+### 30. 员工类型
 
 - **Employee Category**
 
@@ -266,7 +266,7 @@ Note: Setiap pembuatan employee, akun user akan otomatis terbuat juga. (Mengikut
 
 ## Authorization (User Management)
 
-### 1. 用户管理
+### 31. 用户管理
 
 - **User Management**
 
@@ -280,7 +280,7 @@ Note untuk bagian employee: Saat pembuatan Employee pastikan switch “Operator�
 
 ## Authorization (Role Management)
 
-### 1. 角色管理
+### 32. 角色管理
 
 - **Role Management**
 
@@ -288,7 +288,7 @@ Note untuk bagian employee: Saat pembuatan Employee pastikan switch “Operator�
 
 Tempat pembuatan Role baru dan menambahkan akses kedalam role tersebut, hingga enable/disable dan delete. Note: biasanya role dipakai untuk membuat suatu akses untuk admin atau user.
 
-### 2. 角色组
+### 33. 角色组
 
 - **Role Group**
 
