@@ -1,6 +1,6 @@
 ## Sales Basic
 
-1. Sales Quatation
+### 1. Sales Quatation
 
 ![sales screenshot 1](images/sales/sales-001.png)
 
@@ -8,7 +8,7 @@ After approve sales quotation, kita harus lanjut validate, validate, after valid
 
 Note: Jika GL tidak terposting itu bisa saja bermasalah di bagian Cost Area, karna dari warehouse kita belum dimapping ke Cost Area, jadinya system bingung apa yang mau di posting
 
-2. Sales Order
+### 2. Sales Order
 
 ![sales screenshot 2](images/sales/sales-002.png)
 
@@ -16,13 +16,13 @@ Note: Jika GL tidak terposting itu bisa saja bermasalah di bagian Cost Area, kar
 
 Core dari semuanya, dari sini kita bisa lihat sales order kita sudah ditahap mana. Kalau ada problem dll, bisa cek mulai dari sales order dan track Document Flow-nya.
 
-3. Sales Return
+### 3. Sales Return
 
 ![sales screenshot 4](images/sales/sales-004.png)
 
 Sales Return bisa mulai di-Generate dari Sales Order, pengisian harus minus, flow approval sama seperti Sales Order normal yang sampai ke tahapa Sales Invoice.
 
-4. Sales Service
+### 4. Sales Service
 
 ![sales screenshot 5](images/sales/sales-005.png)
 
