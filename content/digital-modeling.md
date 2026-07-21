@@ -300,7 +300,7 @@ Tau fungsi, belum ngerti logic nya (issue)
 
 ## Authorization (Permission Admin)
 
-### 1. 组织权限管理员
+### 34. 组织权限管理员
 
 - **Organize Permission Admin**
 
@@ -308,7 +308,7 @@ Tau fungsi, belum ngerti logic nya (issue)
 
 Hanya yang punya akses akun Enterprise saja yang bisa melakukan edit, karena ini termasuk otoritas paling tinggi bukan di Organization Level.
 
-### 2. 授权
+### 35. 授权
 
 - **Authorization**
 
@@ -316,7 +316,7 @@ Hanya yang punya akses akun Enterprise saja yang bisa melakukan edit, karena ini
 
 **Key Point:** Tempat untuk menyambungkan atau mengaitkan suatu role kepada user, supaya user bisa melakukan akses ke cloud atau fitur yang telah di-set di dalam role tersebut.
 
-### 3. 全员授权
+### 36. 全员授权
 
 - **Global App Authorization**
 
@@ -326,7 +326,7 @@ Penggunaan akses Global Application Authorization hanya khusus untuk pengguna Ak
 
 Tau fungsi, belum ngerti cara pakai (issue)
 
-### 4. 数据权限
+### 37. 数据权限
 
 - **Data Permission**
 
@@ -338,7 +338,7 @@ contoh: seorang sales boleh diberi akses melihat data Sales Order. (cmiiw) (issu
 
 ## Public File
 
-### 1. 基础数据分级管理
+### 38. 基础数据分级管理
 
 - **Hierarchical Management**
 
@@ -346,7 +346,7 @@ contoh: seorang sales boleh diberi akses melihat data Sales Order. (cmiiw) (issu
 
 Memberi akses pada suatu organisasi untuk melakukan akses input data ke dalam master data (terdapat berbagai jenis modul).
 
-### 2. 会计期间方案
+### 39. 会计期间方案
 
 - **Fiscal Period Scheme**
 
@@ -358,7 +358,7 @@ Template/struktur periode akuntansi. Dibuat sekali di awal setup.
 
 Mendefinisikan: Period Type (Monthly, Weekly, dsb) dan Jumlah Fiscal Periods, Quarters, Half Years per tahun.
 
-### 3. 会计期间
+### 40. 会计期间
 
 - **Fiscal Period**
 
@@ -368,7 +368,7 @@ Realisasi aktual per tahun berdasarkan scheme. Sistem otomatis generate periode-
 
 **Flow :** Fiscal Period Scheme (setup sekali) > Fiscal Period per tahun (dibuat bertahap, minimal tahun berjalan)  > Add new tiap kali pergantian tahun.
 
-### 4. 银行类别
+### 41. 银行类别
 
 - **Bank Category**
 
@@ -376,7 +376,7 @@ Realisasi aktual per tahun berdasarkan scheme. Sistem otomatis generate periode-
 
 Penambahan Kategori Jenis Bank ke dalam system. (Enable/Disable, Add, Delete)
 
-### 5. 银行网点
+### 42. 银行网点
 
 - **Bank Branch**
 
@@ -384,7 +384,7 @@ Penambahan Kategori Jenis Bank ke dalam system. (Enable/Disable, Add, Delete)
 
 Penambahan cabang dari bank, berhubungan setelah penambahan jenis/kategori bank sebelumnya. (Enable/Disable, Add, Delete)
 
-### 6. 税目税率
+### 43. 税目税率
 
 - **Tax Item and Tax Rate**
 - **Menu “Withholding Tax Calculation”**
@@ -393,7 +393,7 @@ Penambahan cabang dari bank, berhubungan setelah penambahan jenis/kategori bank 
 
 - **(no clue) (issue)**
 
-### 7. 结算方式
+### 44. 结算方式
 
 - **Payment Method**
 
@@ -401,7 +401,7 @@ Penambahan cabang dari bank, berhubungan setelah penambahan jenis/kategori bank 
 
 Menambahkan jenis metode pembayaran, biasanya kebutuhan purchasing atau sales. (Enable/Disable, Add, Delete)
 
-### 8. 款项类型
+### 45. 款项类型
 
 - **Payment Type**
 
@@ -411,7 +411,7 @@ Pembuatan tipe/kategori pembelian atau pembayaran, apakah biaya penanganan, pemb
 
 (Enable/Disable, Add, Delete)
 
-### 9. 收款协议
+### 46. 收款协议
 
 - **Collection Agreement**
 
@@ -467,7 +467,7 @@ Pembuatan template syarat/skema pembayaran yang disepakati dengan customer/suppl
 
 (Enable/Disable, Add, Delete)
 
-### 12. 付款起算时点
+### 47. 付款起算时点
 
 - **Payment Start Time**
 
@@ -490,7 +490,7 @@ Payment Start Time tempat buat masukin jenis kategori Payment time
 
 ## Material Category
 
-### 1. 物料分类
+### 48. 物料分类
 
 - **Material Category**
 
@@ -500,7 +500,7 @@ Pembuatan kategori tipe material untuk kebutuhan purchasing.
 
 (Enable/Disable, Add, Delete)
 
-### 2. 计量单位
+### 49. 计量单位
 
 - **UOM**
 
@@ -514,7 +514,7 @@ PCS    → Basic Unit = Yes  → 1 PCS = 1 PCS      (patokan)
 
 Box10  → Basic Unit = No   → 1 Box10 = 10 PCS   (1 box isi 10 pcs)
 
-### 3. 物料创建
+### 50. 物料创建
 
 - **Material Creation**
 
@@ -526,7 +526,7 @@ Tempat mendaftarkan semua barang, jasa, atau material yang akan dipakai ke dalam
 
 Pada bagian Material creation ada kotak “Self Produced” ini yang berkorelasi dengan Product Receipt (Produk yang kita terima melalui produksi kita sendiri), jika tidak mencentang “Self produced”, maka Ketika menginput material pada menu product receipt, tidak ada akan material yang muncul pada menu.
 
-### 4. 物料模版
+### 51. 物料模版
 
 - **Material Template**
 
@@ -536,15 +536,15 @@ Blueprint/cetakan standar yang bisa diterapkan ke material baru saat proses pemb
 
 ## Material Property
 
-### 1. 物料规格
+### 52. 物料规格
 
 - **Material Specification** (Tidak ada di settings) (issue)
 
-### 2. 物料属性
+### 53. 物料属性
 
 - **Material Property** (Tidak ada di settings) (issue)
 
-### 3. SKU属性
+### 54. SKU属性
 
 - **SKU Property**
 
@@ -604,7 +604,7 @@ Ini menu paling sensitif karena menentukan **ke mana larinya jurnal akuntansi** 
 
 ## Customer
 
-### 1. 客户分类
+### 55. 客户分类
 
 - **Customer Category**
 
@@ -614,7 +614,7 @@ Pembuatan Jenis/Kategori Customer, tujuan untuk pembagian customer.
 
 (Enable/Disable, Add, Delete)
 
-### 2. 客户级别
+### 56. 客户级别
 
 - **Customer Grade**
 
@@ -624,7 +624,7 @@ Pembuatan Grade atau prioritas dari suatu Customer, tujuan untuk pembagian custo
 
 (Enable/Disable, Add, Delete)
 
-### 3. 客户行业
+### 57. 客户行业
 
 - **Customer's Industry**
 
@@ -634,7 +634,7 @@ Pembuatan Jenis/Kategori Industri Customers
 
 (Enable/Disable, Add, Delete)
 
-### 4. 客户档案
+### 58. 客户档案
 
 - **Customer File**
 
@@ -642,11 +642,11 @@ Pembuatan Jenis/Kategori Industri Customers
 
 **Database resmi semua customer** perusahaan di sistem. Sebelum bisa bikin Sales Order, Invoice, atau transaksi apapun ke customer, customer wajib terdaftar dulu ke customer file system perusahaan, supaya bisa diinput kedalam invoice atau order.
 
-### 5. 客户属性
+### 59. 客户属性
 
 - **Customer Property** (Tidak ada di settings) (issue)
 
-### 6. 供应商分类
+### 60. 供应商分类
 
 - **Supplier Category**
 
@@ -658,7 +658,7 @@ Mirip seperti Customer Category atau Material Category, hanya saja dengan base S
 
 ## Supplier
 
-### 1. 供应商档案
+### 61. 供应商档案
 
 - **Supplier File**
 
@@ -668,13 +668,13 @@ Database atau informasi setiap supplier yang terdaftar di dalam sistem, sama sep
 
 (Enable/Disable, Add, Delete)
 
-### 2. 供应商属性
+### 62. 供应商属性
 
 - **Supplier Property** (Tidak ada di settings) (issue)
 
 ## Project
 
-### 1. 项目类别
+### 63. 项目类别
 
 - **Project Category**
 
@@ -682,7 +682,7 @@ Database atau informasi setiap supplier yang terdaftar di dalam sistem, sama sep
 
 Pengkategorian project, berguna untuk pembagian, kategori atau level suatu project yang akan dijalankan
 
-### 2. 项目
+### 64. 项目
 
 - **Project**
 
@@ -696,7 +696,7 @@ Biasanya dipakai untuk meng-assign ke suatu project yang ingin dijalankan, bergu
 
 ## Business File
 
-### 1. 仓库
+### 65. 仓库
 
 - **Warehouse**
 
