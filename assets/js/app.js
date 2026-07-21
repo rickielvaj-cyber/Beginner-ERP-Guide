@@ -622,6 +622,10 @@
       localStorage.setItem(CHECKLIST_KEY, JSON.stringify(all));
     } catch (e) { /* ignore (private browsing etc.) */ }
   }
+  function extractItemNumber(label) {
+    const m = label.match(/^(\d+(?:\.\d+)?)\.?\s/);
+    return m ? m[1] : "";
+  }
   function renderProgressBadge(counts) {
     if (!counts.total) return "";
     return `
@@ -658,8 +662,8 @@
     if ($rail) {
       $rail.innerHTML = `
         <div class="rail-title">Checklist</div>
-        <div class="rail-grid">${items.map(() => `<button type="button" class="ys-grid-sq"></button>`).join("")}</div>
-        <p class="rail-hint">Klik kotak buat tandai: hijau = selesai, kuning = ditandai.</p>
+        <div class="rail-grid">${items.map((it) => `<button type="button" class="ys-grid-sq"><span class="ys-grid-sq-num">${escapeHtml(extractItemNumber(it.label))}</span></button>`).join("")}</div>
+        <p class="rail-hint">Klik nomor buat loncat ke soalnya. Centang/tandai lewat tombol di judul.</p>
       `;
       const boxes = $rail.querySelectorAll(".ys-grid-sq");
       items.forEach((it, i) => {
@@ -706,8 +710,10 @@
       });
       if (it.box) {
         it.box.addEventListener("click", () => {
-          const next = it.status === null ? "done" : it.status === "done" ? "marked" : null;
-          setStatus(it, next);
+          it.heading.scrollIntoView({ behavior: "smooth", block: "start" });
+          it.heading.classList.remove("flash-highlight");
+          void it.heading.offsetWidth; // restart the animation if it was just played
+          it.heading.classList.add("flash-highlight");
         });
       }
     });
