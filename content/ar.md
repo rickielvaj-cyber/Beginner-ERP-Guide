@@ -52,7 +52,7 @@ Kalau **Opening Collection** = uang yang **DITERIMA** dari customer tapi belum d
 
 Bayangin di sistem lama: customer pernah bayar lebih (overpayment), terus perusahaan refund sebagian ke customer itu — Rp 3 juta misalnya. Tapi refund ini belum jelas "mengurangi" collection yang mana secara spesifik di sistem lama. Nah, transaksi refund yang masih "nganggur" (belum ke-match ke collection tertentu) ini yang dicatat di **Opening Collection Refund**
 
-## **5. A/R Settlement Scheme**
+## **7. A/R Settlement Scheme**
 
 *Aturan settlement yang di-digitize biar bisa jalan otomatis.*
 
@@ -60,7 +60,7 @@ Bayangin di sistem lama: customer pernah bayar lebih (overpayment), terus perusa
 
 Ini semacam **"template aturan"** buat proses settlement piutang: nentuin data mana yang mau di-settle (filter), urutan settle-nya (sorting), dan cara matching-nya — bisa berdasarkan customer, order, atau kriteria custom lainnya. Prosesnya bisa dijalankan otomatis secara real-time, terjadwal (scheduled), atau dipicu manual. Buat pemula, cara paling gampang buat ngerti konsep ini: anggap aja intinya cuma "per customer mana yang mau di-settle," nanti detailnya makin kebayang seiring jalan.
 
-## **6. A/R Settlement Query**
+## **8. A/R Settlement Query**
 
 *Tempat buat cari, export, dan membatalkan transaksi settlement.*
 
@@ -68,7 +68,7 @@ Ini semacam **"template aturan"** buat proses settlement piutang: nentuin data m
 
 Fungsinya buat query (cari) transaksi settlement yang udah kejadian, export datanya, dan kalau ada yang salah, bisa dibatalkan (cancel) atau di-reverse.
 
-## **7. A/R Exchange Gain/Loss (Selisih Kurs)**
+## **9. A/R Exchange Gain/Loss (Selisih Kurs)**
 
 *Menghitung untung/rugi kurs dari piutang & pembayaran dalam mata uang asing.*
 
@@ -82,7 +82,7 @@ Kalau customer bayar pakai mata uang asing (misal USD), kurs pas invoice dibikin
 
 Hasil perhitungan selisih kurs ini otomatis diteruskan ke General Ledger (GL) lewat auto accounting instruction — nggak perlu input jurnal manual.
 
-## **8. A/R Account Closing Period & A/R Closing**
+## **10. A/R Account Closing Period & A/R Closing**
 
 *Proses cek dan tutup buku A/R di akhir periode akuntansi.*
 
@@ -90,7 +90,7 @@ Hasil perhitungan selisih kurs ini otomatis diteruskan ke General Ledger (GL) le
 
 Sebelum buku A/R bisa ditutup, sistem bakal jalanin pengecekan dulu (closing check) buat mastiin nggak ada masalah yang ketinggalan — kalau ada, langsung ketauan dari hasil cek ini. Setelah lolos cek, baru proses closing beneran dijalankan. Kalau ternyata ada yang perlu dikoreksi, closing ini bisa di-reverse (dibuka lagi).
 
-## **9. Opening Account Setup**
+## **11. Opening Account Setup**
 
 *Tempat setup saldo awal — bukan cuma buat A/R. Sebelum kesini biasanya diawali dengan memasukan dari Opening A/R, A/P atau Inventory, baru dilanjut ke bagian menu Opening Account Setup dan itu sudah 1 paket.*
 
@@ -100,7 +100,7 @@ Sebelum buku A/R bisa ditutup, sistem bakal jalanin pengecekan dulu (closing che
 
 Ini tempat buat masukin transaksi-transaksi saldo awal terkait A/R (piutang awal, collection awal, refund awal). Yang penting diinget: fitur ini nggak eksklusif buat A/R aja — struktur yang sama juga dipakai buat setup saldo awal di modul A/P (hutang) dan Inventory (persediaan).
 
-## **10. A/R Sub Ledger**
+## **12. A/R Sub Ledger**
 
 *Laporan rincian (detail per transaksi) piutang & pembayaran.*
 
@@ -108,7 +108,7 @@ Ini tempat buat masukin transaksi-transaksi saldo awal terkait A/R (piutang awal
 
 Kalau butuh lihat **detail satu-satu transaksi piutang dan pembayaran yang kejadian dalam periode akuntansi tertentu**, ini laporannya. Levelnya sampai ke transaksi individual, bukan cuma angka total.
 
-## **11. A/R Balance Report （KEY）**
+## **13. A/R Balance Report （KEY）**
 
 *Laporan ringkasan (summary) saldo piutang & collection.*
 
@@ -116,7 +116,7 @@ Kalau butuh lihat **detail satu-satu transaksi piutang dan pembayaran yang kejad
 
 Mirip A/R Sub Ledger, tapi ini versinya ringkas — **nunjukkin summary saldo piutang dan collection dalam periode tertentu, tanpa perlu breakdown per transaksi.** Cocok kalau cuma butuh angka total, bukan detailnya.
 
-## **12. A/R Aging Analysis**
+## **14. A/R Aging Analysis**
 
 *Laporan umur piutang — dasar buat menilai kualitas piutang & kebijakan kredit.*
 
@@ -124,7 +124,7 @@ Mirip A/R Sub Ledger, tapi ini versinya ringkas — **nunjukkin summary saldo pi
 
 **Laporan ini nunjukkin "umur" piutang tiap customer — piutang mana yang masih baru, dan mana yang udah lama nunggak.** Dengan lihat distribusi umur piutang ini secara menyeluruh, perusahaan bisa menilai kualitas piutang secara keseluruhan dan kondisi kredit masing-masing customer, lalu pakai itu sebagai dasar buat nentuin kebijakan credit sales ke depannya (misalnya, customer yang sering telat bayar mungkin perlu dibatasi limit kreditnya).
 
-## **13. Creditor’s Rights Transfer**
+## **15. Creditor’s Rights Transfer**
 
 ![ar screenshot 16](images/ar/ar-016.png)
 
@@ -132,6 +132,6 @@ Transfer kepemilikan/tanggung jawab piutang secara internal — bukan jual piuta
 
 Nominal piutang nggak berubah, cuma attribution-nya yang pindah. Ada juga transfer khusus buat collection document, terpisah dari AR event-nya.
 
-## Funding Business Partners (资金业务伙伴)
+## 16. Funding Business Partners (资金业务伙伴)
 
 Fungsi: Master data — daftar bank, settlement center, lembaga keuangan non-bank, guarantee company. Dipakai sebagai pilihan counterparty di modul Investment & Financing Management (financing registration, investment registration, derivatives). Beda modul dari AR settlement harian.

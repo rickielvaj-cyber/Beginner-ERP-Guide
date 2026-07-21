@@ -20,27 +20,27 @@ Default urutan ambil harga: **Last Outbound Cost → Recent Period Balance → P
 
 *Catatan: bukan parameter terpisah — digabung/dikelola bareng Issue Doc Price Retrieval Scheme (item #2 di atas). Red-letter (return/reversal) outbound pakai scheme yang sama dengan outbound normal, nggak ada config sendiri.*
 
-### 4. Processing of Abnormal Bal (the Qty is positive and the Amt is 0)
+### 3. Processing of Abnormal Bal (the Qty is positive and the Amt is 0)
 
 ![inventory-accounting screenshot 3](images/inventory-accounting/inventory-accounting-003.png)
 
 Ada stok fisik, tapi nilai buku = 0. Penyebab: biaya masuk (inbound cost) nggak ke-aggregate dengan benar, atau ada anomali di perhitungan cost.
 
-### 5. Processing of Abnormal Bal (the Qty is positive and the Amt is negative)
+### 4. Processing of Abnormal Bal (the Qty is positive and the Amt is negative)
 
 ![inventory-accounting screenshot 4](images/inventory-accounting/inventory-accounting-004.png)
 
 Ada stok fisik, tapi nilai buku minus.
 Bukan soal urutan transaksi kebalik, tapi **biaya outbound (keluar) lebih tinggi dari biaya inbound (masuk)**. Jadi pas barang keluar, sistem ngitung cost yang harus dikurangin dari saldo lebih besar dari apa yang sebenernya ada di saldo — hasilnya saldo jebol ke minus.
 
-### 6. Abnormal Bal (Qty is zero and Amt is not zero) Processing
+### 5. Abnormal Bal (Qty is zero and Amt is not zero) Processing
 
 ![inventory-accounting screenshot 5](images/inventory-accounting/inventory-accounting-005.png)
 
 Fisik udah habis (qty 0), tapi masih ada sisa nilai nyangkut (misal akhir bulan qty 0 tapi amount masih Rp 50).
 bukan cuma soal rounding, tapi lebih umum: **outbound nggak sepenuhnya nge-offset/ngurangin cost dari inbound**. Jadi ada sisa nilai yang "ketinggalan" karena proses pengurangan biaya nggak tuntas pas barang keluar.
 
-### 7. Est. Processing Method
+### 6. Est. Processing Method
 
 ![inventory-accounting screenshot 6](images/inventory-accounting/inventory-accounting-006.png)
 
@@ -55,7 +55,7 @@ Ngatur cara sistem handle **selisih harga** antara barang yang udah masuk gudang
 
 Hasil akhir sama, tapi jejaknya di sistem beda — Adjust lebih ringkas, Reverse & Rebook lebih jelas histori-nya.
 
-### 8. Cost Area Creation Type
+### 7. Cost Area Creation Type
 
 ![inventory-accounting screenshot 7](images/inventory-accounting/inventory-accounting-007.png)
 
@@ -66,9 +66,9 @@ Hasil akhir sama, tapi jejaknya di sistem beda — Adjust lebih ringkas, Reverse
 3. Per warehouse (misal per lini produk)
 4. Per inventory org + warehouse (paling detail — misal gudang bahan baku & gudang barang jadi beda pabrik)
 
-### 9. Price Scheme of Adj Doc Generated Upon Abnormal Bal
+### 8. Price Scheme of Adj Doc Generated Upon Abnormal Bal
 
-### 10. Apportion Basis of Abnormal Balance Booked to Gain/Loss
+### 9. Apportion Basis of Abnormal Balance Booked to Gain/Loss
 
 ![inventory-accounting screenshot 8](images/inventory-accounting/inventory-accounting-008.png)
 
@@ -79,7 +79,7 @@ Alokasi selisihnya dipecah berdasarkan kombinasi 2 dimensi: jenis transaksi akun
 - **Accounting Transaction Type + Department + Customer**
 Sama kayak di atas, tapi lebih detail — nambah dimensi customer juga. Jadi alokasinya makin granular, bisa ketauan abnormal balance-nya "milik" customer mana.
 
-### 11. Re-calculate Cost at Month-end
+### 10. Re-calculate Cost at Month-end
 
 ![inventory-accounting screenshot 9](images/inventory-accounting/inventory-accounting-009.png)
 
@@ -87,7 +87,7 @@ Sama kayak di atas, tapi lebih detail — nambah dimensi customer juga. Jadi alo
 
 **No:** cuma hitung cost buat data periode berjalan yang belum dihitung.
 
-### 12. Data Processing Method after Closing Account Period
+### 11. Data Processing Method after Closing Account Period
 
 ![inventory-accounting screenshot 10](images/inventory-accounting/inventory-accounting-010.png)
 
@@ -105,7 +105,7 @@ Sistem otomatis **"lempar"** transaksi itu ke periode terbuka paling awal — ng
 
 ## **Opening**
 
-### **Opening Inventory Accounting**
+### **12. Opening Inventory Accounting**
 
 *Titik masuk data opening —* ***ambil data dari SCM Cloud.***
 
@@ -113,7 +113,7 @@ Sistem otomatis **"lempar"** transaksi itu ke periode terbuka paling awal — ng
 
 **Fungsi:** ini semacam "pintu gerbang" yang narik data inventory dari modul SCM (Supply Chain Management) Cloud — jadi data yang udah ada di sisi operasional/logistik, ditarik ke sisi akuntansi biar bisa dihitung nilainya.
 
-### **Estimated Opening**
+### **13. Estimated Opening**
 
 *Ambil data dari Purchased Good Receipt Opening.*
 
@@ -121,7 +121,7 @@ Sistem otomatis **"lempar"** transaksi itu ke periode terbuka paling awal — ng
 
 **Fungsi:** khusus narik data barang yang MASUK dari pembelian (purchase receipt) yang statusnya "opening" — ini bagian dari proses membangun saldo awal inventory berdasarkan barang yang udah dibeli sebelum sistem baru dipakai.
 
-### **Product in Transit Opening**
+### **14. Product in Transit Opening**
 
 *Ambil data dari Sales Issue & Receiving Opening transaction type.*
 
@@ -129,7 +129,7 @@ Sistem otomatis **"lempar"** transaksi itu ke periode terbuka paling awal — ng
 
 **Fungsi:** nangkep barang yang "**sedang dalam perjalanan**" pas opening — misalnya barang yang udah keluar dari gudang asal (sales issue) tapi belum sampai/diterima di tujuan. Ini penting supaya nilai barang yang "nggantung di jalan" nggak hilang dari pencatatan. Dikarenakan barang barang sudah sampai dan sudah dibayarkan oleh customer, maka dari itu dari system tidak bisa mengambil data dari Sales Issue, karna datanya sudah kosong.
 
-### **Inventory Opening Account Setup**
+### **15. Inventory Opening Account Setup**
 
 *Setup approval step buat opening data.*
 
@@ -163,7 +163,7 @@ Dipakai buat menambahkan dan query transaksi akuntansi adjustment yang terkait d
 
 **Fungsi:** nentuin CARA sistem menghitung nilai/cost barang yang keluar-masuk. Pemilihan metode ini ngaruh langsung ke akurasi COGS (Cost of Goods Sold) dan nilai inventory di laporan keuangan.
 
-### **3.1 Cost Area**
+### **16. Cost Area**
 
 ![inventory-accounting screenshot 18](images/inventory-accounting/inventory-accounting-018.png)
 
@@ -194,19 +194,19 @@ Pemilihan metode tergantung 3 hal: bagaimana cara perusahaan beroperasi, seberap
 
 *Urutan wajib: Account Period Closing → Cost Calculation → Inventory Closing.*
 
-### **Inv Account Period Closing**
+### **17. Inv Account Period Closing**
 
 ![inventory-accounting screenshot 19](images/inventory-accounting/inventory-accounting-019.png)
 
 Fungsi: mengunci rentang data akuntansi di periode berjalan, menciptakan lingkungan data yang stabil buat proses Cost Calculation dan Inventory Closing berikutnya. Ini kayak **"freeze" data** dulu, biar nggak ada perubahan di tengah proses hitung.
 
-### **Cost Calculation**
+### **18. Cost Calculation**
 
 ![inventory-accounting screenshot 20](images/inventory-accounting/inventory-accounting-020.png)
 
 Fungsi: metode sistematis buat menghitung SEMUA cost area dan SEMUA material sekaligus, dalam satu lingkup accounting entity - ledger. Ini eksekusi nyata dari metode yang dipilih di poin 6 (Monthly Average/Moving Average/FIFO).
 
-### Inv Closing
+### 19. Inv Closing
 
 ![inventory-accounting screenshot 21](images/inventory-accounting/inventory-accounting-021.png)
 
@@ -216,43 +216,43 @@ Fungsi: menjalankan month-end closing buat account book di bawah accounting enti
 
 *3 jenis laporan, beda level detail.*
 
-### **GL of Inv (General Ledger of Inventory) (PENTING)**
+### **20. GL of Inv (General Ledger of Inventory) (PENTING)**
 
 ![inventory-accounting screenshot 22](images/inventory-accounting/inventory-accounting-022.png)
 
 Fungsi: query berdasarkan accounting entity, account book, dan fiscal period — **nampilin inventory receipt, issue, dan balance. Ini level RINGKASAN.**
 
-### **Sub-Ledger of Inv (PENTING)**
+### **21. Sub-Ledger of Inv (PENTING)**
 
 ![inventory-accounting screenshot 23](images/inventory-accounting/inventory-accounting-023.png)
 
 Fungsi: sama query dimension-nya, tapi nampilin detail **SATU PER SATU tiap transaksi** (receipt, issue, balance), diurutkan berdasarkan tanggal dokumen bisnis. Ini level DETAIL/rincian.
 
-### **Good Receipt/Issue/Inv Summary (PENTING)**
+### **22. Good Receipt/Issue/Inv Summary (PENTING)**
 
 ![inventory-accounting screenshot 24](images/inventory-accounting/inventory-accounting-024.png)
 
 Fungsi: query berdasarkan dimensi yang sama tapi dengan rentang fiscal period — **nampilin opening, receipt, issue, dan balance dalam periode yang dipilih.** Cocok buat **lihat pergerakan inventory secara menyeluruh dalam suatu range waktu.**
 
-### **Receipt Summary**
+### **23. Receipt Summary**
 
 ![inventory-accounting screenshot 25](images/inventory-accounting/inventory-accounting-025.png)
 
 Fungsi: Ngerangkum total barang **masuk** (inbound) di suatu ledger & periode, bisa dikelompokin berdasarkan kriteria tertentu (misal per material, per warehouse, per supplier).
 
-### **Issue Summary**
+### **24. Issue Summary**
 
 ![inventory-accounting screenshot 26](images/inventory-accounting/inventory-accounting-026.png)
 
 Fungsi: Ngerangkum total barang **keluar** (outbound) di suatu ledger & periode, sama juga bisa dikelompokin berdasarkan kriteria tertentu.
 
-### **Outsourcing Cost Query**
+### **25. Outsourcing Cost Query**
 
 ![inventory-accounting screenshot 27](images/inventory-accounting/inventory-accounting-027.png)
 
 **Fungsi:** Laporan buat liat **berapa biaya outsourcing** (kerja titip produksi ke pihak luar/subkontraktor) dalam periode tertentu, plus breakdown-nya per komponen biaya (cost sub-item).
 
-### **Turnover Rate Ratio/Analysis**
+### **26. Turnover Rate Ratio/Analysis**
 
 ![inventory-accounting screenshot 28](images/inventory-accounting/inventory-accounting-028.png)
 

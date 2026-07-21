@@ -188,7 +188,7 @@ Laporan analitis/dashboard dari Aset yang dimiliki
 
 Tujuannya kasih gambaran kondisi keseluruhan fixed asset dalam suatu periode query — beda dari Depreciation Allocation Table (yang fokus ke biaya depresiasi buat generate voucher GL), report ini lebih ke **analisis manajerial**: gimana kondisi portfolio aset perusahaan secara umum.
 
-## **Studi Kasus — Error yang Pernah Ditemuin**
+## **23. Studi Kasus — Error yang Pernah Ditemuin**
 
 *2 error nyata yang kejadian pas coba daftar/proses Fixed Asset.*
 

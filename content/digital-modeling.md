@@ -435,7 +435,7 @@ Settingan kapan sistem mulai **"mengontrol"** atau **membatasi** transaksi kalau
 - **Shipping Document** → diblokir saat mau kirim barang
 - **Issue Document** → diblokir saat dokumen pengeluaran dibuat
 - **Sales Invoice** → diblokir saat mau buat invoice
-### 10. 收款起算时点
+### 47. 收款起算时点
 
 - **Coll. Start Time**
 
@@ -457,7 +457,7 @@ Pilihan yang sering dipakai.
 - **Invoice Approval Date** → dihitung dari tanggal invoice di-approve (lebih ketat)
 - **Order Doc Date** → dihitung dari tanggal SO dibuat (jarang, tapi ada)
 - **Shipment Approval Date** → dihitung dari tanggal barang confirmed dikirim
-### 11. 付款协议
+### 48. 付款协议
 
 - **Payment Agreement**
 
@@ -467,7 +467,7 @@ Pembuatan template syarat/skema pembayaran yang disepakati dengan customer/suppl
 
 (Enable/Disable, Add, Delete)
 
-### 47. 付款起算时点
+### 49. 付款起算时点
 
 - **Payment Start Time**
 
@@ -490,7 +490,7 @@ Payment Start Time tempat buat masukin jenis kategori Payment time
 
 ## Material Category
 
-### 48. 物料分类
+### 50. 物料分类
 
 - **Material Category**
 
@@ -500,7 +500,7 @@ Pembuatan kategori tipe material untuk kebutuhan purchasing.
 
 (Enable/Disable, Add, Delete)
 
-### 49. 计量单位
+### 51. 计量单位
 
 - **UOM**
 
@@ -514,7 +514,7 @@ PCS    → Basic Unit = Yes  → 1 PCS = 1 PCS      (patokan)
 
 Box10  → Basic Unit = No   → 1 Box10 = 10 PCS   (1 box isi 10 pcs)
 
-### 50. 物料创建
+### 52. 物料创建
 
 - **Material Creation**
 
@@ -526,7 +526,7 @@ Tempat mendaftarkan semua barang, jasa, atau material yang akan dipakai ke dalam
 
 Pada bagian Material creation ada kotak “Self Produced” ini yang berkorelasi dengan Product Receipt (Produk yang kita terima melalui produksi kita sendiri), jika tidak mencentang “Self produced”, maka Ketika menginput material pada menu product receipt, tidak ada akan material yang muncul pada menu.
 
-### 51. 物料模版
+### 53. 物料模版
 
 - **Material Template**
 
@@ -536,15 +536,15 @@ Blueprint/cetakan standar yang bisa diterapkan ke material baru saat proses pemb
 
 ## Material Property
 
-### 52. 物料规格
+### 54. 物料规格
 
 - **Material Specification** (Tidak ada di settings) (issue)
 
-### 53. 物料属性
+### 55. 物料属性
 
 - **Material Property** (Tidak ada di settings) (issue)
 
-### 54. SKU属性
+### 56. SKU属性
 
 - **SKU Property**
 
@@ -604,7 +604,7 @@ Ini menu paling sensitif karena menentukan **ke mana larinya jurnal akuntansi** 
 
 ## Customer
 
-### 55. 客户分类
+### 57. 客户分类
 
 - **Customer Category**
 
@@ -614,7 +614,7 @@ Pembuatan Jenis/Kategori Customer, tujuan untuk pembagian customer.
 
 (Enable/Disable, Add, Delete)
 
-### 56. 客户级别
+### 58. 客户级别
 
 - **Customer Grade**
 
@@ -624,7 +624,7 @@ Pembuatan Grade atau prioritas dari suatu Customer, tujuan untuk pembagian custo
 
 (Enable/Disable, Add, Delete)
 
-### 57. 客户行业
+### 59. 客户行业
 
 - **Customer's Industry**
 
@@ -634,7 +634,7 @@ Pembuatan Jenis/Kategori Industri Customers
 
 (Enable/Disable, Add, Delete)
 
-### 58. 客户档案
+### 60. 客户档案
 
 - **Customer File**
 
@@ -642,11 +642,11 @@ Pembuatan Jenis/Kategori Industri Customers
 
 **Database resmi semua customer** perusahaan di sistem. Sebelum bisa bikin Sales Order, Invoice, atau transaksi apapun ke customer, customer wajib terdaftar dulu ke customer file system perusahaan, supaya bisa diinput kedalam invoice atau order.
 
-### 59. 客户属性
+### 61. 客户属性
 
 - **Customer Property** (Tidak ada di settings) (issue)
 
-### 60. 供应商分类
+### 62. 供应商分类
 
 - **Supplier Category**
 
@@ -658,7 +658,7 @@ Mirip seperti Customer Category atau Material Category, hanya saja dengan base S
 
 ## Supplier
 
-### 61. 供应商档案
+### 63. 供应商档案
 
 - **Supplier File**
 
@@ -668,13 +668,13 @@ Database atau informasi setiap supplier yang terdaftar di dalam sistem, sama sep
 
 (Enable/Disable, Add, Delete)
 
-### 62. 供应商属性
+### 64. 供应商属性
 
 - **Supplier Property** (Tidak ada di settings) (issue)
 
 ## Project
 
-### 63. 项目类别
+### 65. 项目类别
 
 - **Project Category**
 
@@ -682,7 +682,7 @@ Database atau informasi setiap supplier yang terdaftar di dalam sistem, sama sep
 
 Pengkategorian project, berguna untuk pembagian, kategori atau level suatu project yang akan dijalankan
 
-### 64. 项目
+### 66. 项目
 
 - **Project**
 
@@ -696,7 +696,7 @@ Biasanya dipakai untuk meng-assign ke suatu project yang ingin dijalankan, bergu
 
 ## Business File
 
-### 65. 仓库
+### 67. 仓库
 
 - **Warehouse**
 
@@ -714,7 +714,7 @@ Pendaftaran nama gudang kepunyaan organisasi ke dalam sistem (Enable/Disable, Ad
 
 **Stock-Level-by-Storage-Bin** → sistem tracking jumlah stok per bin secara individual. Kalau Yes, lo bisa lihat berapa qty barang di tiap bin secara real-time, bukan cuma total gudang.
 
-### 2. 货位
+### 68. 货位
 
 - **Storage Bin**
 
@@ -724,7 +724,7 @@ Pendaftaran nama gudang kepunyaan organisasi ke dalam sistem (Enable/Disable, Ad
 
 Contoh: Gudang A – Rak 001 (baju)
 
-### 3. 货位物料对照
+### 69. 货位物料对照
 
 - **Storage Bin Material Cross**
 
@@ -734,7 +734,7 @@ Contoh: Gudang A – Rak 001 (baju)
 
 Contoh Gudang A -- Rak 1A (Raw Material).
 
-### 4. 发运方式
+### 70. 发运方式
 
 - **Shipping Method**
 
@@ -746,29 +746,29 @@ Penambahan jenis pengiriman ke dalam system.
 
 ## Enterprise Fund Account
 
-### 1. 企业银行账户
+### 71. 企业银行账户
 
 - **Bank Account** (Tidak ada di settings) (issue)
 
-### 2. Corporate Fund Account
+### 72. Corporate Fund Account
 
 ![digital-modeling screenshot 76](images/digital-modeling/digital-modeling-076.png)
 
 Kantong dana utama perusahaan. Ini "rekening induk" yang nampung total duit internal yang dimiliki perusahaan. Dari sini lo bisa lihat berapa total dana yang tersedia.
 
-### 3. Enterprise Cash Account
+### 73. Enterprise Cash Account
 
 ![digital-modeling screenshot 77](images/digital-modeling/digital-modeling-077.png)
 
 Rekening kas operasional yang lebih kecil & spesifik. Contoh: petty cash, kas per department. Bisa di-assign ke divisi atau proyek tertentu. Ini "kantong-kantong kecil" yang diambil dari kantong induk.
 
-### 4. Account Purpose
+### 74. Account Purpose
 
 ![digital-modeling screenshot 78](images/digital-modeling/digital-modeling-078.png)
 
 Penanda tujuan tiap akun dipakai buat apa. Fungsinya biar duit ga kepake sembarangan — tiap akun jelas peruntukannya.
 
-### 5. 企业现金账户
+### 75. 企业现金账户
 
 - **Cash Account**
 
@@ -778,7 +778,7 @@ Pengkategorian kantong cash pada suatu organisasi, mirip seperti Chart of Accoun
 
 ## Expense Item
 
-### 1. 费用项目类型
+### 76. 费用项目类型
 
 - **Expense Item Category**
 
@@ -788,7 +788,7 @@ Penambahan jenis atau kategori beban/biaya yang dikeluarkan oleh perusahaan.
 
 (Enable/Disable, Add, Delete)
 
-### 2. 费用项目
+### 77. 费用项目
 
 - **Expense Item**
 
@@ -800,7 +800,7 @@ Contoh: Kategori “Pajak” – PPH 21, PPHb dll
 
 ## User Defined Field
 
-### 1. 固定自定义项
+### 78. 固定自定义项
 
 - **Fixed User-defined Field**
 
@@ -808,7 +808,7 @@ Contoh: Kategori “Pajak” – PPH 21, PPHb dll
 
 Fixed User Defined Field yang menjadi permanen dan wajib ada contoh pada bagian No, code, nama. (penambahan suatu menu atau list pada User Defined)
 
-### 2. 自定义项设置
+### 79. 自定义项设置
 
 - **User-defined File Setting**
 
@@ -818,7 +818,7 @@ Penambahan suatu menu atau suatu list dalam sistem, biasanya kebutuhan bisa berb
 
 ## Process Data
 
-### 1. 交易类型
+### 80. 交易类型
 
 - **Transaction Type**
 
@@ -830,7 +830,7 @@ Tau fungsi, tidak mengerti logic (issue)
 
 ## Workflow
 
-### 1. 模型管理
+### 81. 模型管理
 
 - **Model Management**
 
@@ -840,7 +840,7 @@ Tampilan arsitektur sistem — user bisa lihat struktur data di balik setiap mod
 
 Tau fungsi, tapi tidak tau logic (issue)
 
-### 2. 流程调度
+### 82. 流程调度
 
 - **Workflow Process Scheduling**
 
@@ -851,7 +851,7 @@ Fungsinya utk monitoring Workflow request yang sudah pernah diajukan.
 
 ## Business Process
 
-### 1. 单据转换规则
+### 83. 单据转换规则
 
 - **Doc Conv. Rules**
 
@@ -859,7 +859,7 @@ Fungsinya utk monitoring Workflow request yang sudah pernah diajukan.
 
 Aturan yang menentukan bagaimana satu dokumen bisa otomatis menghasilkan dokumen berikutnya dalam alur transaksi. Document Conversion Rules = aturan yang mendefinisikan push down itu. **Arrival > Receipt**
 
-### 2. 业务流设置
+### 84. 业务流设置
 
 - **Business Process Design**
 
@@ -869,17 +869,17 @@ Jika Workflow Design adalah urutan untuk suatu approval, maka Business Process A
 
 ## Aux Process Function
 
-### 1. 代理人设置
+### 85. 代理人设置
 
 - **Proxy Settings** (Tidak ada di settings) (issue)
 
-### 2. 审批常用语
+### 86. 审批常用语
 
 - **Common Approve** (Tidak ada di settings) (issue)
 
 ## Template
 
-### 1. UI模版
+### 87. UI模版
 
 - **UI Template**
 
@@ -893,7 +893,7 @@ Jika Workflow Design adalah urutan untuk suatu approval, maka Business Process A
 
 Tau fungsi, masih butuh latihan untuk menggunakan ini (issue)
 
-### 2. 打印模版
+### 88. 打印模版
 
 - **Print Template**
 
@@ -905,7 +905,7 @@ Tau fungsi, masih butuh latihan untuk menggunakan ini (issue)
 
 ## Coding Rules
 
-### 1. 编码规则
+### 89. 编码规则
 
 - **Coding Rules**
 
@@ -919,7 +919,7 @@ Constant untuk jenis unique code, Time untuk penomoran tanggal, SN untuk kode ur
 
 ## Alert Task
 
-### 1. 预警任务
+### 90. 预警任务
 
 - **Alert Task**
 
@@ -929,7 +929,7 @@ Bikin Alert atau Reminder terhadap suatu pekerjaan yang dikerjakan, bisa berlaku
 
 ## Workbench Management
 
-### 1. 工作台管理
+### 91. 工作台管理
 
 - **Workbench Management**
 
@@ -941,7 +941,7 @@ Mensetting template tataan dari Workbench sesuai dengan kebutuhan user.
 
 ## Mobile Workbench Configuration
 
-### 1. 移动工作台设置 (Mobile Workspace Settings)
+### 92. 移动工作台设置 (Mobile Workspace Settings)
 
 - **Mobile Workbench Settings**
 
@@ -951,7 +951,7 @@ Digunakan untuk men-customize menu dan men-enable/disable menu yang ada pada sys
 
 **Tau fungsinya belum ngerti cara pakai (issue)**
 
-### 2. 移动门户设计
+### 93. 移动门户设计
 
 - **Mobile Portable Design/ Mobile Portal Design**
 
@@ -961,24 +961,24 @@ Digunakan untuk Mendesign UI dari aplikasi mobile Yonyou
 
 **Tau fungsinya belum ngerti cara pakai (issue)**
 
-### 3. 移动应用排序
+### 94. 移动应用排序
 
 - **Homepage Sorting** (Tidak ada di settings) (issue)
 
 ## Catatan Tambahan Digital Parameter Training Video by Osel
 
-### 1. Enterprise Information
+### 95. Enterprise Information
 
 ![digital-modeling screenshot 98](images/digital-modeling/digital-modeling-098.png)
 
 Tempat menyimpan informasi client/customer. Logo perusahaan juga bisa diedit di sini.
 
-### 2. Alur Setup Dasar (Flow Penting)
+### 96. Alur Setup Dasar (Flow Penting)
 
 - Bikin Business Unit → Bikin Department → Bikin User → Bikin Employee
 - → Bikin Role → Hubungkan Role dengan Employee dengan Authorization
 
-### 3. Parameter Setting — Level Pengaturan
+### 97. Parameter Setting — Level Pengaturan
 
 | Level | Cakupan |
 | --- | --- |
@@ -987,7 +987,7 @@ Tempat menyimpan informasi client/customer. Logo perusahaan juga bisa diedit di 
 
 ![digital-modeling screenshot 99](images/digital-modeling/digital-modeling-099.png)
 
-### 1. Permission Management & Digital Parameters (yang sering diotak-atik)
+### 98. Permission Management & Digital Parameters (yang sering diotak-atik)
 
 - **a. User & Employee**
 - Auto create employee/user saat ada user baru yang dibuat
@@ -1147,11 +1147,11 @@ Opsi "Benchmark exchange rate" bisa konek ke bank China untuk update rate otomat
 
 **Catatan Tambahan:**
 
-### 1. Leader in Charge dan Manager (cmiiw)
+### 99. Leader in Charge dan Manager (cmiiw)
 
 designated head of the department; used for approval routing — when a workflow requires department head approval, the system auto-routes to whoever is set as Leader here.
 
-### 2. Licensing & Resource Management
+### 100. Licensing & Resource Management
 
 ![digital-modeling screenshot 135](images/digital-modeling/digital-modeling-135.png)
 
@@ -1165,25 +1165,25 @@ designated head of the department; used for approval routing — when a workflow
 
 ## Tax Collection
 
-### 1. Tax System File (register
+### 101. Tax System File (register
 
 ![digital-modeling screenshot 136](images/digital-modeling/digital-modeling-136.png)
 
 Biasanya untuk mendaftarkan suatu Lembaga perpajakan suatu negara, karena kita berada di Indonesia, di system kita daftarkan menggunakan DJP.
 
-### 2. Tax Category Archive
+### 102. Tax Category Archive
 
 ![digital-modeling screenshot 137](images/digital-modeling/digital-modeling-137.png)
 
 Biasanya dipakai untuk mendaftarkan tipe tipe jenis pajak pada suatu negara, jika di Indonesia ada seperti PPH, PPH, PPN, dll.
 
-### 3. Tax Rate Archive
+### 103. Tax Rate Archive
 
 ![digital-modeling screenshot 138](images/digital-modeling/digital-modeling-138.png)
 
 Disini biasanya dipakai untuk memasukan tipe tipe rate dari jenis jenis pajak suatu negara tergantung dengan jenis pembelian atau penjualan.
 
-### 4. Witholding Tax Type
+### 104. Witholding Tax Type
 
 ![digital-modeling screenshot 139](images/digital-modeling/digital-modeling-139.png)
 

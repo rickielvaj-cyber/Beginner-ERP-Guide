@@ -1,12 +1,12 @@
 ## Opening A/P (应付事项期初)
 
-### 12.1 Konsep
+### 1. Konsep
 
 Mekanisme untuk input saldo hutang lama (terjadi sebelum sistem YonSuite aktif) ke dalam sistem baru, agar saldo tercatat akurat dari hari pertama sistem dipakai.
 
 **Kapan dipakai:** Saat cutoff point of module activation - ketika modul AP pertama kali diaktifkan untuk suatu accounting entity.
 
-### 12.2 Kenapa Perlu
+### 2. Kenapa Perlu
 
 Tanpa Opening A/P: sistem anggap posisi awal = nol hutang. Padahal ada hutang nyata yang belum lunas. Dampaknya:
 
@@ -14,7 +14,7 @@ Tanpa Opening A/P: sistem anggap posisi awal = nol hutang. Padahal ada hutang ny
 - Saat bayar hutang via sistem, sistem bingung - bayar hutang yang tidak pernah tercatat
 - Aging report dan cash flow projection tidak akurat
 
-### 12.3 Karakteristik Teknis
+### 3. Karakteristik Teknis
 
 - Accounting Transaction Type: 'Opening Confirmed A/P' - DIKUNCI, tidak bisa diubah. Tujuan: sistem bisa bedakan data opening dari transaksi reguler di laporan/aging/audit.
 - Counterparty bisa SUPPLIER atau EMPLOYEE (bukan hanya supplier).
@@ -22,14 +22,14 @@ Tanpa Opening A/P: sistem anggap posisi awal = nol hutang. Padahal ada hutang ny
 - Begitu Opening Account Setup berhasil: data TIDAK BISA diedit/dihapus/ditambah lagi.
 - Bisa dibatalkan jika accounting month belum closed.
 
-### 12.4 Posting Date vs Document Date
+### 4. Posting Date vs Document Date
 
 | Field | Penjelasan |
 | --- | --- |
 | Document Date | Tanggal dokumen fisik/transaksi asli terjadi (tanggal invoice dari supplier). Bisa mundur ke tanggal sebelum sistem aktif. |
 | Posting Date | Tanggal kapan transaksi diakui secara akuntansi - menentukan masuk ke Fiscal Period mana. HARUS dalam range fiscal period yang valid/terbuka di sistem. |
 
-### 12.5 Penyesuaian Fiscal Period saat Client Pindah Sistem
+### 5. Penyesuaian Fiscal Period saat Client Pindah Sistem
 
 Skenario: Client pindah ke YonSuite di bulan Februari 2026. Fiscal period pertama yang di-set di Account Book harus dimulai dari kapan?
 
@@ -39,7 +39,7 @@ Jawaban: JANUARI 2026, bukan Februari 2026. Alasannya:
 - Agar bisa posting Opening A/P tersebut, sistem butuh punya 'amplop' untuk Januari 2026 sebagai period pertama.
 - Jika fiscal period dimulai Februari 2026, tidak ada amplop untuk Januari, dan Opening A/P tidak bisa diposting.
 
-### A/P Opening Account
+### 6. A/P Opening Account
 
 ![ap screenshot 1](images/ap/ap-001.png)
 
@@ -47,7 +47,7 @@ step untuk **mengkonfirmasi data awal AP ledger udah akurat**, lalu melakukan **
 
 ## A/P Process
 
-### Regular A/P Process
+### 7. Regular A/P Process
 
 ![ap screenshot 2](images/ap/ap-002.png)
 
@@ -59,7 +59,7 @@ A/P yang melalui purchasing invoice (purchase order)
 
 **Workflow YY Purchase invoice > Payment**
 
-### Manual A/P Process
+### 8. Manual A/P Process
 
 ![ap screenshot 4](images/ap/ap-004.png)
 
@@ -115,7 +115,7 @@ Mekanisme A/P Settlement terkoneksi dengan semua transaksi supplier dari invoice
 
 ![ap screenshot 8](images/ap/ap-008.png)
 
-### Fungsi Exchange Gain/Loss
+### 9. Fungsi Exchange Gain/Loss
 
 Node ini dipakai untuk menghitung exchange gain/loss (selisih kurs) untuk transaksi akuntansi foreign currency payables dan payment.
 
@@ -146,7 +146,7 @@ Month Closing ada 2 jenis:
 1. A/P Perio Closing
 2. A/P Closing
 
-### A/P Account Period Closing
+### 10. A/P Account Period Closing
 
 ![ap screenshot 11](images/ap/ap-011.png)
 
@@ -158,19 +158,19 @@ After closing period di AP Acct Period Closing, bisa lanjut closing di A/P Closi
 
 ## A/P Report
 
-### A/P Sub Ledger (DETAIL TRANSACTION LEVEL)
+### 11. A/P Sub Ledger (DETAIL TRANSACTION LEVEL)
 
 ![ap screenshot 13](images/ap/ap-013.png)
 
 Menunjukan secara detail listing setiap transaksi A/P, purchase invoice atau payment. Pada bagian current period debit dan credit dan closing balance. Report ini dipakai untuk melihat setiap transaksi AP, biasanya dipakai apakah suatu invoice AP sudah settle atau belum, verifikasi nominal dan review perubahan kurs, invetasgasi error pada bulan closing, ini Adalah detail view dari report AP.
 
-### A/P Balance Report (SUMMARIZE BY EACH SUPPLIER)
+### 12. A/P Balance Report (SUMMARIZE BY EACH SUPPLIER)
 
 ![ap screenshot 14](images/ap/ap-014.png)
 
 Report untuk melihat summarize supplier. Disini kita bisa track transaksi AP per supplier, biasanya dipakai untuk rekonsialiasi atau management reporting
 
-### A/P Aging Analysis (MONITORING PAYMENT DUE DATE)
+### 13. A/P Aging Analysis (MONITORING PAYMENT DUE DATE)
 
 ![ap screenshot 15](images/ap/ap-015.png)
 

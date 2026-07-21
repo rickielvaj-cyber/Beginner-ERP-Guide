@@ -2,7 +2,7 @@
 
 Sebelum belajar ERP, ada satu konsep akuntansi yang WAJIB dipahami karena muncul di semua modul: double-entry bookkeeping. Setiap transaksi keuangan selalu dicatat di DUA sisi sekaligus: Debit dan Credit, dan keduanya harus seimbang.
 
-### 1.1 Aturan Dasar Debit-Credit
+### 1. Aturan Dasar Debit-Credit
 
 | Jenis Akun | Contoh | Bertambah | Berkurang |
 | --- | --- | --- | --- |
@@ -14,7 +14,7 @@ Sebelum belajar ERP, ada satu konsep akuntansi yang WAJIB dipahami karena muncul
 
 **Catatan:** Hafalkan tabel ini. Ini fondasi yang muncul di semua modul AP, AR, GL ke depannya.
 
-### 1.2 Contoh Jurnal Dasar
+### 2. Contoh Jurnal Dasar
 
 **Skenario 1:** Beli bahan baku Rp 10 juta dari Supplier A, belum dibayar (hutang):
 
@@ -58,13 +58,13 @@ Sebelum bisa mencatat transaksi (termasuk AP), ada hierarki setup yang harus dis
 
 ## 3. Chart of Accounts (COA) / 科目表
 
-### 3.1 Konsep
+### 3. Konsep
 
 COA adalah DAFTAR MASTER akun beserta kode dan aturan strukturnya. Ini template/kamus kategori yang dipakai Account Book sebagai referensi - bukan tempat mencatat transaksi langsung.
 
 **Analogi:** COA = Kamus kategori budget (Makan, Transport, Hiburan). Account Book = buku catatan transaksi aktual yang pakai kategori dari kamus itu.
 
-### Step setup COA (need to know first)
+### 4. Step setup COA (need to know first)
 
 **Pahami dulu Accounting Element Table.** Accounting Element Table Adalah jenis pemetaan jurnal akuntansi yang mau kita pakai.
 
@@ -86,7 +86,7 @@ Pada bagian Display Format, disarankan menggunakan **Current Level Name** untuk 
 
 **Balance Deficit Check,** disini ada beberapa pilihan, do not check, warning dan error. Katakana jika kita input event entry dengan nominal, dan masuk ke akun ini, jika kita pakai fitur do not check, dari system tetep akan generate, jika warning akan dikasih peringatan sebelum generate, error maka akan langsung error.
 
-### 3.2 Field Penting di COA
+### 5. Field Penting di COA
 
 | Field | Pilihan | Keterangan |
 | --- | --- | --- |
@@ -95,7 +95,7 @@ Pada bagian Display Format, disarankan menggunakan **Current Level Name** untuk 
 | Account Numbering Rules | Contoh: 4-2-2-2-2-2 | Pola digit per level. Level-1: 4 digit. Level-2: +2 digit (total 6). Level-3: +2 digit (total 8). Dst. |
 | Business-Financial Analysis Dimension | Strict / Partial / No Control | Seberapa ketat akun-akun di COA ini WAJIB terhubung ke dimensi analisis (Dept, Project, dll). Strict = wajib diisi tiap transaksi. No Control = bebas. |
 
-### 3.3 Control Derivation (Parent-Child COA)
+### 6. Control Derivation (Parent-Child COA)
 
 **Konsep dasarnya:**
 Parent COA = "template induk" yang diwariskan ke semua child. Child COA otomatis dapat salinan semua akun dari parent, tapi dengan batasan tertentu tergantung mode control yang dipilih.
@@ -120,11 +120,11 @@ Parent COA = menu standar franchise McDonald's pusat. Semua cabang wajib jual me
 
 ## 4. Account (Akun Detail) / 会计科目
 
-### 4.1 Konsep
+### 7. Konsep
 
 Account adalah item spesifik DALAM COA. Setiap akun merepresentasikan satu kategori pencatatan (Kas, Hutang Dagang, Persediaan, dll). Hanya end-level accounts (akun paling bawah dalam hierarki) yang bisa dipakai untuk input transaksi.
 
-### 4.2 Field Penting di Account
+### 8. Field Penting di Account
 
 | Field | Pilihan | Keterangan |
 | --- | --- | --- |
@@ -138,11 +138,11 @@ Account adalah item spesifik DALAM COA. Setiap akun merepresentasikan satu kateg
 
 ## 5. Auxiliary Accounting Item & Business-Financial Analysis Dimension
 
-### Penjelasan Simple Business Financial Analysis Dimension
+### 9. Penjelasan Simple Business Financial Analysis Dimension
 
 "Business Analysis Dimension itu kayak label yang bisa ditempel ke transaksi, biar nanti bisa ditarik laporan dari sudut pandang bisnis (project/department/region) tanpa peduli transaksi itu jatuh ke akun apa.”
 
-### Penjelasan Simple Auxiliary Accounting Item
+### 10. Penjelasan Simple Auxiliary Accounting Item
 
 "Aux itu nge-detailin satu akun jadi rincian yang lebih spesifik (per supplier, per customer, per karyawan), tapi tetap dalam satu akun yang sama di GL.
 
@@ -151,7 +151,7 @@ Account adalah item spesifik DALAM COA. Setiap akun merepresentasikan satu kateg
 - **Aux** → merinci **di dalam** satu akun (vertikal, per akun)
 - **Business Analysis Dimension** → nge-tag **lintas akun** buat sudut pandang bisnis (horizontal, per project/department)
 
-### 5.1 Masalah yang Dipecahkan
+### 11. Masalah yang Dipecahkan
 
 Tanpa Auxiliary Accounting Item: akun '2100 - Hutang Dagang' hanya kasih total Rp 500 juta. Tidak diketahui berapa ke Supplier A, Supplier B, Supplier C. **(Memperdetail suatu voucher)**
 
@@ -159,13 +159,13 @@ Solusi salah (tapi sering kepikiran): bikin akun terpisah per supplier - 2100-01
 
 Solusi benar (cara YonSuite): akun tetap SATU (2100 - Hutang Dagang), tapi ditempel Auxiliary Accounting Item = Supplier. Tiap transaksi, sistem wajib tag 'supplier mana'. Saldo Rp 500 juta bisa di-breakdown per supplier di laporan TANPA nambah jumlah akun.
 
-### 5.2 Dimana Aux Item Disetup?
+### 12. Dimana Aux Item Disetup?
 
 - Di form detail Account (saat setup akun di COA) - bukan per transaksi
 - Begitu disetup di level akun, berlaku PERMANEN ke semua transaksi yang pakai akun itu
 - Contoh: akun 2100 di-link ke Aux Item 'Supplier' dan 'Department' -> semua AP Invoice yang pakai akun 2100 akan otomatis wajib isi supplier dan department
 
-### 5.3 Daftar Preset Auxiliary Accounting Item di YonSuite
+### 13. Daftar Preset Auxiliary Accounting Item di YonSuite
 
 | Code | Name | Biasa Dipakai Untuk |
 | --- | --- | --- |
@@ -177,7 +177,7 @@ Solusi benar (cara YonSuite): akun tetap SATU (2100 - Hutang Dagang), tapi ditem
 | 0006 | Material | Tracking persediaan per material |
 | 0012 | Bank Account (custom, dibuat Joven) | Breakdown transaksi per rekening bank |
 
-### 5.4 Bedanya Aux Item dengan Business-Financial Analysis Dimension
+### 14. Bedanya Aux Item dengan Business-Financial Analysis Dimension
 
 |  | Business-Financial Analysis Dimension | Auxiliary Accounting Item |
 | --- | --- | --- |
@@ -191,13 +191,13 @@ Note Tambahan: BFAD berhubungan dengan cashflow
 
 ## 6. Account Cross-Reference (Account Mapping) / 科目对照表
 
-### 6.1 Fungsi
+### 15. Fungsi
 
 Menentukan AKUN GL MANA yang otomatis dipakai saat sistem generate voucher dari suatu transaksi, berdasarkan kombinasi Influencing Factors (kondisi transaksi) tertentu.
 
 **Analogi GPS:** Account Mapping = GPS yang nentuin 'rute/akun mana yang dituju'(Target Account) berdasarkan kondisi transaksi yang masuk. User tidak perlu manual pilih akun setiap kali bikin invoice.
 
-### 6.2 Tiga Level Prioritas (Spesifik Menang dari General)
+### 16. Tiga Level Prioritas (Spesifik Menang dari General)
 
 | Level | Prioritas | Keterangan |
 | --- | --- | --- |
@@ -205,7 +205,7 @@ Menentukan AKUN GL MANA yang otomatis dipakai saat sistem generate voucher dari 
 | Account Book Type Level | 2 | Berlaku untuk semua account book dengan tipe yang sama. |
 | Enterprise Account Level | 3 (TERENDAH) | Paling general - level perusahaan. Default fallback terakhir. |
 
-### 6.3 Retrieval Logic (Cara Sistem Cari Mapping)
+### 17. Retrieval Logic (Cara Sistem Cari Mapping)
 
 - Sistem cek dari yang paling spesifik dulu (top to bottom dalam tabel mapping)
 - Begitu ketemu match -> STOP, langsung dipakai (tidak lanjut cek ke bawah)
@@ -216,7 +216,7 @@ Menentukan AKUN GL MANA yang otomatis dipakai saat sistem generate voucher dari 
 
 **Catatan:** Default Target Account itu penting sebagai jaring pengaman - pastikan selalu diisi agar transaksi dengan kondisi yang tidak ter-cover mapping spesifik tetap bisa diposting.
 
-### 6.4 Scope of Influence (NON-RETROAKTIF) - PENTING
+### 18. Scope of Influence (NON-RETROAKTIF) - PENTING
 
 Mengubah Account Mapping HARI INI tidak akan mengubah GL Voucher yang sudah di-generate sebelumnya.
 
@@ -226,7 +226,7 @@ Alasan: Jika voucher lama bisa berubah otomatis, laporan keuangan yang sudah dis
 
 Jika SENGAJA ingin update voucher lama (karena mapping awalnya salah): manual regenerate via menu Business Event Inquiry, TAPI hanya bisa jika transaksi belum diproses lebih lanjut (belum ada payment/settlement yang nyambung ke situ).
 
-### 6.5 Event Template / 事件模板
+### 19. Event Template / 事件模板
 
 Fungsi: cetakan STRUKTUR JURNAL untuk 1 Accounting Transaction (misal 'Purchase Invoice'). Nentuin ada berapa baris jurnal, tiap baris Debit atau Credit, syarat kapan baris itu kepake (Condition Formula), dan yang paling penting: AKUN tiap baris diisi pakai cara apa.
 
@@ -263,11 +263,11 @@ Catatan akurasi: nomor akun (1300, 2100) dan skenario supplier/department di ata
 
 ## 7. Account Book Setting / 账簿设置
 
-### 7.1 Account Book Type
+### 20. Account Book Type
 
 Template/kategori sebelum membuat Account Book aktual. **Menentukan standar akuntansi, currency dasar, dan aturan yang diwarisi oleh Account Book yang dibuat di bawahnya.** Pola yang sama: template dulu, baru instance.
 
-### 7.2 Account Book
+### 21. Account Book
 
 **Buku besar-nya,** tempat transaksi benar-benar dicatat. Mereferensikan COA dan Account Book Type.
 
@@ -276,7 +276,7 @@ Template/kategori sebelum membuat Account Book aktual. **Menentukan standar akun
 | Default Accounting Book | Buku utama - mencatat semua transaksi secara resmi. WAJIB ada, hanya SATU per entity. Contoh: laporan standar Indonesia (PSAK). Harus di-enable duluan sebelum Reporting Book. |
 | Reporting Accounting Book | Buku tambahan OPSIONAL - format/standar berbeda dari default. Contoh: laporan IFRS atau Chinese GAAP untuk konsolidasi ke parent company di Tiongkok. Tidak wajib jika hanya butuh satu standar pelaporan. |
 
-### 7.3 External vs Internal Accounting
+### 22. External vs Internal Accounting
 
 - External Accounting: pembukuan untuk pihak LUAR (pajak, bank, investor, auditor). Mengikuti standar resmi (PSAK/IFRS).
 - Internal Accounting: pembukuan untuk manajemen INTERNAL. Untuk analisis performa per divisi/cabang/profit center.
@@ -337,7 +337,7 @@ Kategori untuk mengelompokkan arus kas ke dalam Cash Flow Statement (Laporan Aru
 
 ## 11. Financial File
 
-### 11.1 Aging Scheme
+### 23. Aging Scheme
 
 Master data yang mendefinisikan interval-interval waktu (misal per hari/bulan/tahun) untuk mengelompokkan piutang (AR) dan hutang (AP) berdasarkan umurnya — dipakai untuk aging analysis di modul AR dan AP.
 
@@ -345,7 +345,7 @@ Tiap scheme berisi beberapa baris interval yang saling nyambung berurutan (Perio
 
 Saran: pada saat setup Aging Scheme yang days, bisa pakai kelipatan 30-60-90-120
 
-### 11.2 Cash Flow Type & Item
+### 24. Cash Flow Type & Item
 
 Cash Flow Type
 
@@ -359,7 +359,7 @@ Cash Flow Type only add 1 but for the cash flow item kita harus bikin beberapa m
 
 ## 12. Cost Center Accounting
 
-### 12.1 Cost Center Accounting
+### 25. Cost Center Accounting
 
 ![aact-coa screenshot 8](images/aact-coa/aact-coa-008.png)
 
@@ -367,7 +367,7 @@ unit organisasi terkecil yang bertanggung jawab mengumpulkan dan memantau biaya 
 
 Catatan: relasi Cost Center ini ke Department/Auxiliary Accounting Item yang udah lo pelajari sebelumnya **belum terkonfirmasi** dari dokumentasi yang lo kasih — masih perlu dicek terpisah.
 
-### 12.2 Cost Group
+### 26. Cost Group
 
 ![aact-coa screenshot 9](images/aact-coa/aact-coa-009.png)
 
@@ -375,9 +375,9 @@ Catatan: relasi Cost Center ini ke Department/Auxiliary Accounting Item yang uda
 
 ## 13. Auto Accounting Intructions
 
-### 13.1 Post Setting
+### 27. Post Setting
 
-### 13.2 Matching Rule Element
+### 28. Matching Rule Element
 
 ![aact-coa screenshot 10](images/aact-coa/aact-coa-010.png)
 
@@ -385,7 +385,7 @@ Daftar faktor/kondisi yang bisa dipakai berulang sebagai syarat dalam suatu matc
 
 Catatan: rule spesifik mana (Account Mapping, Bank Reconciliation, atau lainnya) yang menggunakan faktor-faktor ini **belum terkonfirmasi** dari data yang ada — dokumentasinya tidak menyebutkan secara eksplisit.
 
-### 13.3 Account Cross Reference
+### 29. Account Cross Reference
 
 Account Cross-Reference (= Account Mapping) itu rule yang nentuin akun mana yang di-Debit/Credit waktu sebuah transaksi bisnis (Event Entry) di-approve dan otomatis jadi GL Voucher.
 
@@ -431,11 +431,11 @@ acct cross reference - ngarahin mau dipost kemana
 
 Ini study case yang menghubungkan semua konsep di atas menjadi satu workflow nyata. Skenario: PT YOYI INDONESIA beli bahan baku dari Supplier A senilai Rp 10 juta, belum dibayar.
 
-### STEP 1: Kejadian bisnis terjadi di dunia nyata
+### 30. STEP 1: Kejadian bisnis terjadi di dunia nyata
 
 Gudang terima barang dari Supplier A. Invoice datang: Rp 10 juta, jatuh tempo 30 hari. Di dunia nyata, hutang itu ADA. Sekarang bagaimana sistem tau soal ini?
 
-### STEP 2: User input di Event Entry (AP Invoice)
+### 31. STEP 2: User input di Event Entry (AP Invoice)
 
 User buka modul AP, buat AP Invoice. Ini yang disebut Event Entry - level bisnis, manusiawi, banyak field:
 
@@ -457,11 +457,11 @@ Tulisan filed yang harus diisi seperti Supplier, Amount, Department, Expense Ite
 
 Semua field ini tersimpan di Event Entry. Belum ada jurnal akuntansi di tahap ini.
 
-### STEP 3: User approve dokumen
+### 32. STEP 3: User approve dokumen
 
 Begitu klik Approve, sistem mulai kerja otomatis di belakang layar. Sistem tanya ke dirinya sendiri: transaksi ini harus dicatat ke akun GL yang mana?
 
-### STEP 4: Event Template bekerja, manggil Account Cross-Reference untuk baris yang butuh (otomatis)
+### 33. STEP 4: Event Template bekerja, manggil Account Cross-Reference untuk baris yang butuh (otomatis)
 
 Di sinilah Event Template bekerja - dia cetakan struktur jurnal untuk Accounting Transaction 'AP Invoice', berisi 2 baris jurnal. TIAP baris punya cara isi akun sendiri-sendiri (lihat Section 8.5). PENTING: Account Cross-Reference BUKAN tahap terpisah setelah Event Template - dia cuma dipanggil DARI DALAM baris yang butuh (yang pakai cara 'Expression').
 
@@ -477,7 +477,7 @@ Maka dari Baris ke 2 akan dipasangkan ke akun 2100, sesuai dengan kondisi atau f
 
 Sistem cocokkan kondisi transaksi (Department = Produksi, tipe = AP Invoice) ke tabel Account Cross-Reference. Ketemu match -> akun 2100 dipakai untuk baris 2. Tanpa Account Cross-Reference, baris yang pakai 'Expression' tidak akan tau mau generate ke akun mana - tapi baris yang pakai Fixed Value (seperti baris 1) tetap bisa jalan normal tanpa Account Cross-Reference sama sekali.
 
-### STEP 5: GL Voucher ter-generate otomatis
+### 34. STEP 5: GL Voucher ter-generate otomatis
 
 Dari Event Entry, dipandu oleh Event Template (yang untuk baris 2 memanggil Account Cross-Reference), sistem generate GL Voucher (jurnal akuntansi resmi):
 
@@ -487,7 +487,7 @@ Cr. 2100 - Hutang Dagang [Supplier: A] [Dept: Produksi]  10.000.000
 
 Kenapa hanya Supplier dan Department yang muncul di Cr. 2100? Karena akun 2100 disetup dengan Aux Item: Supplier + Department. Business Type dan Project TIDAK di-link ke Aux Item di akun 2100, jadi tidak ikut ke GL Voucher - meskipun data itu ada di Event Entry.
 
-### STEP 6: Apa yang terjadi dengan Business Type dan Project?
+### 35. STEP 6: Apa yang terjadi dengan Business Type dan Project?
 
 Business Type dan Project tetap tersimpan di Event Entry dan bisa dilihat di laporan event/business analysis. Tapi keduanya tidak masuk ke jurnal akuntansi resmi (GL Voucher) karena tidak di-link ke Aux Item di akun 2100.
 
@@ -499,7 +499,7 @@ Di Event Entry, user isi Dimension: Supplier=PT ABC, Department=Produksi, Busine
 
 **Hasil di GL Voucher:** cuma Supplier & Department yang muncul — **BUKAN karena Aux Item "milih" 2 dari 4**, tapi karena **cuma Supplier & Department yang kebetulan di-set sebagai Aux Item di akun 2100 itu**. Business Type & Project tetap kesimpen di Event Entry, cuma ga ikut ke jurnal resmi karena ga ada Aux Item yang "nunggu" data mereka di akun tersebut.
 
-### STEP 7: Bayar hutang ke Supplier A (transaksi lanjutan)
+### 36. STEP 7: Bayar hutang ke Supplier A (transaksi lanjutan)
 
 Bulan depan, PT YOYI bayar hutang Rp 10 juta ke Supplier A via transfer bank. GL Voucher yang ter-generate:
 
@@ -509,7 +509,7 @@ Cr. 1000 - Kas / Bank                      10.000.000   <- kas keluar
 
 **Catatan:** Hutang Dagang didebit (Liability berkurang = didebit). Kas dikredit (Asset berkurang = dikredit). Ini sering dibalik - ingat tabel debit-credit di Section 1.
 
-### STEP 8: Voucher Type mengatur kategorisasi
+### 37. STEP 8: Voucher Type mengatur kategorisasi
 
 Kedua transaksi di atas (AP Invoice dan Payment) menggunakan Voucher Type berbeda:
 
@@ -518,7 +518,7 @@ Kedua transaksi di atas (AP Invoice dan Payment) menggunakan Voucher Type berbed
 
 Tujuannya: organisasi dan audit trail. Auditor yang mau cek semua pembayaran supplier tinggal filter Voucher Type = OUTGOING PAYMENT, langsung muncul semua tanpa campur sama jenis voucher lain.
 
-### Ringkasan Alur Visual
+### 38. Ringkasan Alur Visual
 
 DUNIA NYATA         EVENT ENTRY              EVENT TEMPLATE              GL VOUCHER
 
