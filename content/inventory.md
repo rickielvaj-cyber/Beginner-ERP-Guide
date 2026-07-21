@@ -484,15 +484,17 @@ Stok awal saat pertama kali setup sistem. Action: Add new, Approve/Unapprove. Ha
 
 ![inventory screenshot 20](images/inventory/inventory-020.png)
 
-2. **Issue Application
-出库申请**
+### 2. Issue Application
+
+- **出库申请**
 
 Permintaan pengeluaran barang. Push down bisa ke: Issue, Transfer, atau Lend (pinjam).
 
 ![inventory screenshot 21](images/inventory/inventory-021.png)
 
-3. **Purchased Goods Receipt
-采购入库**
+### 3. Purchased Goods Receipt
+
+- **采购入库**
 
 Barang masuk dari pembelian. Push down ke: Invoice (langsung generate invoice dari Good Receipt).
 
@@ -502,29 +504,33 @@ Barang masuk dari pembelian. Push down ke: Invoice (langsung generate invoice da
 
 Untuk generate Purchased good receipt kita juga bisa generate dari **purchase arrival** (purchase arrival ada ketika kita ada bikin purchase order dan alurnya sudah sampai purchase arrival)
 
-4. **Other Goods Receipt
-其他入库**
+### 4. Other Goods Receipt
+
+- **其他入库**
 
 Barang masuk di luar jalur beli — termasuk Borrow-in receipt (barang pinjaman masuk) dan Lend-return receipt (barang yang dipinjamkan balik lagi). Biasanya dipakai ada material tambahan yang masuk yang diberikan client atau kondisi tertentu
 
 ![inventory screenshot 24](images/inventory/inventory-024.png)
 
-5. **Product Issue
-销售出库**
+### 5. Product Issue
+
+- **销售出库**
 
 Barang keluar untuk penjualan. Push down ke: Invoice. **(ada di finance cloud)**
 
 ![inventory screenshot 25](images/inventory/inventory-025.png)
 
-6. **Matl Issue
-材料出库**
+### 6. Matl Issue
+
+- **材料出库**
 
 Keluar material/bahan baku. Bisa dari: Add new langsung atau dari Issue Request (出库申请).
 
 ![inventory screenshot 26](images/inventory/inventory-026.png)
 
-7. **Other Goods Issue
-其他出库**
+### 7. Other Goods Issue
+
+- **其他出库**
 
 Keluar barang di luar jalur penjualan — termasuk **Borrow-return issue** (kembaliin barang pinjaman), **Issue-request issue** (dari permintaan), **Issue-request return** (retur permintaan).
 
@@ -532,15 +538,17 @@ Keluar barang di luar jalur penjualan — termasuk **Borrow-return issue** (kemb
 
 ## Transfer
 
-1. **Transfer Application
-调拨申请**
+### 1. Transfer Application
+
+- **调拨申请**
 
 Permintaan mutasi barang antar gudang. Push down ke: Transfer Order. Butuh Approval
 
 ![inventory screenshot 28](images/inventory/inventory-028.png)
 
-2. **Transfer Order
-调拨订单**
+### 2. Transfer Order
+
+- **调拨订单**
 
 Order mutasi resmi setelah melalui Approval dari Transfer Application. Push down ke: Issue (出库 di gudang asal).
 
@@ -548,15 +556,17 @@ Order mutasi resmi setelah melalui Approval dari Transfer Application. Push down
 
 Bisanya dipakai di 1 organisasi yang memiliki 2 warehouse, tidak bisa transfer warehouse antar organisasi
 
-3. **Transfer-Out
-调出**
+### 3. Transfer-Out
+
+- **调出**
 
 Eksekusi keluar di gudang asal. **Push down ke: Receipt (调入 di gudang tujuan).**
 
 ![inventory screenshot 30](images/inventory/inventory-030.png)
 
-4. **Transfer-In
-调入**
+### 4. Transfer-In
+
+- **调入**
 
 Konfirmasi masuk di gudang tujuan. **Action: Add new Receipt, Approve/Unapprove.**
 

@@ -1000,6 +1000,61 @@ html[data-unlocked="1"] .lock-screen { display: none; }
   color: var(--color-text);
   scroll-margin-top: 84px;
 }
+.checkable-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+}
+.checkable-heading-text { flex: 1; min-width: 0; }
+.checklist-done .checkable-heading-text {
+  color: var(--color-text-faint);
+  text-decoration: line-through;
+  text-decoration-color: var(--color-text-faint);
+}
+.ys-check {
+  position: relative;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+.ys-check-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+.ys-check-box {
+  width: 21px;
+  height: 21px;
+  border-radius: 6px;
+  border: 1.5px solid var(--color-border);
+  background: var(--color-surface);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .15s var(--ease), border-color .15s var(--ease), transform .1s var(--ease);
+}
+.ys-check-box::after {
+  content: "";
+  width: 6px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) scale(0);
+  transition: transform .15s var(--ease);
+  margin-top: -2px;
+}
+.ys-check-input:checked + .ys-check-box {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.ys-check-input:checked + .ys-check-box::after { transform: rotate(45deg) scale(1); }
+.ys-check-input:focus-visible + .ys-check-box { box-shadow: 0 0 0 3px var(--color-accent-soft); }
+.ys-check:hover .ys-check-box { border-color: var(--color-accent); }
+.ys-check:active .ys-check-box { transform: scale(.92); }
 .markdown-body h2:first-child { margin-top: 0; }
 .markdown-body p { color: var(--color-text); }
 .markdown-body ul, .markdown-body ol { padding-left: 22px; }

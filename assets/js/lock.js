@@ -28,25 +28,33 @@ window.YSLock = (function () {
     document.dispatchEvent(new CustomEvent("ys:unlocked"));
   }
 
+  function logout() {
+    localStorage.removeItem(UNLOCK_KEY);
+    location.reload();
+  }
+
   function wireForm() {
     const $form = document.getElementById("lockForm");
     const $id = document.getElementById("lockId");
     const $pw = document.getElementById("lockPw");
     const $err = document.getElementById("lockErr");
-    if (!$form) return;
-    $form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const combined = `${($id.value || "").trim()}:${$pw.value || ""}`;
-      const hash = await sha256Hex(combined);
-      if (hash !== LOGIN_HASH) {
-        $err.textContent = "ID atau password salah.";
-        $pw.value = "";
-        $pw.focus();
-        return;
-      }
-      $err.textContent = "";
-      setUnlocked();
-    });
+    if ($form) {
+      $form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const combined = `${($id.value || "").trim()}:${$pw.value || ""}`;
+        const hash = await sha256Hex(combined);
+        if (hash !== LOGIN_HASH) {
+          $err.textContent = "ID atau password salah.";
+          $pw.value = "";
+          $pw.focus();
+          return;
+        }
+        $err.textContent = "";
+        setUnlocked();
+      });
+    }
+    const $logout = document.getElementById("logoutBtn");
+    if ($logout) $logout.addEventListener("click", logout);
   }
 
   if (document.readyState === "loading") {
@@ -55,5 +63,5 @@ window.YSLock = (function () {
     wireForm();
   }
 
-  return { isUnlocked };
+  return { isUnlocked, logout };
 })();

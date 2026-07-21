@@ -1,83 +1,95 @@
 ## System Parameter
 
-1. **员工启用时是否自动生成/关联用户（是与否）
-Auto create/relate the user when a user is enabled (Yes/No)**
+### 1. 员工启用时是否自动生成/关联用户（是与否）
+
+- **Auto create/relate the user when a user is enabled (Yes/No)**
 
 ![digital-modeling screenshot 1](images/digital-modeling/digital-modeling-001.png)
 
 Fungsinya untuk setiap kali ada pendaftaran employee/karyawan baru, maka user akan otomatis dibentuk.
 
-2. **商家商品是否需平台方审核 (TIDAK ADA)
-Merchant products require platform approval**
+### 2. 商家商品是否需平台方审核 (TIDAK ADA)
+
+- **Merchant products require platform approval**
 
 Sistem Izin supplier/seller ke user Tenant untuk upload product ke sistem
 
-3. **浮动换算基准（通常以“数量为准“。）
-Floating Conv. Basis (Usually "quantity based ")**
+### 3. 浮动换算基准（通常以“数量为准“。）
+
+- **Floating Conv. Basis (Usually "quantity based ")**
 
 ![digital-modeling screenshot 2](images/digital-modeling/digital-modeling-002.png)
 
 Menghitung suatu jumlah menggunakan format quantity based (pcs).
 
-4. **换算率精度
-CR Precision**
+### 4. 换算率精度
+
+- **CR Precision**
 
 ![digital-modeling screenshot 3](images/digital-modeling/digital-modeling-003.png)
 
 Angka Decimal (setelah koma) yang ingin ditampilkan supaya data angka yang diberikan bisa lebih presisi
 
-5. **显示物料图片 （是与否）
-Display Matl Picture(Yes/No)**
+### 5. 显示物料图片 （是与否）
+
+- **Display Matl Picture(Yes/No)**
 
 ![digital-modeling screenshot 4](images/digital-modeling/digital-modeling-004.png)
 
 Mengizinkan meng-upload gambar suatu produk/jasa
 
-6. **仓库组织关系 （不控制，服务单一组织，服务多组织）
-Warehouse Org Relationship (No control, single service organization, multi-organization service)**
+### 6. 仓库组织关系 （不控制，服务单一组织，服务多组织）
+
+- **Warehouse Org Relationship (No control, single service organization, multi-organization service)**
 
 ![digital-modeling screenshot 5](images/digital-modeling/digital-modeling-005.png)
 
 - **No Control :** Organisasi mana saja bebas akses sistem warehouse (1 untuk semua)
 - **Single service org:** 1 warehouse Cuma bisa diakses 1 entitas
 - **Multi org service :**  1 warehouse bisa multiientitas (lebih dari 1 user atau org yang akses)
-7. **启用允销控制 （启用与停用）
-Enable Allowed Sales Control**
+### 7. 启用允销控制 （启用与停用）
+
+- **Enable Allowed Sales Control**
 
 ![digital-modeling screenshot 6](images/digital-modeling/digital-modeling-006.png)
 
 Izin mengkatifkan barang/jasa boleh dijual atau tidak boleh dijual.
 
-8. **允许对当前用户授权（是与否）
-Allow to authorize the current user(Yes/No)**
+### 8. 允许对当前用户授权（是与否）
+
+- **Allow to authorize the current user(Yes/No)**
 
 ![digital-modeling screenshot 7](images/digital-modeling/digital-modeling-007.png)
 
 - **Yes :** Punya hak untuk membuka atau menambah akses ke user sendiri.
 - **No :** Tidak bisa, hanya admin user yang dipilih saja bisa membuka akses
-9. **允许组织管理员管理企业账号级角色（是与否）
-Allow the Org administrator to manage enterprise account-level roles(Yes/No)**
+### 9. 允许组织管理员管理企业账号级角色（是与否）
+
+- **Allow the Org administrator to manage enterprise account-level roles(Yes/No)**
 
 ![digital-modeling screenshot 8](images/digital-modeling/digital-modeling-008.png)
 
 - **Yes :** Organisasi terkait hanya boleh me-manage struktur dibawah mereka (tidak ke Organisasi lain)
 - **No :** Tidak ada batasan untuk bisa manage hingga ke organisasi lain
-10. **部门维护受组织权限控制（是与否）
-Dept maintenance controlled by Org permission(Yes/No)**
+### 10. 部门维护受组织权限控制（是与否）
+
+- **Dept maintenance controlled by Org permission(Yes/No)**
 
 ![digital-modeling screenshot 9](images/digital-modeling/digital-modeling-009.png)
 
 - **Yes :** Department terkait hanya bisa me-manage struktur dibawah mereka (tidak ke Department lain)
 - **No :** Tidak ada batasan untuk bisa me-manage hingga ke Department lain
-11. **允许组织管理员管理企业账号级角色（是与否）
-Allow the Org administrator to manage enterprise account-level roles(Yes/No)**
+### 11. 允许组织管理员管理企业账号级角色（是与否）
+
+- **Allow the Org administrator to manage enterprise account-level roles(Yes/No)**
 
 ![digital-modeling screenshot 10](images/digital-modeling/digital-modeling-010.png)
 
 Memberi izin kepada Admin Organisasi yang dipilih untuk me-manage akses system Enterprise Account (High level).
 
-12. **角色管理受用户权限控制（是与否）
-Role management is subject to user permissions(Yes/No)**
+### 12. 角色管理受用户权限控制（是与否）
+
+- **Role management is subject to user permissions(Yes/No)**
 
 ![digital-modeling screenshot 11](images/digital-modeling/digital-modeling-011.png)
 
@@ -85,8 +97,9 @@ Role management is subject to user permissions(Yes/No)**
 
 **No :** Tidak ada Batasan.
 
-13. **是否启用权限授权管控（不启用/ 启用组织管理员）
-Whether to enable authority authorization control**
+### 13. 是否启用权限授权管控（不启用/ 启用组织管理员）
+
+- **Whether to enable authority authorization control**
 
 ![digital-modeling screenshot 12](images/digital-modeling/digital-modeling-012.png)
 
@@ -119,8 +132,9 @@ Whether to enable authority authorization control**
 
 ## Multilingual
 
-1. **查询需要修改的字段，并进行语言修改 （2-3条）
-Query the fields that need to be modified, and modify the language (items 2-3)**
+### 1. 查询需要修改的字段，并进行语言修改 （2-3条）
+
+- **Query the fields that need to be modified, and modify the language (items 2-3)**
 
 ![digital-modeling screenshot 16](images/digital-modeling/digital-modeling-016.png)
 
@@ -173,15 +187,17 @@ Input rate fiat ke dalam Exchange Rate Type yang sudah dibuat. Kolom "indirect e
 
 ## Organization
 
-1. **多组织模型启用
-Multi-organization model enabled**
+### 1. 多组织模型启用
+
+- **Multi-organization model enabled**
 
 ![digital-modeling screenshot 24](images/digital-modeling/digital-modeling-024.png)
 
 **(HANYA BISA DIAKTIFKAN SEKALI, LANGGANAN BERBEDA)—** untuk perusahaan yang punya cabang/anak Perusahaan. Untuk Perusahaan hanya single entity tidak perlu membuka fitur ini.
 
-2. **新增业务单元 （公司，分公司，事业部，办事处，工厂，其它组织）
-Add new Business Unit (Company,Factory ,Branch ,Office, Business Unit ,Other Org)**
+### 2. 新增业务单元 （公司，分公司，事业部，办事处，工厂，其它组织）
+
+- **Add new Business Unit (Company,Factory ,Branch ,Office, Business Unit ,Other Org)**
 
 ![digital-modeling screenshot 25](images/digital-modeling/digital-modeling-025.png)
 
@@ -189,8 +205,9 @@ Add new Business Unit (Company,Factory ,Branch ,Office, Business Unit ,Other Org
 
 Pembuatan Business Unit baru hingga edit, enable/disable dan settings.
 
-3. **Department
-部门**
+### 3. Department
+
+- **部门**
 
 ![digital-modeling screenshot 27](images/digital-modeling/digital-modeling-027.png)
 
@@ -204,8 +221,9 @@ Melihat struktur oraganisasi yang telah dibuat, jika ingin ditampilkan secara vi
 
 ![digital-modeling screenshot 29](images/digital-modeling/digital-modeling-029.png)
 
-5. **职能共享设置 
-Function Sharing Setting**
+### 5. 职能共享设置 
+
+- **Function Sharing Setting**
 
 ![digital-modeling screenshot 30](images/digital-modeling/digital-modeling-030.png)
 
@@ -248,8 +266,9 @@ Note: Setiap pembuatan employee, akun user akan otomatis terbuat juga. (Mengikut
 
 ## Authorization (User Management)
 
-1. **用户管理
-User Management**
+### 1. 用户管理
+
+- **User Management**
 
 ![digital-modeling screenshot 34](images/digital-modeling/digital-modeling-034.png)
 
@@ -382,8 +401,9 @@ Penambahan cabang dari bank, berhubungan setelah penambahan jenis/kategori bank 
 
 Menambahkan jenis metode pembayaran, biasanya kebutuhan purchasing atau sales. (Enable/Disable, Add, Delete)
 
-8. **款项类型
-Payment Type**
+### 8. 款项类型
+
+- **Payment Type**
 
 ![digital-modeling screenshot 49](images/digital-modeling/digital-modeling-049.png)
 
@@ -415,8 +435,9 @@ Settingan kapan sistem mulai **"mengontrol"** atau **membatasi** transaksi kalau
 - **Shipping Document** → diblokir saat mau kirim barang
 - **Issue Document** → diblokir saat dokumen pengeluaran dibuat
 - **Sales Invoice** → diblokir saat mau buat invoice
-10. **收款起算时点
-Coll. Start Time**
+### 10. 收款起算时点
+
+- **Coll. Start Time**
 
 ![digital-modeling screenshot 53](images/digital-modeling/digital-modeling-053.png)
 
@@ -436,8 +457,9 @@ Pilihan yang sering dipakai.
 - **Invoice Approval Date** → dihitung dari tanggal invoice di-approve (lebih ketat)
 - **Order Doc Date** → dihitung dari tanggal SO dibuat (jarang, tapi ada)
 - **Shipment Approval Date** → dihitung dari tanggal barang confirmed dikirim
-11. **付款协议
-Payment Agreement**
+### 11. 付款协议
+
+- **Payment Agreement**
 
 ![digital-modeling screenshot 54](images/digital-modeling/digital-modeling-054.png)
 
@@ -445,8 +467,9 @@ Pembuatan template syarat/skema pembayaran yang disepakati dengan customer/suppl
 
 (Enable/Disable, Add, Delete)
 
-12. **付款起算时点
-Payment Start Time**
+### 12. 付款起算时点
+
+- **Payment Start Time**
 
 ![digital-modeling screenshot 55](images/digital-modeling/digital-modeling-055.png)
 

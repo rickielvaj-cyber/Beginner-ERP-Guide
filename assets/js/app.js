@@ -181,6 +181,9 @@
       } else {
         usedIds.set(id, 1);
       }
+      if (level === 3) {
+        return `<h3 id="${id}" class="checkable-heading"><span class="checkable-heading-text">${text}</span><label class="ys-check" data-check-id="${id}" title="Tandai udah dipelajari"><input type="checkbox" class="ys-check-input"><span class="ys-check-box"></span></label></h3>\n`;
+      }
       return `<h${level} id="${id}">${text}</h${level}>\n`;
     };
     renderer.image = (href, title, text) => {
@@ -586,6 +589,40 @@
   }
 
   // ---------------------------------------------------------------------
+  // "Udah dipelajari" checklist (localStorage) — one checkbox per H3
+  // setting/heading, scoped per page (module slug or the issue log).
+  // ---------------------------------------------------------------------
+  const CHECKLIST_KEY = "ys-checklist";
+  function loadChecklist() {
+    try { return JSON.parse(localStorage.getItem(CHECKLIST_KEY)) || {}; } catch (e) { return {}; }
+  }
+  function setChecklistItem(pageKey, checkId, checked) {
+    try {
+      const all = loadChecklist();
+      if (!all[pageKey]) all[pageKey] = {};
+      if (checked) all[pageKey][checkId] = true;
+      else delete all[pageKey][checkId];
+      localStorage.setItem(CHECKLIST_KEY, JSON.stringify(all));
+    } catch (e) { /* ignore (private browsing etc.) */ }
+  }
+  function applyChecklist(pageKey) {
+    const state = loadChecklist()[pageKey] || {};
+    $app.querySelectorAll(".checkable-heading").forEach((h) => {
+      const input = h.querySelector(".ys-check-input");
+      const label = h.querySelector(".ys-check");
+      if (!input || !label) return;
+      const id = label.dataset.checkId;
+      const checked = !!state[id];
+      input.checked = checked;
+      h.classList.toggle("checklist-done", checked);
+      input.addEventListener("change", () => {
+        setChecklistItem(pageKey, id, input.checked);
+        h.classList.toggle("checklist-done", input.checked);
+      });
+    });
+  }
+
+  // ---------------------------------------------------------------------
   // Visit tracking (localStorage) — powers the Dashboard's progress stats
   // ---------------------------------------------------------------------
   const VISITS_KEY = "ys-module-visits";
@@ -631,6 +668,7 @@
         </div>
       `;
       wireNavClicks();
+      applyChecklist(slug);
       if (window.YSEditor) window.YSEditor.mount();
       if (anchor || query) jumpToResult(anchor, query);
       trackVisit(slug);
@@ -669,6 +707,7 @@
       wireNavClicks();
       decorateIssueCards();
       applyIssueFilter(activeCat);
+      applyChecklist(manifest.issueLog.slug);
       if (window.YSEditor) window.YSEditor.mount();
       if (anchor || query) jumpToResult(anchor, query);
 
