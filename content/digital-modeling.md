@@ -1147,11 +1147,11 @@ Opsi "Benchmark exchange rate" bisa konek ke bank China untuk update rate otomat
 
 **Catatan Tambahan:**
 
-### 110. Leader in Charge dan Manager (cmiiw)
+### 99. Leader in Charge dan Manager (cmiiw)
 
 designated head of the department; used for approval routing — when a workflow requires department head approval, the system auto-routes to whoever is set as Leader here.
 
-### 111. Licensing & Resource Management
+### 100. Licensing & Resource Management
 
 ![digital-modeling screenshot 135](images/digital-modeling/digital-modeling-135.png)
 
@@ -1165,25 +1165,25 @@ designated head of the department; used for approval routing — when a workflow
 
 ## Tax Collection
 
-### 112. Tax System File (register
+### 101. Tax System File (register
 
 ![digital-modeling screenshot 136](images/digital-modeling/digital-modeling-136.png)
 
 Biasanya untuk mendaftarkan suatu Lembaga perpajakan suatu negara, karena kita berada di Indonesia, di system kita daftarkan menggunakan DJP.
 
-### 113. Tax Category Archive
+### 102. Tax Category Archive
 
 ![digital-modeling screenshot 137](images/digital-modeling/digital-modeling-137.png)
 
 Biasanya dipakai untuk mendaftarkan tipe tipe jenis pajak pada suatu negara, jika di Indonesia ada seperti PPH, PPH, PPN, dll.
 
-### 114. Tax Rate Archive
+### 103. Tax Rate Archive
 
 ![digital-modeling screenshot 138](images/digital-modeling/digital-modeling-138.png)
 
 Disini biasanya dipakai untuk memasukan tipe tipe rate dari jenis jenis pajak suatu negara tergantung dengan jenis pembelian atau penjualan.
 
-### 115. Witholding Tax Type
+### 104. Witholding Tax Type
 
 ![digital-modeling screenshot 139](images/digital-modeling/digital-modeling-139.png)
 

@@ -188,11 +188,16 @@
       } else {
         usedIds.set(id, 1);
       }
-      if (level === 3) {
-        return `<h3 id="${id}" class="checkable-heading"><span class="checkable-heading-text">${text}</span><span class="ys-check-cluster" data-check-id="${id}">` +
+      // Only headings that are actually numbered items ("1. ...", "12. ...")
+      // get the checklist treatment — plain group-label headings (no number,
+      // e.g. "System Parameter") stay as normal headings with no checkbox.
+      const rawStripped = raw.replace(/^\*\*/, "").replace(/\*\*$/, "").trim();
+      const isNumberedItem = (level === 2 || level === 3) && /^\d+(?:\.\d+)?\.?\s/.test(rawStripped);
+      if (isNumberedItem) {
+        return `<h${level} id="${id}" class="checkable-heading"><span class="checkable-heading-text">${text}</span><span class="ys-check-cluster" data-check-id="${id}">` +
           `<button type="button" class="ys-mark-btn" data-action="marked" aria-label="Tandai buat direview lagi" title="Tandai (kuning)">${markIconSvg()}</button>` +
           `<button type="button" class="ys-check-btn" data-action="done" aria-label="Tandai udah selesai dipelajari" title="Selesai (hijau)">${checkIconSvg()}</button>` +
-          `</span></h3>\n`;
+          `</span></h${level}>\n`;
       }
       return `<h${level} id="${id}">${text}</h${level}>\n`;
     };

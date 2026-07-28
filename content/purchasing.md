@@ -36,7 +36,7 @@ Menentukan bagaimana harga suatu barang akan diambil untuk kebutuhan purchasing,
 - Lastest Purchase Price = Mengikuti harga pembelian terakhir
 - Price Retrieval Starategi = Mengikuti strategi system pengecekan dan pencocokan secara bertahap
 
-### 5.定价可改
+### 5. 定价可改
 
 - **Pricing modifiable**
 
