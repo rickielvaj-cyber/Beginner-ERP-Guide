@@ -16,7 +16,7 @@ Dipakai buat purchase inbound, self-made inbound, dan inbound lainnya — kalau 
 Harus enable "auto pricing" dulu di Inventory Parameters baru fitur ini jalan. Red-letter outbound (return/reversal) dan outbound normal dikelola pakai scheme yang sama.
 Default urutan ambil harga: **Last Outbound Cost → Recent Period Balance → Price List Reference → Last Inbound Cost** — bisa pilih beberapa dan diurutin prioritasnya.
 
-3. Negative Issue Doc Price Scheme
+1. Negative Issue Doc Price Scheme
 
 *Catatan: bukan parameter terpisah — digabung/dikelola bareng Issue Doc Price Retrieval Scheme (item #2 di atas). Red-letter (return/reversal) outbound pakai scheme yang sama dengan outbound normal, nggak ada config sendiri.*
 
@@ -48,10 +48,8 @@ Ngatur cara sistem handle **selisih harga** antara barang yang udah masuk gudang
 
 **2 opsi:**
 
-1. **Invoice based cost adjustment (补差)** — cuma bikin 1 entry buat nutup selisihnya aja.
-*Contoh: estimasi Rp 1.000.000, invoice Rp 1.050.000 → sistem bikin entry +Rp 50.000.*
-2. **Invoice triggered reversal and rebooking (回冲)** — hapus/reverse entry lama, terus bikin entry baru dari nol pakai harga invoice.
-*Contoh sama: entry lama -Rp 1.000.000 (reverse), entry baru +Rp 1.050.000 (rebook).*
+1. **Invoice based cost adjustment (补差)** — cuma bikin 1 entry buat nutup selisihnya aja. *Contoh: estimasi Rp 1.000.000, invoice Rp 1.050.000 → sistem bikin entry +Rp 50.000.*
+2. **Invoice triggered reversal and rebooking (回冲)** — hapus/reverse entry lama, terus bikin entry baru dari nol pakai harga invoice. *Contoh sama: entry lama -Rp 1.000.000 (reverse), entry baru +Rp 1.050.000 (rebook).*
 
 Hasil akhir sama, tapi jejaknya di sistem beda — Adjust lebih ringkas, Reverse & Rebook lebih jelas histori-nya.
 
@@ -72,12 +70,9 @@ Hasil akhir sama, tapi jejaknya di sistem beda — Adjust lebih ringkas, Reverse
 
 ![inventory-accounting screenshot 8](images/inventory-accounting/inventory-accounting-008.png)
 
-- **Default Rules**
-Pakai aturan bawaan sistem — kemungkinan ini yang narik dari node "Outbound Adjustment Doc Allocation Rule" yang kita bahas kemarin (rule custom per item/kategori kalau udah di-setup).
-- **Accounting Transaction Type + Department**
-Alokasi selisihnya dipecah berdasarkan kombinasi 2 dimensi: jenis transaksi akuntansi + department. Jadi kalau abnormal balance-nya nyangkut beberapa department, sistem bagi proporsional berdasarkan kombinasi itu.
-- **Accounting Transaction Type + Department + Customer**
-Sama kayak di atas, tapi lebih detail — nambah dimensi customer juga. Jadi alokasinya makin granular, bisa ketauan abnormal balance-nya "milik" customer mana.
+- **Default Rules** Pakai aturan bawaan sistem — kemungkinan ini yang narik dari node "Outbound Adjustment Doc Allocation Rule" yang kita bahas kemarin (rule custom per item/kategori kalau udah di-setup).
+- **Accounting Transaction Type + Department** Alokasi selisihnya dipecah berdasarkan kombinasi 2 dimensi: jenis transaksi akuntansi + department. Jadi kalau abnormal balance-nya nyangkut beberapa department, sistem bagi proporsional berdasarkan kombinasi itu.
+- **Accounting Transaction Type + Department + Customer** Sama kayak di atas, tapi lebih detail — nambah dimensi customer juga. Jadi alokasinya makin granular, bisa ketauan abnormal balance-nya "milik" customer mana.
 
 ### 10. Re-calculate Cost at Month-end
 
@@ -211,6 +206,11 @@ Fungsi: metode sistematis buat menghitung SEMUA cost area dan SEMUA material sek
 ![inventory-accounting screenshot 21](images/inventory-accounting/inventory-accounting-021.png)
 
 Fungsi: menjalankan month-end closing buat account book di bawah accounting entity tersebut, sesuai fiscal period-nya. Ini langkah penutup — setelah ini, periode dianggap selesai diproses.
+
+## Alur Closing Inventory Accounting
+
+Inv acc
+period > cost calculate > inv batch close
 
 ## Inventory Accounting Report
 
