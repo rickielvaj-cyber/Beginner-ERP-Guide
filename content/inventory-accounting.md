@@ -6,15 +6,15 @@ Inget dulu bedanya sama Inventory Management: yang di-track di sini bukan QUANTI
 
 ![inventory-accounting screenshot 1](images/inventory-accounting/inventory-accounting-001.png)
 
-Dipakai buat purchase inbound, self-made inbound, dan inbound lainnya — kalau harga inbound nggak dispesifikasi manual, sistem ambil harga otomatis pakai scheme ini.
-**Catatan penting:** Purchase inbound (PO) sebenernya ambil harga dari **Purchasing Parameters**, BUKAN dari Inventory Parameters ini. Jadi parameter ini cuma berlaku buat inbound non-purchase (self-made/lainnya).
+Dipakai buat purchase inbound, self-made inbound, dan inbound lainnya — kalau harga inbound nggak dispesifikasi manual, sistem ambil harga otomatis pakai scheme ini. Jadi untuk cost calculation sistem akan mengambil harga dari sini sesuai urutan.
 
 ### 2. Issue Doc Price Retrieval Scheme
 
 ![inventory-accounting screenshot 2](images/inventory-accounting/inventory-accounting-002.png)
 
 Harus enable "auto pricing" dulu di Inventory Parameters baru fitur ini jalan. Red-letter outbound (return/reversal) dan outbound normal dikelola pakai scheme yang sama.
-Default urutan ambil harga: **Last Outbound Cost → Recent Period Balance → Price List Reference → Last Inbound Cost** — bisa pilih beberapa dan diurutin prioritasnya.
+Default urutan ambil harga: **Last Outbound Cost → Recent Period Balance → Price List Reference → Last Inbound Cost** — bisa pilih beberapa dan diurutin prioritasnya. 
+Jadi untuk cost calculation sistem akan mengambil harga dari sini sesuai urutan.
 
 1. Negative Issue Doc Price Scheme
 
@@ -70,8 +70,8 @@ Hasil akhir sama, tapi jejaknya di sistem beda — Adjust lebih ringkas, Reverse
 
 ![inventory-accounting screenshot 8](images/inventory-accounting/inventory-accounting-008.png)
 
-- **Default Rules** Pakai aturan bawaan sistem — kemungkinan ini yang narik dari node "Outbound Adjustment Doc Allocation Rule" yang kita bahas kemarin (rule custom per item/kategori kalau udah di-setup).
-- **Accounting Transaction Type + Department** Alokasi selisihnya dipecah berdasarkan kombinasi 2 dimensi: jenis transaksi akuntansi + department. Jadi kalau abnormal balance-nya nyangkut beberapa department, sistem bagi proporsional berdasarkan kombinasi itu.
+- **Default Rules** Pakai aturan bawaan sistem — kemungkinan ini yang narik dari node "Outbound Adjustment Doc Allocation Rule" (rule custom per item/kategori kalau udah di-setup).
+- **Accounting Transaction Type + Department** Alokasi selisihnya dipecah berdasarkan kombinasi 2 dimensi: jenis transaksi akuntansi + department. Jadi kalau abnormal balance-nya nyangkut beberapa department, sistem bagi proporsional berdasarkan kombinasi itu.
 - **Accounting Transaction Type + Department + Customer** Sama kayak di atas, tapi lebih detail — nambah dimensi customer juga. Jadi alokasinya makin granular, bisa ketauan abnormal balance-nya "milik" customer mana.
 
 ### 10. Re-calculate Cost at Month-end
