@@ -12,9 +12,7 @@ Dipakai buat purchase inbound, self-made inbound, dan inbound lainnya — kalau 
 
 ![inventory-accounting screenshot 2](images/inventory-accounting/inventory-accounting-002.png)
 
-Harus enable "auto pricing" dulu di Inventory Parameters baru fitur ini jalan. Red-letter outbound (return/reversal) dan outbound normal dikelola pakai scheme yang sama.
-Default urutan ambil harga: **Last Outbound Cost → Recent Period Balance → Price List Reference → Last Inbound Cost** — bisa pilih beberapa dan diurutin prioritasnya. 
-Jadi untuk cost calculation sistem akan mengambil harga dari sini sesuai urutan.
+Harus enable "auto pricing" dulu di Inventory Parameters baru fitur ini jalan. Dipakai buat purchase outbound, self-made outbound, dan outbound lainnya — kalau harga outbound nggak dispesifikasi manual, sistem ambil harga otomatis pakai scheme ini. Jadi untuk cost calculation sistem akan mengambil harga dari sini sesuai urutan.
 
 1. Negative Issue Doc Price Scheme
 
